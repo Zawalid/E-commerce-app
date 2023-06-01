@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .checkedRememberMe {
+    @apply grid place-content-center border-none bg-white bg-gradient-to-br from-DayBlue via-Blue to-Green500  text-sm text-black !important;
+  }
+  .remove-focus:focus-visible {
+    @apply shadow-activeInput outline-none   !important;
+  }
+  .checkedBox {
+    @apply border-none bg-primary-500 text-white !important;
+  }
+  aside.show {
+    @apply z-10 opacity-100;
+  }
+  #sideBarDropDown.show,
+  #dropDown.show {
+    @apply z-10 h-[309px] border-2 border-border-color pt-4;
+  }
+  #sideBar.show {
+    @apply translate-y-0;
+  }
+  body:has(#sideBar.show) {
+    @apply h-screen overflow-hidden;
+  }
+  body:has(#sideBar.show)::before {
+    @apply z-[2] opacity-100;
+  }
+  .showPasswordIcon {
+    @apply absolute right-3 top-[62%] -translate-y-1/2 cursor-pointer text-sm text-nobleDark300;
+  }
+}
