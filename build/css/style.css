@@ -949,6 +949,10 @@ body:has(#sideBar.show)::before {
   grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
 }
 
+.flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
 .flex-col {
   flex-direction: column;
 }

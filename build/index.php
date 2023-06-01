@@ -1,4 +1,13 @@
-<?php session_start() ?>
+<?php session_start();
+function showProfilePicture()
+{
+  if (isset($_SESSION['userName'])) {
+    return '<img src="imgs/Person-4.svg" alt="" class="h-9 w-9 rounded-full" />';
+  } else {
+    return '<img src="imgs/no profile.png" alt="" class="h-9 w-9 rounded-full" />';
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,15 +35,14 @@
           <a href="#" class="relative mr-6 text-sm font-semibold text-grey-500 transition-colors duration-500 before:absolute before:-bottom-[26px] before:h-[2px] before:w-full before:bg-primary-500 before:opacity-0 before:transition-opacity before:duration-500 hover:text-grey-900 hover:before:opacity-100">Support</a>
           <a href="#" class="relative mr-6 text-sm font-semibold text-grey-500 transition-colors duration-500 before:absolute before:-bottom-[26px] before:h-[2px] before:w-full before:bg-primary-500 before:opacity-0 before:transition-opacity before:duration-500 hover:text-grey-900 hover:before:opacity-100">Terms & Conditions</a>
         </div>
-        <div class="flex items-center gap-4">
-          <div class="relative flex items-center gap-2 max-md:hidden">
-            <!-- src="./imgs/Person-4.svg" -->
-            <img src="imgs/no profile.png" alt="" class="h-9 w-9 rounded-full" />
-            <i class="fa-solid fa-chevron-down cursor-pointer text-lg text-grey-500 transition-transform duration-500" id="dropDownBtn"></i>
+        <div class="flex items-center gap-4" id="headerDropDownParent">
+          <div class="relative flex items-center gap-2 ">
+
+            <?php echo showProfilePicture() ?>
+            <i class="fa-solid fa-chevron-up cursor-pointer text-lg text-grey-500 transition-transform duration-500" id="dropDownBtn"></i>
             <div class="absolute right-0 top-[3.3rem] -z-10 h-0 w-52 overflow-hidden rounded-xl bg-white p-0 transition-all duration-500" id="dropDown">
               <div class="flex items-center gap-3 border-b border-border-color px-4 pb-3">
-                <!-- src="imgs/Person-4.svg" -->
-                <img src="imgs/no profile.png" alt="" class="h-9 w-9 rounded-full" />
+                <?php echo showProfilePicture() ?>
                 <h2 class="font-semibold text-grey-900"><?php if (isset($_SESSION['userName'])) {
                                                           echo   $_SESSION['userName'];
                                                         } else {
@@ -43,13 +51,13 @@
               </div>
               <ul>
                 <li class="cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100">
-                  <a href="#" class="flex items-center gap-3">
+                  <a href="<?= (isset($_SESSION['userName'])) ? 'login' : "login" ?>.php" class="flex items-center gap-3">
                     <i class="fa-regular fa-heart cursor-pointer text-lg text-grey-500"></i>
                     Favorites
                   </a>
                 </li>
                 <li class="cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100">
-                  <a href="#" class="flex items-center gap-3">
+                  <a href="<?= (isset($_SESSION['userName'])) ? 'login' : "login" ?>.php" class="flex items-center gap-3">
                     <i class="fa-regular fa-bell cursor-pointer text-lg text-grey-500"></i>
                     Notifications
                   </a>
@@ -73,12 +81,6 @@
                     ></i>';
                       echo   'Log in';
                     } ?>
-                    <!-- <i
-                        class="fa-solid fa-right-from-bracket rotate-180 cursor-pointer text-lg text-grey-500"
-                      ></i>
-                      Log out -->
-                    <!-- <i class="fa-solid fa-right-from-bracket cursor-pointer text-lg text-grey-500"></i>
-                    Log in -->
                   </a>
                 </li>
               </ul>
@@ -104,43 +106,7 @@
         <i class="fa-solid fa-file-contract mr-3"></i>
         Terms & conditions</a>
     </div>
-    <div>
-      <div class="relative flex items-center justify-between">
-        <i class="fa-solid fa-chevron-up cursor-pointer text-lg text-grey-500 transition-transform duration-500" id="sideBarDropDownBtn"></i>
-        <img src="./imgs/Person-4.svg" alt="" class="h-9 w-9 rounded-full" />
-        <div class="absolute bottom-14 left-1/2 -z-10 h-0 w-52 -translate-x-1/2 overflow-hidden rounded-xl bg-white p-0 transition-all duration-500" id="sideBarDropDown">
-          <div class="flex items-center gap-3 border-b border-border-color px-4 pb-3">
-            <img src="imgs/Person-4.svg" alt="" class="h-9 w-9 rounded-full" />
-            <h2 class="font-semibold text-grey-900">Walid</h2>
-          </div>
-          <ul>
-            <li class="cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100">
-              <a href="#" class="flex items-center gap-3">
-                <i class="fa-regular fa-heart cursor-pointer text-lg text-grey-500"></i>
-                Favorites
-              </a>
-            </li>
-            <li class="cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100">
-              <a href="#" class="flex items-center gap-3">
-                <i class="fa-regular fa-bell cursor-pointer text-lg text-grey-500"></i>
-                Notifications
-              </a>
-            </li>
-            <li class="cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100">
-              <a href="#" class="flex items-center gap-3">
-                <i class="fa-solid fa-gear cursor-pointer text-lg text-grey-500"></i>
-                Settings
-              </a>
-            </li>
-            <li class="cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100">
-              <a href="#" class="flex items-center gap-3">
-                <i class="fa-solid fa-right-from-bracket rotate-180 cursor-pointer text-lg text-grey-500"></i>
-                Log out
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
+    <div id="sideBarDropDownParent">
     </div>
   </div>
   <main>

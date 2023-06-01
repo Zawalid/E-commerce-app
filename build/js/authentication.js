@@ -35,4 +35,3 @@ const showPassword = () => {
   });
 };
 showPassword();
-console.log(777);

@@ -19,20 +19,17 @@ addToFavorites.forEach((heart) => {
 });
 //* Show and hide aside and dropdown
 const aside = document.querySelector("aside");
-const filterBtn = document.querySelector("#filterBtn");
-const dropDownBtn = document.querySelector("#dropDownBtn");
-const dropDown = document.querySelector("#dropDown");
-const sideBarDropDownBtn = document.querySelector("#sideBarDropDownBtn");
-const sideBarDropDown = document.querySelector("#sideBarDropDown");
-const sideBar = document.querySelector("#sideBar");
-const sideBarOpenBtn = document.querySelector("#sideBarOpenBtn");
+const filterBtn = document.getElementById("filterBtn");
+const dropDownBtn = document.getElementById("dropDownBtn");
+const dropDown = document.getElementById("dropDown");
+const sideBar = document.getElementById("sideBar");
+const sideBarOpenBtn = document.getElementById("sideBarOpenBtn");
 
-const showAndHideElement = (element, elementBtn, elementName) => {
+const showAndHideElement = (element, elementBtn) => {
   elementBtn?.addEventListener("click", () => {
     element.classList.toggle("show");
-    if (elementBtn === dropDownBtn || elementBtn === sideBarDropDownBtn) {
-      elementBtn.classList.toggle("rotate-180");
-    }
+    elementBtn === dropDownBtn && dropDownBtn.classList.toggle("rotate-180");
+    elementBtn === sideBarOpenBtn && dropDownBtn.classList.remove("rotate-180");
   });
 
   document.addEventListener("click", (e) => {
@@ -41,29 +38,46 @@ const showAndHideElement = (element, elementBtn, elementName) => {
       !element.contains(e.target)
     ) {
       element.classList.remove("show");
-      if (!sideBar.classList.contains("show"))
-        sideBarDropDownBtn.classList.remove("rotate-180");
+      element === sideBar && dropDownBtn.classList.remove("rotate-180");
     }
   });
 };
 
-showAndHideElement(aside, filterBtn, "aside");
-showAndHideElement(dropDown, dropDownBtn, "#dropDown");
-showAndHideElement(sideBarDropDown, sideBarDropDownBtn, "#sideBarDropDown");
-showAndHideElement(sideBar, sideBarOpenBtn, "#sideBar");
+showAndHideElement(aside, filterBtn);
+showAndHideElement(dropDown, dropDownBtn);
+showAndHideElement(sideBar, sideBarOpenBtn);
 
-const mediaQuery = window.matchMedia("(min-width: 768px)");
+const headerDropDownParent = document.getElementById("headerDropDownParent");
+const sideBarDropDownParent = document.getElementById("sideBarDropDownParent");
+
+const mediaQuery = window.matchMedia("(max-width: 768px)");
 
 const handleTabletChange = (e) => {
-  // Check if the media query is true
+  const drDpaClasses = ["justify-between", "flex-row-reverse"];
   if (e.matches) {
-    // Then log the following message to the console
-    console.log("Media Query Matched!");
-    sideBar.classList.remove("show");
+    dropDown.className =
+      "absolute bottom-14 left-1/2 -z-10 h-0 w-52 -translate-x-1/2 overflow-hidden rounded-xl bg-white p-0 transition-all duration-500";
+    dropDown.parentElement.classList.add(...drDpaClasses);
+    dropDown.parentElement.classList.remove("max-md:hidden");
+    dropDownBtn.classList.remove("fa-chevron-down");
+    dropDownBtn.classList.add("fa-chevron-up");
+    sideBarDropDownParent.appendChild(dropDown.parentElement);
+    headerDropDownParent.contains(dropDown) &&
+      headerDropDownParent.removeChild(dropDown.parentElement);
+  } else {
+    dropDown.className =
+      "absolute right-0 top-[3.3rem] -z-10 h-0 w-52 overflow-hidden rounded-xl bg-white p-0 transition-all duration-500";
+    headerDropDownParent.appendChild(dropDown.parentElement);
+    dropDown.parentElement.classList.remove(...drDpaClasses);
+    dropDownBtn.classList.remove("fa-chevron-up");
+    dropDownBtn.classList.add("fa-chevron-down");
+    dropDown.parentElement.classList.add("max-md:hidden");
+    sideBarDropDownParent.contains(dropDown) &&
+      sideBarDropDownParent.removeChild(dropDown.parentElement);
   }
 };
 
 // Register event listener
-mediaQuery.addEventListener(handleTabletChange);
-console.log(777);
-cl
+mediaQuery.addEventListener("change", handleTabletChange);
+// Initial check
+handleTabletChange(mediaQuery);
