@@ -44,11 +44,11 @@ session_start();
         </label>
 
         <div class="my-12 flex items-center justify-between">
-          <div class="flex items-center gap-3">
+          <div class="flex items-center gap-3 relative">
 
-            <input type="checkbox" class="" name="rememberMe" id="activeRememberMe">
+            <input type="checkbox" name="rememberMe" id="activeRememberMe" class="absolute h-6 w-6 opacity-0 cursor-pointer">
 
-            <div class="h-6 w-6 cursor-pointer rounded-lg border border-nobleDark500 bg-nobleDark600 text-transparent" id="rememberMe">
+            <div class="h-6 w-6  rounded-lg border border-nobleDark500 bg-nobleDark600 text-transparent" id="rememberMe">
               <i class="fa-solid fa-check"></i>
             </div>
             <span class="text-nobleDark200 max-xs:text-xs">Remember me</span>
