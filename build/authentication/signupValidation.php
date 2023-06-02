@@ -1,5 +1,6 @@
 <?php
 require 'db.php';
+require 'utilities.php';
 session_start();
 
 $_SESSION['firstName'] = $firstName = $_POST['firstName'];

@@ -81,3 +81,4 @@ const handleTabletChange = (e) => {
 mediaQuery.addEventListener("change", handleTabletChange);
 // Initial check
 handleTabletChange(mediaQuery);
+// window.location.href = "loading.php";

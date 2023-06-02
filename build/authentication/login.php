@@ -20,7 +20,7 @@ session_start();
 <body class="flex min-h-screen flex-col bg-nobleDark700 font-Jakarta md:flex-row">
   <section class="flex min-h-screen flex-col justify-between gap-12 bg-nobleDark700 p-8 lg:w-1/2">
     <a href="index.php">
-      <img  src="./imgs/Logo.svg" alt="" class="w-7 cursor-pointer"/>
+      <img src="./imgs/Logo.svg" alt="" class="w-7 cursor-pointer" />
     </a>
     <div class="px-5 sm:px-16">
       <h1 class="mb-5 text-4xl text-white max-md:text-center max-md:text-3xl">
@@ -31,13 +31,16 @@ session_start();
         Log in to Artificium to start creating magic.
       </p>
       <form action="verifyUser.php" method="post">
-        <input class="active remove-focus w-full rounded-xl border border-nobleDark500 bg-nobleDark600 p-3 text-white outline-transparent placeholder:text-nobleDark300" type="email" placeholder="Email" required name="email" <?php if (isset($_SESSION['email'])) : ?> value="<?= $_SESSION['email'] ?>" <?php endif; ?> />
+        <input class="focus-visible:shadow-activeInput focus:outline-none w-full rounded-xl border border-nobleDark500 bg-nobleDark600 p-3 text-white outline-transparent placeholder:text-nobleDark300" type="email" placeholder="Email" required name="email" <?php if (isset($_SESSION['email'])) : ?> value="<?= $_SESSION['email'] ?>" <?php endif; ?> />
         <div class=" relative">
-          <input class="active remove-focus mt-5 w-full rounded-xl border border-nobleDark500 bg-nobleDark600 p-3 text-white placeholder:text-nobleDark300" type="password" placeholder="Password" required name="password" />
+          <input class="focus-visible:shadow-activeInput focus:outline-none mt-5 w-full rounded-xl border border-nobleDark500 bg-nobleDark600 p-3 text-white placeholder:text-nobleDark300" type="password" placeholder="Password" required name="password" />
           <i class="fa-solid fa-eye eye-icon showPasswordIcon" id="show_password"></i>
         </div>
         <div class="my-12 flex items-center justify-between">
           <div class="flex items-center gap-3">
+
+            <input type="checkbox" class="" name="rememberMe" id="activeRememberMe">
+
             <div class="h-6 w-6 cursor-pointer rounded-lg border border-nobleDark500 bg-nobleDark600 text-transparent" id="rememberMe">
               <i class="fa-solid fa-check"></i>
             </div>

@@ -1,4 +1,5 @@
-<?php session_start();
+<?php
+session_start();
 function showProfilePicture()
 {
   if (isset($_SESSION['userName'])) {

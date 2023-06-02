@@ -12,5 +12,8 @@
   "license": "ISC",
   "devDependencies": {
     "prettier-plugin-tailwindcss": "^0.3.0"
+  },
+  "dependencies": {
+    "lottie-web": "^5.12.0"
   }
 }

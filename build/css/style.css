@@ -548,7 +548,7 @@ video {
   }
 }
 
-.checkedRememberMe {
+#activeRememberMe:checked ~ div {
   display: grid !important;
   place-content: center !important;
   border-style: none !important;
@@ -565,14 +565,6 @@ video {
   line-height: 1.25rem !important;
   --tw-text-opacity: 1 !important;
   color: rgb(0 0 0 / var(--tw-text-opacity)) !important;
-}
-
-.remove-focus:focus-visible {
-  --tw-shadow:  0px 0px 0px 4px rgba(132, 220, 245, 0.24) !important;
-  --tw-shadow-colored: 0px 0px 0px 4px var(--tw-shadow-color) !important;
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
-  outline: 2px solid transparent !important;
-  outline-offset: 2px !important;
 }
 
 .checkedBox {
@@ -814,6 +806,10 @@ body:has(#sideBar.show)::before {
   height: 1.25rem;
 }
 
+.h-56 {
+  height: 14rem;
+}
+
 .h-6 {
   height: 1.5rem;
 }
@@ -832,6 +828,10 @@ body:has(#sideBar.show)::before {
 
 .h-screen {
   height: 100vh;
+}
+
+.h-44 {
+  height: 11rem;
 }
 
 .max-h-\[535px\] {
@@ -866,6 +866,10 @@ body:has(#sideBar.show)::before {
   width: 13rem;
 }
 
+.w-56 {
+  width: 14rem;
+}
+
 .w-6 {
   width: 1.5rem;
 }
@@ -893,6 +897,10 @@ body:has(#sideBar.show)::before {
 
 .w-full {
   width: 100%;
+}
+
+.w-44 {
+  width: 11rem;
 }
 
 .flex-1 {
@@ -1585,6 +1593,12 @@ body:has(#sideBar.show)::before {
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+
+.focus-visible\:shadow-activeInput:focus-visible {
+  --tw-shadow:  0px 0px 0px 4px rgba(132, 220, 245, 0.24);
+  --tw-shadow-colored: 0px 0px 0px 4px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 @media not all and (min-width: 768px) {

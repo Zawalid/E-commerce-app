@@ -1,10 +1,10 @@
 "use strict";
-const rememberMe = document.getElementById("rememberMe");
-const illustration = document.getElementById("illustration");
+// const rememberMe = document.getElementById("rememberMe");
+// const illustration = document.getElementById("illustration");
 
-rememberMe.addEventListener("click", () =>
-  rememberMe.classList.toggle("checkedRememberMe")
-);
+// rememberMe.addEventListener("click", () =>
+//   rememberMe.classList.toggle("checkedRememberMe")
+// );
 
 //* Show password
 const showPassword = () => {

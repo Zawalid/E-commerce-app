@@ -3,11 +3,8 @@
 @tailwind utilities;
 
 @layer components {
-  .checkedRememberMe {
+  #activeRememberMe:checked ~ div {
     @apply grid place-content-center border-none bg-white bg-gradient-to-br from-DayBlue via-Blue to-Green500  text-sm text-black !important;
-  }
-  .remove-focus:focus-visible {
-    @apply shadow-activeInput outline-none   !important;
   }
   .checkedBox {
     @apply border-none bg-primary-500 text-white !important;
