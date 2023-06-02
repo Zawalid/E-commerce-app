@@ -1,0 +1,16 @@
+{
+    "name": "walid/web-app",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Walid\\WebApp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Walid Zakan",
+            "email": "walid.zakan@gmail.com"
+        }
+    ],
+    "require": {}
+}
