@@ -6,4 +6,3 @@ const animation = lottie.loadAnimation({
   loop: true,
 });
 animation.setSpeed(0.7);
-

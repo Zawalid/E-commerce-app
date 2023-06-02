@@ -9,19 +9,19 @@ session_start();
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Register</title>
-  <link rel="stylesheet" href="./css/all.min.css" />
-  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="../css/all.min.css" />
+  <link rel="stylesheet" href="../css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <script defer src="./js/authentication.js"></script>
+  <script defer src="../js/authentication.js"></script>
 </head>
 
 <body class="flex min-h-screen flex-col bg-nobleDark700 font-Jakarta md:flex-row">
   <section class="flex min-h-screen flex-col justify-between gap-12 bg-nobleDark700 p-8 lg:w-4/5">
     <div class="flex items-center justify-between">
-      <a href="index.php">
-        <img src="./imgs/Logo.svg" alt="" class="w-7 cursor-pointer" />
+      <a href="../main.php">
+        <img src="../imgs/Logo.svg" alt="" class="w-7 cursor-pointer" />
       </a>
       <a class="bg-gradient-to-br from-Blue to-Green500 bg-clip-text font-semibold text-transparent" href="login.php">Login</a>
     </div>

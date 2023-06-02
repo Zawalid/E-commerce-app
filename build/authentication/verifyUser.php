@@ -5,7 +5,8 @@ session_start();
 
 if (rememberedUser()) {
     $_SESSION['userName'] = rememberedUser();
-    header("Location: ../index.php");
+    echo 777 ;
+    header("Location: ../main.php");
 } else {
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -28,7 +29,7 @@ if (rememberedUser()) {
         if (isset($rememberMe)) {
             setcookie('remember_token', $token, time() + 86400 * 7, '/', '', true, true);
         }
-        header("Location: ../index.php");
+        header("Location: ../main.php");
     } else {
         $_SESSION['email'] = $email;
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
