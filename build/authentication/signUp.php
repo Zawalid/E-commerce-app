@@ -68,7 +68,7 @@ session_start();
             <div class="h-6 w-6  rounded-lg border border-nobleDark500 bg-nobleDark600 text-transparent" id="rememberMe">
               <i class="fa-solid fa-check"></i>
             </div>
-            <span class="text-nobleDark200 max-xs:text-xs">I agree with Terms and conditions</span>
+            <span class="text-nobleDark200">I agree with Terms and conditions</span>
           </div>
         </div>
         <input type="submit" name="create" value=" Create free account" href="#" class="cursor-pointer text-l block w-full rounded-2xl bg-stemGreen500 py-3 text-center font-bold transition hover:bg-stemGreen400 focus:bg-stemGreen300">
