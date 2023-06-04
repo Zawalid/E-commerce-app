@@ -830,6 +830,18 @@ body:has(#sideBar.show)::before {
   height: 100vh;
 }
 
+.h-16 {
+  height: 4rem;
+}
+
+.h-64 {
+  height: 16rem;
+}
+
+.h-\[535px\] {
+  height: 535px;
+}
+
 .max-h-\[535px\] {
   max-height: 535px;
 }
@@ -895,6 +907,22 @@ body:has(#sideBar.show)::before {
   width: 100%;
 }
 
+.w-16 {
+  width: 4rem;
+}
+
+.w-2 {
+  width: 0.5rem;
+}
+
+.w-28 {
+  width: 7rem;
+}
+
+.w-64 {
+  width: 16rem;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -928,12 +956,6 @@ body:has(#sideBar.show)::before {
 
 .rotate-90 {
   --tw-rotate: 90deg;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.scale-110 {
-  --tw-scale-x: 1.1;
-  --tw-scale-y: 1.1;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -1381,6 +1403,11 @@ body:has(#sideBar.show)::before {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.text-grey-100 {
+  --tw-text-opacity: 1;
+  color: rgb(246 247 249 / var(--tw-text-opacity));
+}
+
 .underline {
   text-decoration-line: underline;
 }
@@ -1451,6 +1478,19 @@ body:has(#sideBar.show)::before {
 
 .duration-500 {
   transition-duration: 500ms;
+}
+
+::--webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
 }
 
 .placeholder\:text-sm::-moz-placeholder {

@@ -1,30 +1,43 @@
 "use strict";
-//* Checkboxes
+
+//* Check if user is logged in
+const userName = document.getElementById("userName");
+const checkIfUserLoggedIn = () => {
+  if (userName.textContent === "Guest") return false;
+  return true;
+};
+
+//* Filter Checkboxes
 const checkBoxes = document.querySelectorAll("#checkBox");
 checkBoxes.forEach((checkBox) => {
   checkBox.addEventListener("click", () => {
     checkBox.classList.toggle("checkedBox");
   });
 });
+
 //* Heart icons
 const addToFavorites = document.querySelectorAll("#addToFav");
 addToFavorites.forEach((heart) => {
   heart.addEventListener("click", () => {
-    heart.classList.contains("fa-regular")
-      ? (heart.className =
-          "fa-solid fa-heart  cursor-pointer text-lg text-red-300")
-      : (heart.className =
-          "fa-regular fa-heart  cursor-pointer text-lg text-grey-600");
+    if (checkIfUserLoggedIn()) {
+      heart.classList.contains("fa-regular")
+        ? (heart.className =
+            "fa-solid fa-heart  cursor-pointer text-lg text-red-300")
+        : (heart.className =
+            "fa-regular fa-heart  cursor-pointer text-lg text-grey-600");
+    } else {
+      window.location.href = "authentication/login.php";
+    }
   });
 });
-//* Show and hide aside and dropdown
+
+//* Show and hide aside and dropdown and sidebar
 const aside = document.querySelector("aside");
 const filterBtn = document.getElementById("filterBtn");
 const dropDownBtn = document.getElementById("dropDownBtn");
 const dropDown = document.getElementById("dropDown");
 const sideBar = document.getElementById("sideBar");
 const sideBarOpenBtn = document.getElementById("sideBarOpenBtn");
-
 const showAndHideElement = (element, elementBtn) => {
   elementBtn?.addEventListener("click", () => {
     element.classList.toggle("show");
@@ -42,17 +55,15 @@ const showAndHideElement = (element, elementBtn) => {
     }
   });
 };
-
 showAndHideElement(aside, filterBtn);
 showAndHideElement(dropDown, dropDownBtn);
 showAndHideElement(sideBar, sideBarOpenBtn);
 
+//* Keep track of the media query to know when to change the dropdown position
 const headerDropDownParent = document.getElementById("headerDropDownParent");
 const sideBarDropDownParent = document.getElementById("sideBarDropDownParent");
-
 const mediaQuery = window.matchMedia("(max-width: 768px)");
-
-const handleTabletChange = (e) => {
+const handleMediaQueryChange = (e) => {
   const drDpaClasses = ["justify-between", "flex-row-reverse"];
   if (e.matches) {
     dropDown.className =
@@ -76,8 +87,61 @@ const handleTabletChange = (e) => {
       sideBarDropDownParent.removeChild(dropDown.parentElement);
   }
 };
-
-// Register event listener
-mediaQuery.addEventListener("change", handleTabletChange);
+mediaQuery.addEventListener("change", handleMediaQueryChange);
 // Initial check
-handleTabletChange(mediaQuery);
+handleMediaQueryChange(mediaQuery);
+
+//* Get the filters
+let type = [];
+const capacity = [];
+
+aside.addEventListener("click", (e) => {
+  if (e.target.closest("#checkBox")) {
+    const filterEl = e.target
+      .closest("#checkBox")
+      .nextElementSibling.innerText.split(" (")[0];
+
+    e.target.closest("#checkBox").nextElementSibling.parentElement.parentElement
+      .id == "filterByType"
+      ? type.includes(filterEl)
+        ? type.pop(filterEl)
+        : type.push(filterEl)
+      : capacity.includes(filterEl)
+      ? capacity.pop(filterEl)
+      : capacity.push(filterEl);
+
+    console.log(type);
+    console.log(capacity);
+  }
+});
+
+//* Send the search query to search.php and display results
+document
+  .getElementById("search_input")
+  .addEventListener("keyup", function (event) {
+    // event.preventDefault(); // Prevent form submission
+
+    const searchQuery = this.value;
+    const data = {
+      query: searchQuery,
+      type,
+      capacity,
+    };
+    // Perform AJAX request
+    fetch("search.php", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded",
+      },
+      body: JSON.stringify(data),
+    })
+      .then(function (response) {
+        return response.text();
+      })
+      .then(function (data) {
+        document.getElementById("search_results").innerHTML = data;
+      })
+      .catch(function (error) {
+        console.log("An error occurred while processing the search.", error);
+      });
+  });

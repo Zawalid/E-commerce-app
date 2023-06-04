@@ -44,11 +44,11 @@ function showProfilePicture()
             <div class="absolute right-0 top-[3.3rem] -z-10 h-0 w-52 overflow-hidden rounded-xl bg-white p-0 transition-all duration-500" id="dropDown">
               <div class="flex items-center gap-3 border-b border-border-color px-4 pb-3">
                 <?php echo showProfilePicture() ?>
-                <h2 class="font-semibold text-grey-900"><?php if (isset($_SESSION['userName'])) {
-                                                          echo   $_SESSION['userName'];
-                                                        } else {
-                                                          echo  "Guest";
-                                                        } ?> </h2>
+                <h2 class="font-semibold text-grey-900" id="userName"><?php if (isset($_SESSION['userName'])) {
+                                                                        echo   $_SESSION['userName'];
+                                                                      } else {
+                                                                        echo  "Guest";
+                                                                      } ?></h2>
               </div>
               <ul>
                 <li class="cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100">
@@ -205,23 +205,23 @@ function showProfilePicture()
           </h2>
           <div class="mt-5">
             <p class="mb-4 text-sm font-semibold text-grey-700">Car type</p>
-            <ul>
+            <ul id="filterByType">
               <li class="mb-3 flex items-center gap-3">
-                <div class="checkedBox grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
+                <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                   <i class="fa-solid fa-check text-sm"></i>
                 </div>
                 <label class="font-semibold text-grey-500">Coupe <span class="ml-2" id="quantity">(24)</span>
                 </label>
               </li>
               <li class="mb-3 flex items-center gap-3">
-                <div class="checkedBox grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
+                <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                   <i class="fa-solid fa-check text-sm"></i>
                 </div>
                 <label class="font-semibold text-grey-500">Hatchback <span class="ml-2" id="quantity">(12)</span>
                 </label>
               </li>
               <li class="mb-3 flex items-center gap-3">
-                <div class="checkedBox grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
+                <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                   <i class="fa-solid fa-check text-sm"></i>
                 </div>
                 <label class="font-semibold text-grey-500">Sedan <span class="ml-2" id="quantity">(16)</span>
@@ -245,9 +245,9 @@ function showProfilePicture()
           </div>
           <div class="mt-5">
             <p class="mb-4 text-sm font-semibold text-grey-700">Capacity</p>
-            <ul>
+            <ul id="filterByCapacity">
               <li class="mb-3 flex items-center gap-3">
-                <div class="checkedBox grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
+                <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                   <i class="fa-solid fa-check text-sm"></i>
                 </div>
                 <label class="font-semibold text-grey-500">2 - 5 <span class="ml-2" id="quantity">(100)</span>
@@ -266,9 +266,9 @@ function showProfilePicture()
             <p class="mb-4 text-sm font-semibold text-grey-700">
               Customer Recommendation
             </p>
-            <ul>
+            <ul id="filterByRecommendation">
               <li class="mb-3 flex items-center gap-3">
-                <div class="checkedBox grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
+                <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                   <i class="fa-solid fa-check text-sm"></i>
                 </div>
                 <label class="font-semibold text-grey-500">70 - 100% <span class="ml-2" id="quantity">(72)</span>
@@ -295,263 +295,18 @@ function showProfilePicture()
           <div class="flex items-center justify-between gap-12">
             <div class="flex flex-1 items-center gap-5 rounded-[35px] bg-white px-5 py-3">
               <i class="fa-solid fa-search text-lg text-grey-600"></i>
-              <input type="text" name="search" placeholder="Search Cars" class="w-full flex-1 border-none font-semibold text-grey-700 placeholder-grey-700 placeholder:text-sm placeholder:font-bold focus:outline-none" />
+              <input type="text" name="search" id="search_input" placeholder="Search Cars" class="w-full flex-1 border-none font-semibold text-grey-700 placeholder-grey-700 placeholder:text-sm placeholder:font-bold focus:outline-none" />
+              <!-- <form method="post" id="search_form">
+              </form> -->
             </div>
             <img src="imgs/icons8-filter-90.png" alt="" class="hidden h-7 w-7 cursor-pointer max-md:block" id="filterBtn" />
           </div>
-          <div class="mt-5 grid max-h-[535px] grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-9 overflow-y-scroll pb-1 pr-4">
-            <div class="rounded-xl bg-white p-5 shadow-shadow-1">
-              <div class="mb-3 flex items-center justify-between">
-                <h4 class="font-bold text-grey-900">Porsche 718 Cayman S</h4>
-                <i class="fa-solid fa-heart cursor-pointer text-lg text-red-300" id="addToFav"></i>
-              </div>
-              <p class="font-semibold text-grey-500">Coupe</p>
-              <img src="imgs/car-03.svg" alt="" class="mx-auto my-3 h-28" />
-              <div class="flex items-center justify-between">
-                <div class="flex gap-3">
-                  <span class="font-semibold text-grey-500">
-                    <i class="fa-solid fa-user mr-2 text-primary-500"></i>
-                    2
-                  </span>
-                  <div class="flex items-center">
-                    <img src="imgs/icons8-gearshift-50.png" alt="" class="mr-1 h-5 w-5" />
-                    <span class="font-semibold text-grey-500">Manual</span>
-                  </div>
-                </div>
-                <span class="font-bold text-grey-900">$400 <span class="text-grey-500">/d</span></span>
-              </div>
-            </div>
-            <div class="rounded-xl bg-white p-5 shadow-shadow-1">
-              <div class="mb-3 flex items-center justify-between">
-                <h4 class="font-bold text-grey-900">Mini Cooper 5-DOOR</h4>
-                <i class="fa-regular fa-heart cursor-pointer text-lg text-grey-600" id="addToFav"></i>
-              </div>
-              <p class="font-semibold text-grey-500">Hatchback</p>
-              <img src="imgs/car-04.svg" alt="" class="mx-auto my-3 h-28 w-52" />
-              <div class="flex items-center justify-between">
-                <div class="flex gap-3">
-                  <span class="font-semibold text-grey-500">
-                    <i class="fa-solid fa-user mr-2 text-primary-500"></i>
-                    4
-                  </span>
-                  <div class="flex items-center">
-                    <img src="imgs/icons8-gearshift-50.png" alt="" class="mr-1 h-5 w-5" />
-                    <span class="font-semibold text-grey-500">Matic</span>
-                  </div>
-                </div>
-                <span class="font-bold text-grey-900">$394 <span class="text-grey-500">/d</span></span>
-              </div>
-            </div>
-            <div class="rounded-xl bg-white p-5 shadow-shadow-1">
-              <div class="mb-3 flex items-center justify-between">
-                <h4 class="font-bold text-grey-900">Toyota GR Supra</h4>
-                <i class="fa-regular fa-heart cursor-pointer text-lg text-grey-600" id="addToFav"></i>
-              </div>
-              <p class="font-semibold text-grey-500">Coupe</p>
-              <img src="imgs/car-01.svg" alt="" class="mx-auto my-3 h-28" />
-              <div class="flex items-center justify-between">
-                <div class="flex gap-3">
-                  <span class="font-semibold text-grey-500">
-                    <i class="fa-solid fa-user mr-2 text-primary-500"></i>
-                    2
-                  </span>
-                  <div class="flex items-center">
-                    <img src="imgs/icons8-gearshift-50.png" alt="" class="mr-1 h-5 w-5" />
-                    <span class="font-semibold text-grey-500">Manual</span>
-                  </div>
-                </div>
-                <span class="font-bold text-grey-900">$360 <span class="text-grey-500">/d</span></span>
-              </div>
-            </div>
-            <div class="rounded-xl bg-white p-5 shadow-shadow-1">
-              <div class="mb-3 flex items-center justify-between">
-                <h4 class="font-bold text-grey-900">Porsche 911 Turbo</h4>
-                <i class="fa-regular fa-heart cursor-pointer text-lg text-grey-600" id="addToFav"></i>
-              </div>
-              <p class="font-semibold text-grey-500">Coupe</p>
-              <img src="imgs/car-05.svg" alt="" class="mx-auto my-3 h-28" />
-              <div class="flex items-center justify-between">
-                <div class="flex gap-3">
-                  <span class="font-semibold text-grey-500">
-                    <i class="fa-solid fa-user mr-2 text-primary-500"></i>
-                    2
-                  </span>
-                  <div class="flex items-center">
-                    <img src="imgs/icons8-gearshift-50.png" alt="" class="mr-1 h-5 w-5" />
-                    <span class="font-semibold text-grey-500">Manual</span>
-                  </div>
-                </div>
-                <span class="font-bold text-grey-900">$468 <span class="text-grey-500">/d</span></span>
-              </div>
-            </div>
-            <div class="rounded-xl bg-white p-5 shadow-shadow-1">
-              <div class="mb-3 flex items-center justify-between">
-                <h4 class="font-bold text-grey-900">Porsche Taycan 4S</h4>
-                <i class="fa-regular fa-heart cursor-pointer text-lg text-grey-600" id="addToFav"></i>
-              </div>
-              <p class="font-semibold text-grey-500">Hatchback</p>
-              <img src="imgs/car-06.svg" alt="" class="mx-auto my-3 h-28" />
-              <div class="flex items-center justify-between">
-                <div class="flex gap-3">
-                  <span class="font-semibold text-grey-500">
-                    <i class="fa-solid fa-user mr-2 text-primary-500"></i>
-                    2
-                  </span>
-                  <div class="flex items-center">
-                    <img src="imgs/icons8-gearshift-50.png" alt="" class="mr-1 h-5 w-5" />
-                    <span class="font-semibold text-grey-500">Manual</span>
-                  </div>
-                </div>
-                <span class="font-bold text-grey-900">$424 <span class="text-grey-500">/d</span></span>
-              </div>
-            </div>
-            <div class="rounded-xl bg-white p-5 shadow-shadow-1">
-              <div class="mb-3 flex items-center justify-between">
-                <h4 class="font-bold text-grey-900">Mini Cooper WORKS</h4>
-                <i class="fa-regular fa-heart cursor-pointer text-lg text-grey-600" id="addToFav"></i>
-              </div>
-              <p class="font-semibold text-grey-500">Hatchback</p>
-              <img src="imgs/car-02.svg" alt="" class="mx-auto my-3 h-28" />
-              <div class="flex items-center justify-between">
-                <div class="flex gap-3">
-                  <span class="font-semibold text-grey-500">
-                    <i class="fa-solid fa-user mr-2 text-primary-500"></i>
-                    4
-                  </span>
-                  <div class="flex items-center">
-                    <img src="imgs/icons8-gearshift-50.png" alt="" class="mr-1 h-5 w-5 scale-110" />
-                    <span class="font-semibold text-grey-500">Matic</span>
-                  </div>
-                </div>
-                <span class="font-bold text-grey-900">$360 <span class="text-grey-500">/d</span></span>
-              </div>
-            </div>
-            <div class="rounded-xl bg-white p-5 shadow-shadow-1">
-              <div class="mb-3 flex items-center justify-between">
-                <h4 class="font-bold text-grey-900">Porsche 718 Cayman S</h4>
-                <i class="fa-solid fa-heart cursor-pointer text-lg text-red-300" id="addToFav"></i>
-              </div>
-              <p class="font-semibold text-grey-500">Coupe</p>
-              <img src="imgs/car-03.svg" alt="" class="mx-auto my-3 h-28" />
-              <div class="flex items-center justify-between">
-                <div class="flex gap-3">
-                  <span class="font-semibold text-grey-500">
-                    <i class="fa-solid fa-user mr-2 text-primary-500"></i>
-                    2
-                  </span>
-                  <div class="flex items-center">
-                    <img src="imgs/icons8-gearshift-50.png" alt="" class="mr-1 h-5 w-5" />
-                    <span class="font-semibold text-grey-500">Manual</span>
-                  </div>
-                </div>
-                <span class="font-bold text-grey-900">$400 <span class="text-grey-500">/d</span></span>
-              </div>
-            </div>
-            <div class="rounded-xl bg-white p-5 shadow-shadow-1">
-              <div class="mb-3 flex items-center justify-between">
-                <h4 class="font-bold text-grey-900">Mini Cooper 5-DOOR</h4>
-                <i class="fa-regular fa-heart cursor-pointer text-lg text-grey-600" id="addToFav"></i>
-              </div>
-              <p class="font-semibold text-grey-500">Hatchback</p>
-              <img src="imgs/car-04.svg" alt="" class="mx-auto my-3 h-28 w-52" />
-              <div class="flex items-center justify-between">
-                <div class="flex gap-3">
-                  <span class="font-semibold text-grey-500">
-                    <i class="fa-solid fa-user mr-2 text-primary-500"></i>
-                    4
-                  </span>
-                  <div class="flex items-center">
-                    <img src="imgs/icons8-gearshift-50.png" alt="" class="mr-1 h-5 w-5" />
-                    <span class="font-semibold text-grey-500">Matic</span>
-                  </div>
-                </div>
-                <span class="font-bold text-grey-900">$394 <span class="text-grey-500">/d</span></span>
-              </div>
-            </div>
-            <div class="rounded-xl bg-white p-5 shadow-shadow-1">
-              <div class="mb-3 flex items-center justify-between">
-                <h4 class="font-bold text-grey-900">Toyota GR Supra</h4>
-                <i class="fa-regular fa-heart cursor-pointer text-lg text-grey-600" id="addToFav"></i>
-              </div>
-              <p class="font-semibold text-grey-500">Coupe</p>
-              <img src="imgs/car-01.svg" alt="" class="mx-auto my-3 h-28" />
-              <div class="flex items-center justify-between">
-                <div class="flex gap-3">
-                  <span class="font-semibold text-grey-500">
-                    <i class="fa-solid fa-user mr-2 text-primary-500"></i>
-                    2
-                  </span>
-                  <div class="flex items-center">
-                    <img src="imgs/icons8-gearshift-50.png" alt="" class="mr-1 h-5 w-5" />
-                    <span class="font-semibold text-grey-500">Manual</span>
-                  </div>
-                </div>
-                <span class="font-bold text-grey-900">$360 <span class="text-grey-500">/d</span></span>
-              </div>
-            </div>
-            <div class="rounded-xl bg-white p-5 shadow-shadow-1">
-              <div class="mb-3 flex items-center justify-between">
-                <h4 class="font-bold text-grey-900">Porsche 911 Turbo</h4>
-                <i class="fa-regular fa-heart cursor-pointer text-lg text-grey-600" id="addToFav"></i>
-              </div>
-              <p class="font-semibold text-grey-500">Coupe</p>
-              <img src="imgs/car-05.svg" alt="" class="mx-auto my-3 h-28" />
-              <div class="flex items-center justify-between">
-                <div class="flex gap-3">
-                  <span class="font-semibold text-grey-500">
-                    <i class="fa-solid fa-user mr-2 text-primary-500"></i>
-                    2
-                  </span>
-                  <div class="flex items-center">
-                    <img src="imgs/icons8-gearshift-50.png" alt="" class="mr-1 h-5 w-5" />
-                    <span class="font-semibold text-grey-500">Manual</span>
-                  </div>
-                </div>
-                <span class="font-bold text-grey-900">$468 <span class="text-grey-500">/d</span></span>
-              </div>
-            </div>
-            <div class="rounded-xl bg-white p-5 shadow-shadow-1">
-              <div class="mb-3 flex items-center justify-between">
-                <h4 class="font-bold text-grey-900">Porsche Taycan 4S</h4>
-                <i class="fa-regular fa-heart cursor-pointer text-lg text-grey-600" id="addToFav"></i>
-              </div>
-              <p class="font-semibold text-grey-500">Hatchback</p>
-              <img src="imgs/car-06.svg" alt="" class="mx-auto my-3 h-28" />
-              <div class="flex items-center justify-between">
-                <div class="flex gap-3">
-                  <span class="font-semibold text-grey-500">
-                    <i class="fa-solid fa-user mr-2 text-primary-500"></i>
-                    2
-                  </span>
-                  <div class="flex items-center">
-                    <img src="imgs/icons8-gearshift-50.png" alt="" class="mr-1 h-5 w-5" />
-                    <span class="font-semibold text-grey-500">Manual</span>
-                  </div>
-                </div>
-                <span class="font-bold text-grey-900">$424 <span class="text-grey-500">/d</span></span>
-              </div>
-            </div>
-            <div class="rounded-xl bg-white p-5 shadow-shadow-1">
-              <div class="mb-3 flex items-center justify-between">
-                <h4 class="font-bold text-grey-900">Mini Cooper WORKS</h4>
-                <i class="fa-regular fa-heart cursor-pointer text-lg text-grey-600" id="addToFav"></i>
-              </div>
-              <p class="font-semibold text-grey-500">Hatchback</p>
-              <img src="imgs/car-02.svg" alt="" class="mx-auto my-3 h-28" />
-              <div class="flex items-center justify-between">
-                <div class="flex gap-3">
-                  <span class="font-semibold text-grey-500">
-                    <i class="fa-solid fa-user mr-2 text-primary-500"></i>
-                    4
-                  </span>
-                  <div class="flex items-center">
-                    <img src="imgs/icons8-gearshift-50.png" alt="" class="mr-1 h-5 w-5 scale-110" />
-                    <span class="font-semibold text-grey-500">Matic</span>
-                  </div>
-                </div>
-                <span class="font-bold text-grey-900">$360 <span class="text-grey-500">/d</span></span>
-              </div>
-            </div>
+          <div class="mt-5 grid max-h-[535px] grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-9 overflow-y-scroll pb-1 pr-4" id="search_results">
+            <?php
+            require 'utilities.php';
+            showAllProducts();
+            ?>
+
           </div>
         </div>
       </div>

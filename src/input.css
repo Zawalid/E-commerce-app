@@ -29,3 +29,14 @@
     @apply absolute right-3 top-[62%] -translate-y-1/2 cursor-pointer text-sm text-nobleDark300;
   }
 }
+
+::--webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
