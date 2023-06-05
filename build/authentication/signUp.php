@@ -18,14 +18,14 @@ session_start();
 </head>
 
 <body class="flex min-h-screen flex-col bg-nobleDark700 font-Jakarta md:flex-row">
-  <section class="flex min-h-screen flex-col justify-between gap-12 bg-nobleDark700 p-8 lg:w-4/5">
+  <section class="flex min-h-screen flex-col justify-between gap-12 bg-nobleDark700 p-8 max-xs:p-4 lg:w-4/5">
     <div class="flex items-center justify-between">
       <a href="../main.php">
         <img src="../imgs/Logo.svg" alt="" class="w-7 cursor-pointer" />
       </a>
       <a class="bg-gradient-to-br from-Blue to-Green500 bg-clip-text font-semibold text-transparent" href="login.php">Login</a>
     </div>
-    <div class="px-5 sm:px-16">
+    <div class="px-5 sm:px-16  max-xs:px-2 ">
       <h1 class="mb-12 text-4xl text-white max-md:text-center max-md:text-3xl">
         Connect with your team and bring your creative ideas to life.
       </h1>
@@ -63,13 +63,6 @@ session_start();
           </label>
         </div>
         <div class="my-12 flex items-center justify-between">
-          <div class="flex items-center gap-3 relative">
-            <input type="checkbox" name="rememberMe" id="activeRememberMe" class="absolute h-6 w-6 opacity-0 cursor-pointer">
-            <div class="h-6 w-6  rounded-lg border border-nobleDark500 bg-nobleDark600 text-transparent" id="rememberMe">
-              <i class="fa-solid fa-check"></i>
-            </div>
-            <span class="text-nobleDark200">I agree with Terms and conditions</span>
-          </div>
         </div>
         <input type="submit" name="create" value=" Create free account" href="#" class="cursor-pointer text-l block w-full rounded-2xl bg-stemGreen500 py-3 text-center font-bold transition hover:bg-stemGreen400 focus:bg-stemGreen300">
 

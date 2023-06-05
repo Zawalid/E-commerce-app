@@ -18,11 +18,11 @@ session_start();
 </head>
 
 <body class="flex min-h-screen flex-col bg-nobleDark700 font-Jakarta md:flex-row">
-  <section class="flex min-h-screen flex-col justify-between gap-12 bg-nobleDark700 p-8 lg:w-1/2">
+  <section class="flex min-h-screen flex-col justify-between gap-12 bg-nobleDark700 p-8 max-xs:p-4 lg:w-1/2">
     <a href="../main.php">
       <img src="../imgs/Logo.svg" alt="" class="w-7 cursor-pointer" />
     </a>
-    <div class="px-5 sm:px-16">
+    <div class="px-5 sm:px-16 max-xs:px-2">
       <h1 class="mb-5 text-4xl text-white max-md:text-center max-md:text-3xl">
         Let's get
         <span class="bg-gradient-to-br from-DayBlue via-Blue to-Green500 bg-clip-text font-bold text-transparent">creative!</span>
@@ -51,9 +51,9 @@ session_start();
             <div class="h-6 w-6  rounded-lg border border-nobleDark500 bg-nobleDark600 text-transparent" id="rememberMe">
               <i class="fa-solid fa-check"></i>
             </div>
-            <span class="text-nobleDark200 max-xs:text-xs">Remember me</span>
+            <span class="text-nobleDark200 max-xs:text-sm">Remember me</span>
           </div>
-          <a class="bg-gradient-to-br from-Blue to-Green500 bg-clip-text font-semibold text-transparent max-xs:text-xs" href="#">Forgot password?</a>
+          <a class="bg-gradient-to-br from-Blue to-Green500 bg-clip-text font-semibold text-transparent max-xs:text-sm" href="#">Forgot password?</a>
         </div>
         <input type="submit" name="login" value="Login" class="cursor-pointer text-l w-full rounded-2xl bg-stemGreen500 py-3 font-bold transition hover:bg-stemGreen400 focus:bg-stemGreen300">
       </form>

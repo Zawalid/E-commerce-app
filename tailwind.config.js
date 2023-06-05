@@ -71,6 +71,9 @@ module.exports = {
       screens: {
         xs: "420px",
       },
+      height: {
+        sideBar: "calc(100vh - 40px)",
+      },
     },
   },
   plugins: [],

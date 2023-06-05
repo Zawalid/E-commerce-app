@@ -100,14 +100,13 @@ aside.addEventListener("click", (e) => {
     const filterEl = e.target
       .closest("#checkBox")
       .nextElementSibling.innerText.split(" (")[0];
-
     e.target.closest("#checkBox").nextElementSibling.parentElement.parentElement
       .id == "filterByType"
       ? type.includes(filterEl)
-        ? type.pop(filterEl)
+        ? type.splice(type.indexOf(filterEl), 1)
         : type.push(filterEl)
       : capacity.includes(filterEl)
-      ? capacity.pop(filterEl)
+      ? capacity.splice(capacity.indexOf(filterEl),1)
       : capacity.push(filterEl);
 
     console.log(type);
@@ -119,8 +118,6 @@ aside.addEventListener("click", (e) => {
 document
   .getElementById("search_input")
   .addEventListener("keyup", function (event) {
-    // event.preventDefault(); // Prevent form submission
-
     const searchQuery = this.value;
     const data = {
       query: searchQuery,

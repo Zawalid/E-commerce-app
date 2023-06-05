@@ -2,37 +2,37 @@
 require 'db.php';
 require 'utilities.php';
 
-function noResults()
-{
-    echo "<div class='flex flex-col justify-center items-center h-[530px]'>
-    <img src='./imgs/no result search icon.png' alt='' class='w-64 h-64'>
-    <h2 class='text-grey-900 font-bold mb-3 text-lg'>No Result Found</h2>
-    <h3 class=' font-bold text-grey-500'>
-      We couldn't find any item matching your search
-      </h1>
-  </div>";
-}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $jsonData = file_get_contents('php://input');
     $data = json_decode($jsonData, true);
-    $types = $data['type'];
-    $capacity = $data['capacity'];
+    $carTypes = $data['type'];
+    $carCapacity = $data['capacity'];
     $searchQuery = $data['query'];
-
     if (!empty($searchQuery)) {
-        count($types) > 0 ?
-            $sql = "SELECT * FROM `cars` WHERE `name` LIKE :name AND `type` = :type " :
-            $sql = "SELECT * FROM `cars` WHERE `name` LIKE :name ";
-        echo $sql;
-        $stmt = $conn->prepare($sql);
-        $searchQuery .= '%';
-        if (count($types) > 0) {
-            ($stmt->bindParam(':name', $searchQuery));
-            ($stmt->bindParam(':type', $types[0]));
-        } else {
-            $stmt->bindParam(':name', $searchQuery);
+        // If there is no filter
+        $sql = "SELECT * FROM cars WHERE name LIKE ?";
+        // If there is type  filter
+        if (!empty($carTypes)) {
+            $sql .= " AND type IN (";
+            $placeholders = str_repeat('?, ', count($carTypes) - 1) . '?';
+            $sql .= $placeholders . ")";
         }
-        // $stmt->bindParam(':name', $searchName);
+        // If there is capacity  filter
+        if (!empty($carCapacity) && count($carCapacity) === 1) {
+            $carCapacity[0] === "2 - 5" ?
+                $sql .= " AND capacity >= 2 AND capacity <= 5" :
+                $sql .= " AND capacity >= 6";
+
+            echo $sql;
+        }
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(1, $searchQuery . '%');
+        if (!empty($carTypes)) {
+            foreach ($carTypes as $index => $type) {
+                $stmt->bindValue($index + 2, $type);
+            }
+        }
         $stmt->execute();
         $cars = $stmt->fetchAll(PDO::FETCH_OBJ);
         $count = $stmt->rowCount();
@@ -62,7 +62,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>";
             }
         } else {
-            noResults();
+            echo "<div class='flex flex-col justify-center items-center h-[530px]'>
+            <img src='./imgs/no result search icon.png' alt='' class='w-64 h-64'>
+            <h2 class='text-grey-900 font-bold mb-3 text-lg'>No Result Found</h2>
+            <h3 class=' font-bold text-grey-500'>
+              We couldn't find any item matching your search
+              </h1>
+          </div>";
         }
     } else {
         showAllProducts();

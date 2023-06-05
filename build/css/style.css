@@ -814,6 +814,10 @@ body:has(#sideBar.show)::before {
   height: 1.5rem;
 }
 
+.h-64 {
+  height: 16rem;
+}
+
 .h-7 {
   height: 1.75rem;
 }
@@ -826,20 +830,16 @@ body:has(#sideBar.show)::before {
   height: 1px;
 }
 
+.h-\[530px\] {
+  height: 530px;
+}
+
 .h-screen {
   height: 100vh;
 }
 
-.h-16 {
-  height: 4rem;
-}
-
-.h-64 {
-  height: 16rem;
-}
-
-.h-\[535px\] {
-  height: 535px;
+.h-sideBar {
+  height: calc(100vh - 40px);
 }
 
 .max-h-\[535px\] {
@@ -882,6 +882,10 @@ body:has(#sideBar.show)::before {
   width: 1.5rem;
 }
 
+.w-64 {
+  width: 16rem;
+}
+
 .w-7 {
   width: 1.75rem;
 }
@@ -905,22 +909,6 @@ body:has(#sideBar.show)::before {
 
 .w-full {
   width: 100%;
-}
-
-.w-16 {
-  width: 4rem;
-}
-
-.w-2 {
-  width: 0.5rem;
-}
-
-.w-28 {
-  width: 7rem;
-}
-
-.w-64 {
-  width: 16rem;
 }
 
 .flex-1 {
@@ -1403,11 +1391,6 @@ body:has(#sideBar.show)::before {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-.text-grey-100 {
-  --tw-text-opacity: 1;
-  color: rgb(246 247 249 / var(--tw-text-opacity));
-}
-
 .underline {
   text-decoration-line: underline;
 }
@@ -1709,6 +1692,10 @@ body:has(#sideBar.show)::before {
 }
 
 @media not all and (min-width: 420px) {
+  .max-xs\:h-sideBar {
+    height: calc(100vh - 40px);
+  }
+
   .max-xs\:w-full {
     width: 100%;
   }
@@ -1717,9 +1704,18 @@ body:has(#sideBar.show)::before {
     flex-direction: column;
   }
 
-  .max-xs\:text-xs {
-    font-size: 0.75rem;
-    line-height: 1rem;
+  .max-xs\:p-4 {
+    padding: 1rem;
+  }
+
+  .max-xs\:px-2 {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .max-xs\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
   }
 }
 

@@ -92,7 +92,7 @@ function showProfilePicture()
       </div>
     </div>
   </header>
-  <div class="absolute left-0 top-0 z-10 flex h-screen -translate-y-full flex-col justify-between bg-white px-5 py-7 shadow-shadow-1 transition-transform duration-500" id="sideBar">
+  <div class="absolute left-0 top-0 z-10 flex h-screen max-xs:h-sideBar -translate-y-full flex-col justify-between bg-white px-5 py-7 shadow-shadow-1 transition-transform duration-500" id="sideBar">
     <div class="flex flex-col">
       <a href="#" class="mb-8 text-lg font-semibold text-grey-500 transition-colors duration-500 hover:text-grey-900 hover:before:opacity-100">
         <i class="fa-solid fa-ticket-simple mr-3"></i>
