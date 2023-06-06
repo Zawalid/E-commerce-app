@@ -818,10 +818,6 @@ body:has(#sideBar.show)::before {
   height: 16rem;
 }
 
-.h-7 {
-  height: 1.75rem;
-}
-
 .h-9 {
   height: 2.25rem;
 }
@@ -834,12 +830,12 @@ body:has(#sideBar.show)::before {
   height: 530px;
 }
 
-.h-screen {
-  height: 100vh;
+.h-full {
+  height: 100%;
 }
 
-.h-sideBar {
-  height: calc(100vh - 40px);
+.h-screen {
+  height: 100vh;
 }
 
 .max-h-\[535px\] {
@@ -1102,6 +1098,11 @@ body:has(#sideBar.show)::before {
   background-color: rgb(246 247 249 / var(--tw-bg-opacity));
 }
 
+.bg-grey-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(76 92 107 / var(--tw-bg-opacity));
+}
+
 .bg-light-grey {
   --tw-bg-opacity: 1;
   background-color: rgb(245 246 248 / var(--tw-bg-opacity));
@@ -1219,6 +1220,11 @@ body:has(#sideBar.show)::before {
   padding: 2rem;
 }
 
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -1255,6 +1261,16 @@ body:has(#sideBar.show)::before {
 
 .pb-3 {
   padding-bottom: 0.75rem;
+}
+
+.pe-0 {
+  -webkit-padding-end: 0px;
+          padding-inline-end: 0px;
+}
+
+.pe-8 {
+  -webkit-padding-end: 2rem;
+          padding-inline-end: 2rem;
 }
 
 .pr-4 {
@@ -1463,7 +1479,7 @@ body:has(#sideBar.show)::before {
   transition-duration: 500ms;
 }
 
-::--webkit-scrollbar {
+::-webkit-scrollbar {
   width: 5px;
   height: 5px;
 }
@@ -1625,8 +1641,8 @@ body:has(#sideBar.show)::before {
     position: absolute;
   }
 
-  .max-md\:right-5 {
-    right: 1.25rem;
+  .max-md\:left-5 {
+    left: 1.25rem;
   }
 
   .max-md\:top-24 {
@@ -1637,24 +1653,37 @@ body:has(#sideBar.show)::before {
     z-index: -10;
   }
 
-  .max-md\:block {
-    display: block;
+  .max-md\:grid {
+    display: grid;
   }
 
   .max-md\:hidden {
     display: none;
   }
 
-  .max-md\:h-\[550px\] {
-    height: 550px;
+  .max-md\:h-\[400px\] {
+    height: 400px;
+  }
+
+  .max-md\:h-\[500px\] {
+    height: 500px;
   }
 
   .max-md\:flex-col {
     flex-direction: column;
   }
 
+  .max-md\:overflow-hidden {
+    overflow: hidden;
+  }
+
   .max-md\:overflow-y-scroll {
     overflow-y: scroll;
+  }
+
+  .max-md\:ps-7 {
+    -webkit-padding-start: 1.75rem;
+            padding-inline-start: 1.75rem;
   }
 
   .max-md\:text-center {

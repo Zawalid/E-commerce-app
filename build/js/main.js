@@ -92,8 +92,9 @@ mediaQuery.addEventListener("change", handleMediaQueryChange);
 handleMediaQueryChange(mediaQuery);
 
 //* Get the filters
-let type = [];
+const type = [];
 const capacity = [];
+const customRecommendation = [];
 
 aside.addEventListener("click", (e) => {
   if (e.target.closest("#checkBox")) {
@@ -105,40 +106,51 @@ aside.addEventListener("click", (e) => {
       ? type.includes(filterEl)
         ? type.splice(type.indexOf(filterEl), 1)
         : type.push(filterEl)
-      : capacity.includes(filterEl)
-      ? capacity.splice(capacity.indexOf(filterEl),1)
-      : capacity.push(filterEl);
+      : e.target.closest("#checkBox").nextElementSibling.parentElement
+          .parentElement.id == "filterByCapacity"
+      ? capacity.includes(filterEl)
+        ? capacity.splice(capacity.indexOf(filterEl), 1)
+        : capacity.push(filterEl)
+      : customRecommendation.includes(filterEl)
+      ? customRecommendation.splice(customRecommendation.indexOf(filterEl), 1)
+      : customRecommendation.push(filterEl);
 
     console.log(type);
     console.log(capacity);
+    console.log(customRecommendation);
   }
 });
 
 //* Send the search query to search.php and display results
-document
-  .getElementById("search_input")
-  .addEventListener("keyup", function (event) {
-    const searchQuery = this.value;
-    const data = {
-      query: searchQuery,
-      type,
-      capacity,
-    };
-    // Perform AJAX request
-    fetch("search.php", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded",
-      },
-      body: JSON.stringify(data),
+
+function search(event) {
+  let searchQuery = this.value;
+  !searchQuery ? (searchQuery = "") : this.value;
+  console.log(searchQuery);
+  const data = {
+    query: searchQuery,
+    type,
+    capacity,
+    customRecommendation,
+  };
+  // Perform AJAX request
+  fetch("search.php", {
+    method: "POST",
+    headers: {
+      "Content-type": "application/x-www-form-urlencoded",
+    },
+    body: JSON.stringify(data),
+  })
+    .then(function (response) {
+      return response.text();
     })
-      .then(function (response) {
-        return response.text();
-      })
-      .then(function (data) {
-        document.getElementById("search_results").innerHTML = data;
-      })
-      .catch(function (error) {
-        console.log("An error occurred while processing the search.", error);
-      });
-  });
+    .then(function (data) {
+      document.getElementById("search_results").innerHTML = data;
+      document.getElementById("search_results").scrollTop = 0;
+    })
+    .catch(function (error) {
+      console.log("An error occurred while processing the search.", error);
+    });
+}
+document.getElementById("search_input").addEventListener("keyup", search);
+document.getElementById("search_button").addEventListener("click", search);

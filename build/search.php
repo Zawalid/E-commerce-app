@@ -8,37 +8,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = json_decode($jsonData, true);
     $carTypes = $data['type'];
     $carCapacity = $data['capacity'];
-    $searchQuery = $data['query'];
-    if (!empty($searchQuery)) {
-        // If there is no filter
-        $sql = "SELECT * FROM cars WHERE name LIKE ?";
-        // If there is type  filter
-        if (!empty($carTypes)) {
-            $sql .= " AND type IN (";
-            $placeholders = str_repeat('?, ', count($carTypes) - 1) . '?';
-            $sql .= $placeholders . ")";
+    $customRecommendation =  $data['customRecommendation'];
+    $searchQuery = ltrim($data['query']);
+    // If there is no filter
+    $sql = "SELECT * FROM cars WHERE name LIKE ?";
+    // If there is type  filter
+    if (!empty($carTypes)) {
+        $sql .= " AND type IN (";
+        $placeholders = str_repeat('?, ', count($carTypes) - 1) . '?';
+        $sql .= $placeholders . ")";
+    }
+    // If there is capacity  filter
+    if (!empty($carCapacity) && count($carCapacity) === 1) {
+        $carCapacity[0] === "2 - 5" ?
+            $sql .= " AND capacity >= 2 AND capacity <= 5" :
+            $sql .= " AND capacity >= 6";
+    }
+    // If there is custom recommendation  filter
+    if (!empty($customRecommendation)) {
+        if (in_array("70 - 100%", $customRecommendation)) {
+            $sql .= " AND customRecommendation >= 70";
         }
-        // If there is capacity  filter
-        if (!empty($carCapacity) && count($carCapacity) === 1) {
-            $carCapacity[0] === "2 - 5" ?
-                $sql .= " AND capacity >= 2 AND capacity <= 5" :
-                $sql .= " AND capacity >= 6";
-
-            echo $sql;
+        if (
+            in_array("40 - 69%", $customRecommendation)
+        ) {
+            $sql .= " AND customRecommendation >= 40 AND customRecommendation <= 69";
         }
-        $stmt = $conn->prepare($sql);
-        $stmt->bindValue(1, $searchQuery . '%');
-        if (!empty($carTypes)) {
-            foreach ($carTypes as $index => $type) {
-                $stmt->bindValue($index + 2, $type);
-            }
+        if (
+            in_array("0 - 39%", $customRecommendation)
+        ) {
+            $sql .= " AND customRecommendation <= 39";
         }
-        $stmt->execute();
-        $cars = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $count = $stmt->rowCount();
-        if ($count > 0) {
-            foreach ($cars as $car) {
-                echo " 
+        echo $sql;
+    }
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(1, $searchQuery . '%');
+    if (!empty($carTypes)) {
+        foreach ($carTypes as $index => $type) {
+            $stmt->bindValue($index + 2, $type);
+        }
+    }
+    $stmt->execute();
+    $cars = $stmt->fetchAll(PDO::FETCH_OBJ);
+    $count = $stmt->rowCount();
+    if ($count > 0) {
+        foreach ($cars as $car) {
+            echo " 
 <div class='rounded-xl bg-white p-5 shadow-shadow-1'>
         <div class='mb-3 flex items-center justify-between'>
         <h4 class='font-bold text-grey-900'>$car->name</h4>
@@ -46,8 +61,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <p class='font-semibold text-grey-500'>$car->type</p>
     <img src='$car->image' alt='' class='mx-auto my-3 h-28' />
-    <div class='flex items-center justify-between'>
-        <div class='flex gap-3'>
+    <div class='flex items-center justify-between gap-3 mb-4'>
+        
             <span class='font-semibold text-grey-500'>
                 <i class='fa-solid fa-user mr-2 text-primary-500'></i>
                 $car->capacity
@@ -56,21 +71,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <img src='imgs/icons8-gearshift-50.png' alt='' class='mr-1 h-5 w-5' />
                 <span class='font-semibold text-grey-500'>$car->gearShift</span>
             </div>
-        </div>
-        <span class='font-bold text-grey-900'>$$car->price <span class='text-grey-500'>/d</span></span>
-    </div>
+            </div>
+            <span class='font-bold text-grey-900'>$$car->price</span>
+            <span class='font-bold text-grey-900'>$$car->customRecommendation</span>
 </div>";
-            }
-        } else {
-            echo "<div class='flex flex-col justify-center items-center h-[530px]'>
+        }
+    } else {
+        echo "<div class='flex flex-col justify-center items-center h-[530px]'>
             <img src='./imgs/no result search icon.png' alt='' class='w-64 h-64'>
             <h2 class='text-grey-900 font-bold mb-3 text-lg'>No Result Found</h2>
             <h3 class=' font-bold text-grey-500'>
               We couldn't find any item matching your search
               </h1>
           </div>";
-        }
-    } else {
-        showAllProducts();
     }
 }

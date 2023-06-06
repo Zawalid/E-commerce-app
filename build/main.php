@@ -1,5 +1,6 @@
 <?php
 session_start();
+require 'utilities.php';
 function showProfilePicture()
 {
   if (isset($_SESSION['userName'])) {
@@ -199,114 +200,124 @@ function showProfilePicture()
     </section>
     <section class="bg-light-grey">
       <div class="container relative flex items-start gap-9 py-10">
-        <aside class="w-fit rounded-xl border-2 border-border-color bg-white p-8 max-md:absolute max-md:right-5 max-md:top-24 max-md:-z-10 max-md:h-[550px] max-md:overflow-y-scroll max-md:opacity-0 max-md:transition-all max-md:duration-500">
+        <aside class="w-fit rounded-xl border-2 border-border-color bg-white p-8 pe-0 max-md:absolute max-md:left-5 max-md:top-24 max-md:-z-10  max-md:h-[500px] max-md:overflow-hidden  max-md:opacity-0 max-md:transition-all max-md:duration-500">
           <h2 class="border-b border-border-color pb-3 font-semibold text-grey-900">
             Filter By
           </h2>
-          <div class="mt-5">
-            <p class="mb-4 text-sm font-semibold text-grey-700">Car type</p>
-            <ul id="filterByType">
-              <li class="mb-3 flex items-center gap-3">
-                <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
-                  <i class="fa-solid fa-check text-sm"></i>
-                </div>
-                <label class="font-semibold text-grey-500">Coupe <span class="ml-2" id="quantity">(24)</span>
-                </label>
-              </li>
-              <li class="mb-3 flex items-center gap-3">
-                <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
-                  <i class="fa-solid fa-check text-sm"></i>
-                </div>
-                <label class="font-semibold text-grey-500">Hatchback <span class="ml-2" id="quantity">(12)</span>
-                </label>
-              </li>
-              <li class="mb-3 flex items-center gap-3">
-                <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
-                  <i class="fa-solid fa-check text-sm"></i>
-                </div>
-                <label class="font-semibold text-grey-500">Sedan <span class="ml-2" id="quantity">(16)</span>
-                </label>
-              </li>
-              <li class="mb-3 flex items-center gap-3">
-                <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
-                  <i class="fa-solid fa-check text-sm"></i>
-                </div>
-                <label class="font-semibold text-grey-500">MPV <span class="ml-2" id="quantity">(28)</span>
-                </label>
-              </li>
-              <li class="flex items-center gap-3">
-                <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
-                  <i class="fa-solid fa-check text-sm"></i>
-                </div>
-                <label class="font-semibold text-grey-500">SUV <span class="ml-2" id="quantity">(20)</span>
-                </label>
-              </li>
-            </ul>
+          <div class="max-md:h-[400px] pe-8 max-md:overflow-y-scroll">
+
+            <div class="mt-5">
+              <p class="mb-4 text-sm font-semibold text-grey-700">Car type</p>
+              <ul id="filterByType">
+                <li class="mb-3 flex items-center gap-3">
+                  <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
+                    <i class="fa-solid fa-check text-sm"></i>
+                  </div>
+                  <label class="font-semibold text-grey-500">Sports Car <span class="ml-2" id="quantity">(<?= countProductsByType("Sports Car") ?>)</span>
+                  </label>
+                </li>
+                <li class="mb-3 flex items-center gap-3">
+                  <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
+                    <i class="fa-solid fa-check text-sm"></i>
+                  </div>
+                  <label class="font-semibold text-grey-500">Hatchback <span class="ml-2" id="quantity">(<?= countProductsByType("Hatchback") ?>)</span>
+                  </label>
+                </li>
+                <li class="mb-3 flex items-center gap-3">
+                  <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
+                    <i class="fa-solid fa-check text-sm"></i>
+                  </div>
+                  <label class="font-semibold text-grey-500">Sedan <span class="ml-2" id="quantity">(<?= countProductsByType("Sedan") ?>)</span>
+                  </label>
+                </li>
+                <li class="mb-3 flex items-center gap-3">
+                  <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
+                    <i class="fa-solid fa-check text-sm"></i>
+                  </div>
+                  <label class="font-semibold text-grey-500">Truck <span class="ml-2" id="quantity">(<?= countProductsByType("Truck") ?>)</span>
+                  </label>
+                </li>
+                <li class="mb-3 flex items-center gap-3">
+                  <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
+                    <i class="fa-solid fa-check text-sm"></i>
+                  </div>
+                  <label class="font-semibold text-grey-500">SUV <span class="ml-2" id="quantity">(<?= countProductsByType("SUV") ?>)</span>
+                  </label>
+                </li>
+                <li class="flex items-center gap-3">
+                  <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
+                    <i class="fa-solid fa-check text-sm"></i>
+                  </div>
+                  <label class="font-semibold text-grey-500">Electric <span class="ml-2" id="quantity">(<?= countProductsByType("Electric") ?>)</span>
+                  </label>
+                </li>
+              </ul>
+            </div>
+            <div class="mt-5">
+              <p class="mb-4 text-sm font-semibold text-grey-700">Capacity</p>
+              <ul id="filterByCapacity">
+                <li class="mb-3 flex items-center gap-3">
+                  <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
+                    <i class="fa-solid fa-check text-sm"></i>
+                  </div>
+                  <label class="font-semibold text-grey-500">2 - 5 <span class="ml-2" id="quantity">(<?= capacityGt2AndLs5() ?>)</span>
+                  </label>
+                </li>
+                <li class="mb-3 flex items-center gap-3">
+                  <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
+                    <i class="fa-solid fa-check text-sm"></i>
+                  </div>
+                  <label class="font-semibold text-grey-500">6 or more <span class="ml-2" id="quantity">(<?= capacityGt6() ?>)</span>
+                  </label>
+                </li>
+              </ul>
+            </div>
+            <div class="mt-5">
+              <p class="mb-4 text-sm font-semibold text-grey-700">
+                Customer Recommendation
+              </p>
+              <ul id="filterByRecommendation">
+                <li class="mb-3 flex items-center gap-3">
+                  <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
+                    <i class="fa-solid fa-check text-sm"></i>
+                  </div>
+                  <label class="font-semibold text-grey-500">70 - 100% <span class="ml-2" id="quantity">(72)</span>
+                  </label>
+                </li>
+                <li class="mb-3 flex items-center gap-3">
+                  <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
+                    <i class="fa-solid fa-check text-sm"></i>
+                  </div>
+                  <label class="font-semibold text-grey-500">40 - 69% <span class="ml-2" id="quantity">(41)</span>
+                  </label>
+                </li>
+                <li class="mb-3 flex items-center gap-3">
+                  <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
+                    <i class="fa-solid fa-check text-sm"></i>
+                  </div>
+                  <label class="font-semibold text-grey-500">0 - 39% <span class="ml-2" id="quantity">(28)</span>
+                  </label>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div class="mt-5">
-            <p class="mb-4 text-sm font-semibold text-grey-700">Capacity</p>
-            <ul id="filterByCapacity">
-              <li class="mb-3 flex items-center gap-3">
-                <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
-                  <i class="fa-solid fa-check text-sm"></i>
-                </div>
-                <label class="font-semibold text-grey-500">2 - 5 <span class="ml-2" id="quantity">(100)</span>
-                </label>
-              </li>
-              <li class="mb-3 flex items-center gap-3">
-                <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
-                  <i class="fa-solid fa-check text-sm"></i>
-                </div>
-                <label class="font-semibold text-grey-500">6 or more <span class="ml-2" id="quantity">(4)</span>
-                </label>
-              </li>
-            </ul>
-          </div>
-          <div class="mt-5">
-            <p class="mb-4 text-sm font-semibold text-grey-700">
-              Customer Recommendation
-            </p>
-            <ul id="filterByRecommendation">
-              <li class="mb-3 flex items-center gap-3">
-                <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
-                  <i class="fa-solid fa-check text-sm"></i>
-                </div>
-                <label class="font-semibold text-grey-500">70 - 100% <span class="ml-2" id="quantity">(72)</span>
-                </label>
-              </li>
-              <li class="mb-3 flex items-center gap-3">
-                <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
-                  <i class="fa-solid fa-check text-sm"></i>
-                </div>
-                <label class="font-semibold text-grey-500">40 - 69%<span class="ml-2" id="quantity">(41)</span>
-                </label>
-              </li>
-              <li class="mb-3 flex items-center gap-3">
-                <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
-                  <i class="fa-solid fa-check text-sm"></i>
-                </div>
-                <label class="font-semibold text-grey-500">0 - 39% <span class="ml-2" id="quantity">(28)</span>
-                </label>
-              </li>
-            </ul>
-          </div>
+
         </aside>
         <div class="flex-1">
-          <div class="flex items-center justify-between gap-12">
-            <div class="flex flex-1 items-center gap-5 rounded-[35px] bg-white px-5 py-3">
-              <i class="fa-solid fa-search text-lg text-grey-600"></i>
-              <input type="text" name="search" id="search_input" placeholder="Search Cars" class="w-full flex-1 border-none font-semibold text-grey-700 placeholder-grey-700 placeholder:text-sm placeholder:font-bold focus:outline-none" />
-              <!-- <form method="post" id="search_form">
-              </form> -->
+          <div>
+            <div class=" relative rounded-[35px] overflow-hidden bg-white px-5 py-3">
+              <div class="absolute top-0 left-0 bg-grey-700  place-content-center h-full px-3  cursor-pointer hidden max-md:grid">
+                <img src="imgs/icons8-filter-96.png" alt="" class=" h-5 w-5 cursor-pointer " id="filterBtn" />
+              </div>
+              <input type="text" name="search" id="search_input" placeholder="Search Cars" class="max-md:ps-7 w-full flex-1 border-none font-semibold text-grey-700 placeholder-grey-700 placeholder:text-sm placeholder:font-bold focus:outline-none" />
+              <div class="absolute top-0 right-0 bg-grey-700 grid place-content-center h-full px-3  cursor-pointer" id="search_button">
+                <i class="fa-solid fa-search text-lg text-white"></i>
+              </div>
+
             </div>
-            <img src="imgs/icons8-filter-90.png" alt="" class="hidden h-7 w-7 cursor-pointer max-md:block" id="filterBtn" />
           </div>
           <div class="mt-5 grid max-h-[535px] grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-9 overflow-y-scroll pb-1 pr-4" id="search_results">
-            <?php
-            require 'utilities.php';
-            showAllProducts();
-            ?>
-
+            <?= showAllProducts() ?>
           </div>
         </div>
       </div>
