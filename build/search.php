@@ -25,24 +25,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql .= " AND capacity >= 6";
     }
     // If there is custom recommendation  filter
+    $conditions = [];
+    foreach ($customRecommendation as $option) {
+        switch ($option) {
+            case "70 - 100%":
+                $conditions[] = "customRecommendation >= 70";
+                break;
+            case "40 - 69%":
+                $conditions[] = "customRecommendation >= 40 AND customRecommendation <= 69";
+                break;
+            case "0 - 39%":
+                $conditions[] = "customRecommendation <= 39";
+                break;
+        }
+    }
     if (!empty($customRecommendation)) {
-        if (in_array("70 - 100%", $customRecommendation)) {
-            $sql .= " AND customRecommendation >= 70";
+        if (count($conditions) === 1) {
+            $sql .= " AND " . $conditions[0];
+        } else {
+            $sql .= " AND (" . implode(" OR ", $conditions) . ")";
         }
-        if (
-            in_array("40 - 69%", $customRecommendation)
-        ) {
-            $sql .= " AND customRecommendation >= 40 AND customRecommendation <= 69";
-        }
-        if (
-            in_array("0 - 39%", $customRecommendation)
-        ) {
-            $sql .= " AND customRecommendation <= 39";
-        }
-        echo $sql;
     }
     $stmt = $conn->prepare($sql);
-    $stmt->bindValue(1, $searchQuery . '%');
+    $stmt->bindValue(1, '%' . $searchQuery . '%');
     if (!empty($carTypes)) {
         foreach ($carTypes as $index => $type) {
             $stmt->bindValue($index + 2, $type);
@@ -57,7 +62,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class='rounded-xl bg-white p-5 shadow-shadow-1'>
         <div class='mb-3 flex items-center justify-between'>
         <h4 class='font-bold text-grey-900'>$car->name</h4>
-        <i class='fa-regular fa-heart cursor-pointer text-lg text-grey-600' id='addToFav'></i>
+        <div class='grid place-content-center w-8 h-8 rounded-full bg-grey-500 p1 transition-colors duration-500'>
+        <i class='fa-solid fa-cart-plus cursor-pointer text-lg text-white' id='addToCart'></i>
+        </div>
     </div>
     <p class='font-semibold text-grey-500'>$car->type</p>
     <img src='$car->image' alt='' class='mx-auto my-3 h-28' />
@@ -68,12 +75,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $car->capacity
             </span>
             <div class='flex items-center'>
-                <img src='imgs/icons8-gearshift-50.png' alt='' class='mr-1 h-5 w-5' />
+                <img src='imgs/icons8-gear-stick-50.png' alt='' class='mr-1 h-5 w-5' />
                 <span class='font-semibold text-grey-500'>$car->gearShift</span>
             </div>
             </div>
+            <div class='flex items-center justify-between'>
             <span class='font-bold text-grey-900'>$$car->price</span>
-            <span class='font-bold text-grey-900'>$$car->customRecommendation</span>
+            <span class='font-bold text-grey-600'><i class='fa-solid fa-thumbs-up me-2 text-primary-500'></i> $car->customRecommendation </span>
+            </div>
 </div>";
         }
     } else {

@@ -15,21 +15,31 @@ checkBoxes.forEach((checkBox) => {
   });
 });
 
-//* Heart icons
-const addToFavorites = document.querySelectorAll("#addToFav");
-addToFavorites.forEach((heart) => {
-  heart.addEventListener("click", () => {
-    if (checkIfUserLoggedIn()) {
-      heart.classList.contains("fa-regular")
-        ? (heart.className =
-            "fa-solid fa-heart  cursor-pointer text-lg text-red-300")
-        : (heart.className =
-            "fa-regular fa-heart  cursor-pointer text-lg text-grey-600");
-    } else {
-      window.location.href = "authentication/login.php";
-    }
+//* Add to cart
+const addToCart = (buttons) => {
+  buttons.forEach((cart) => {
+    cart.addEventListener("click", () => {
+      if (checkIfUserLoggedIn()) {
+        cart.classList.contains("fa-cart-plus")
+          ? (cart.className =
+              "fa-solid fa-check cursor-pointer text-lg text-white")(
+              cart.parentElement.classList.remove("bg-grey-500"),
+              cart.parentElement.classList.add("bg-green-500"),
+              document.getElementById("cart_toggler").dataset.cart++
+            )
+          : (cart.className =
+              "fa-solid fa-cart-plus  cursor-pointer text-lg text-white")(
+              cart.parentElement.classList.remove("bg-green-500"),
+              cart.parentElement.classList.add("bg-grey-500"),
+              document.getElementById("cart_toggler").dataset.cart--
+            );
+      } else {
+        window.location.href = "authentication/login.php";
+      }
+    });
   });
-});
+};
+addToCart(document.querySelectorAll("#addToCart"));
 
 //* Show and hide aside and dropdown and sidebar
 const aside = document.querySelector("aside");
@@ -123,10 +133,8 @@ aside.addEventListener("click", (e) => {
 
 //* Send the search query to search.php and display results
 
-function search(event) {
-  let searchQuery = this.value;
-  !searchQuery ? (searchQuery = "") : this.value;
-  console.log(searchQuery);
+function search() {
+  let searchQuery = document.getElementById("search_input").value;
   const data = {
     query: searchQuery,
     type,
@@ -147,6 +155,7 @@ function search(event) {
     .then(function (data) {
       document.getElementById("search_results").innerHTML = data;
       document.getElementById("search_results").scrollTop = 0;
+      addToCart(document.querySelectorAll("#addToCart"));
     })
     .catch(function (error) {
       console.log("An error occurred while processing the search.", error);

@@ -82,7 +82,7 @@ session_start();
       <a class="bg-gradient-to-br from-Blue to-Green500 bg-clip-text font-semibold text-transparent" href="signUp.php">Sign up</a>
     </div>
   </section>
-  <section class="w-1/2 rounded-bl-[30px] rounded-tl-[30px] bg-abstract-1 bg-cover bg-center transition-all duration-1000 max-md:hidden" id="illustration"></section>
+  <section class="w-1/2 rounded-bl-[30px] rounded-tl-[30px] bg-abstract-4 bg-cover bg-center transition-all duration-1000 max-md:hidden" id="illustration"></section>
 </body>
 
 </html>

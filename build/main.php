@@ -4,7 +4,7 @@ require 'utilities.php';
 function showProfilePicture()
 {
   if (isset($_SESSION['userName'])) {
-    return '<img src="imgs/Person-4.svg" alt="" class="h-9 w-9 rounded-full" />';
+    return '<img src="imgs/Person-3.svg" alt="" class="h-9 w-9 rounded-full" />';
   } else {
     return '<img src="imgs/no profile.png" alt="" class="h-9 w-9 rounded-full" />';
   }
@@ -52,10 +52,10 @@ function showProfilePicture()
                                                                       } ?></h2>
               </div>
               <ul>
-                <li class="cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100">
+                <li class="cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100  ">
                   <a href="authentication/<?= (isset($_SESSION['userName'])) ? 'login' : "login" ?>.php" class="flex items-center gap-3">
-                    <i class="fa-regular fa-heart cursor-pointer text-lg text-grey-500"></i>
-                    Favorites
+                    <i class="fa-solid fa-cart-shopping relative cursor-pointer text-lg text-grey-500 after:w-4 after:h-4 after:rounded-full after:bg-red-300 after:absolute after:content-[attr(data-cart)] after:text-white after:text-[0.5rem] after:grid after:place-content-center after:-top-2 after:-right-2" data-cart="0" id="cart_toggler"></i>
+                    Cart
                   </a>
                 </li>
                 <li class="cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100">
@@ -199,7 +199,7 @@ function showProfilePicture()
       </div>
     </section>
     <section class="bg-light-grey">
-      <div class="container relative flex items-start gap-9 py-10">
+      <div class="container relative flex items-start gap-9 pt-10 py-8">
         <aside class="w-fit rounded-xl border-2 border-border-color bg-white p-8 pe-0 max-md:absolute max-md:left-5 max-md:top-24 max-md:-z-10  max-md:h-[500px] max-md:overflow-hidden  max-md:opacity-0 max-md:transition-all max-md:duration-500">
           <h2 class="border-b border-border-color pb-3 font-semibold text-grey-900">
             Filter By
@@ -281,21 +281,21 @@ function showProfilePicture()
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">70 - 100% <span class="ml-2" id="quantity">(72)</span>
+                  <label class="font-semibold text-grey-500">70 - 100% <span class="ml-2" id="quantity">(<?= customRecGt70() ?>)</span>
                   </label>
                 </li>
                 <li class="mb-3 flex items-center gap-3">
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">40 - 69% <span class="ml-2" id="quantity">(41)</span>
+                  <label class="font-semibold text-grey-500">40 - 69% <span class="ml-2" id="quantity">(<?= customRecBt40And70() ?>)</span>
                   </label>
                 </li>
                 <li class="mb-3 flex items-center gap-3">
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">0 - 39% <span class="ml-2" id="quantity">(28)</span>
+                  <label class="font-semibold text-grey-500">0 - 39% <span class="ml-2" id="quantity">(<?= customRecLt39() ?>)</span>
                   </label>
                 </li>
               </ul>
@@ -306,17 +306,17 @@ function showProfilePicture()
         <div class="flex-1">
           <div>
             <div class=" relative rounded-[35px] overflow-hidden bg-white px-5 py-3">
-              <div class="absolute top-0 left-0 bg-grey-700  place-content-center h-full px-3  cursor-pointer hidden max-md:grid">
+              <div class="absolute top-0 left-0 bg-grey-700  place-content-center h-full ps-3 pe-2  cursor-pointer hover:bg-grey-600 transition-colors  hidden max-md:grid">
                 <img src="imgs/icons8-filter-96.png" alt="" class=" h-5 w-5 cursor-pointer " id="filterBtn" />
               </div>
               <input type="text" name="search" id="search_input" placeholder="Search Cars" class="max-md:ps-7 w-full flex-1 border-none font-semibold text-grey-700 placeholder-grey-700 placeholder:text-sm placeholder:font-bold focus:outline-none" />
-              <div class="absolute top-0 right-0 bg-grey-700 grid place-content-center h-full px-3  cursor-pointer" id="search_button">
+              <div class="absolute top-0 right-0 bg-grey-700 grid place-content-center h-full pe-3 ps-2  cursor-pointer hover:bg-grey-600 transition-colors " id="search_button">
                 <i class="fa-solid fa-search text-lg text-white"></i>
               </div>
 
             </div>
           </div>
-          <div class="mt-5 grid max-h-[535px] grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-9 overflow-y-scroll pb-1 pr-4" id="search_results">
+          <div class="mt-5 grid max-h-[575px] max-md:max-h-[650px] grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-9 overflow-y-scroll pb-1 pr-4" id="search_results">
             <?= showAllProducts() ?>
           </div>
         </div>

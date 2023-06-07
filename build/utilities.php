@@ -51,7 +51,9 @@ function showAllProducts()
         echo " <div class='rounded-xl bg-white p-5 shadow-shadow-1'>
         <div class='mb-3 flex items-center justify-between'>
         <h4 class='font-bold text-grey-900'>$car->name</h4>
-        <i class='fa-regular fa-heart cursor-pointer text-lg text-grey-600' id='addToFav'></i>
+        <div class='grid place-content-center w-8 h-8 rounded-full bg-grey-500 p1 transition-colors duration-500'>
+        <i class='fa-solid fa-cart-plus cursor-pointer text-lg text-white' id='addToCart'></i>
+        </div>
     </div>
     <p class='font-semibold text-grey-500'>$car->type</p>
     <img src='$car->image' alt='' class='mx-auto my-3 h-28' />
@@ -61,12 +63,14 @@ function showAllProducts()
                 $car->capacity
             </span>
             <div class='flex items-center'>
-                <img src='imgs/icons8-gearshift-50.png' alt='' class='mr-1 h-5 w-5' />
+                <img src='imgs/icons8-gear-stick-50.png' alt='' class='mr-1 h-5 w-5' />
                 <span class='font-semibold text-grey-500'>$car->gearShift</span>
             </div>
             </div>
-            <span class='font-bold text-grey-900'>$$car->price</span>
-            <span class='font-bold text-grey-900'>$$car->customRecommendation</span>
+            <div class='flex items-center justify-between'>
+            <span class='font-bold text-grey-700'>$$car->price</span>
+            <span class='font-bold text-grey-600'><i class='fa-solid fa-thumbs-up me-2 text-primary-500'></i> $car->customRecommendation </span>
+            </div>
 
 </div>";
     }
@@ -94,6 +98,33 @@ function capacityGt2AndLs5()
 {
     require 'db.php';
     $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE capacity >= 2 AND capacity <= 5 ");
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $count = $result['total'];
+    echo  $count;
+}
+function customRecGt70()
+{
+    require 'db.php';
+    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE customRecommendation >= 70 ");
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $count = $result['total'];
+    echo  $count;
+}
+function customRecBt40And70()
+{
+    require 'db.php';
+    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE customRecommendation >= 40 AND customRecommendation <= 69 ");
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $count = $result['total'];
+    echo  $count;
+}
+function customRecLt39()
+{
+    require 'db.php';
+    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE customRecommendation <= 39 ");
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];

@@ -35,8 +35,8 @@
   height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #ffff;
 }
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  @apply bg-grey-700;
 }
