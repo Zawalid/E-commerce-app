@@ -15,32 +15,6 @@ checkBoxes.forEach((checkBox) => {
   });
 });
 
-//* Add to cart
-const addToCart = (buttons) => {
-  buttons.forEach((cart) => {
-    cart.addEventListener("click", () => {
-      if (checkIfUserLoggedIn()) {
-        cart.classList.contains("fa-cart-plus")
-          ? (cart.className =
-              "fa-solid fa-check cursor-pointer text-lg text-white")(
-              cart.parentElement.classList.remove("bg-grey-500"),
-              cart.parentElement.classList.add("bg-green-500"),
-              document.getElementById("cart_toggler").dataset.cart++
-            )
-          : (cart.className =
-              "fa-solid fa-cart-plus  cursor-pointer text-lg text-white")(
-              cart.parentElement.classList.remove("bg-green-500"),
-              cart.parentElement.classList.add("bg-grey-500"),
-              document.getElementById("cart_toggler").dataset.cart--
-            );
-      } else {
-        window.location.href = "authentication/login.php";
-      }
-    });
-  });
-};
-addToCart(document.querySelectorAll("#addToCart"));
-
 //* Show and hide aside and dropdown and sidebar
 const aside = document.querySelector("aside");
 const filterBtn = document.getElementById("filterBtn");
@@ -141,11 +115,11 @@ function search() {
     capacity,
     customRecommendation,
   };
-  // Perform AJAX request
+  // Send search query using AJAX
   fetch("search.php", {
     method: "POST",
     headers: {
-      "Content-type": "application/x-www-form-urlencoded",
+      "Content-type": "application/json",
     },
     body: JSON.stringify(data),
   })
@@ -163,3 +137,54 @@ function search() {
 }
 document.getElementById("search_input").addEventListener("keyup", search);
 document.getElementById("search_button").addEventListener("click", search);
+
+//* Add to cart
+const addToCart = (buttons) => {
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      if (checkIfUserLoggedIn()) {
+        const carName = button.parentElement.previousElementSibling.textContent;
+        // Send search query using AJAX
+        fetch("addToCart.php", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({ carName }),
+        })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            console.log(data);
+          })
+          .catch(function (error) {
+            console.log(
+              "An error occurred while processing the search.",
+              error
+            );
+          });
+        // Change the icon
+
+        try {
+          button.classList.contains("fa-cart-plus")
+            ? (button.className =
+                "fa-solid fa-check cursor-pointer text-lg text-white")(
+                button.parentElement.classList.remove("bg-grey-500"),
+                button.parentElement.classList.add("bg-green-500"),
+                document.getElementById("cart_toggler").dataset.cart++
+              )
+            : (button.className =
+                "fa-solid fa-cart-plus  cursor-pointer text-lg text-white")(
+                button.parentElement.classList.remove("bg-green-500"),
+                button.parentElement.classList.add("bg-grey-500"),
+                document.getElementById("cart_toggler").dataset.cart--
+              );
+        } catch (error) {}
+      } else {
+        window.location.href = "authentication/login.php";
+      }
+    });
+  });
+};
+addToCart(document.querySelectorAll("#addToCart"));

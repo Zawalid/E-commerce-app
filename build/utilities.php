@@ -30,16 +30,13 @@ function rememberedUser()
     $sql = "SELECT * FROM `users` WHERE `Token` = :token ";
     $stmt = $conn->prepare($sql);
     $stmt->execute([':token' => $token]);
-    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $stmt->rowCount();
     if ($count === 1) {
-        foreach ($data as $key) {
-            $username =  ($key['First Name']);
-        }
+        $username =  ($data['First Name']);
         return $username;
     }
 }
-
 function showAllProducts()
 {
     require 'db.php';
@@ -50,15 +47,15 @@ function showAllProducts()
     foreach ($cars as $car) {
         echo " <div class='rounded-xl bg-white p-5 shadow-shadow-1'>
         <div class='mb-3 flex items-center justify-between'>
-        <h4 class='font-bold text-grey-900'>$car->name</h4>
+        <h4 class='font-bold text-grey-900 '>$car->name</h4>
         <div class='grid place-content-center w-8 h-8 rounded-full bg-grey-500 p1 transition-colors duration-500'>
         <i class='fa-solid fa-cart-plus cursor-pointer text-lg text-white' id='addToCart'></i>
         </div>
     </div>
-    <p class='font-semibold text-grey-500'>$car->type</p>
+    <p class='font-semibold text-grey-500 '>$car->type</p>
     <img src='$car->image' alt='' class='mx-auto my-3 h-28' />
     <div class='flex items-center justify-between gap-3 mb-4'>
-            <span class='font-semibold text-grey-500'>
+            <span class='font-semibold text-grey-500 '>
                 <i class='fa-solid fa-user mr-2 text-primary-500'></i>
                 $car->capacity
             </span>
