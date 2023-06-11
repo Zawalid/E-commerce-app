@@ -34,3 +34,6 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         showError("Passwords do not match", "signUp.php");
     }
 }
+
+// CLose the connection
+$conn = null;

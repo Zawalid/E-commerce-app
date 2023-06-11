@@ -16,6 +16,12 @@
   #dropDown.show {
     @apply z-10 h-[309px] border-2 border-border-color pt-4;
   }
+  #cart.show {
+    @apply z-10 translate-x-[-80%];
+  }
+  #dropDown:has(#cart.show) {
+    @apply overflow-visible;
+  }
   #sideBar.show {
     @apply translate-y-0;
   }
@@ -32,11 +38,17 @@
 
 ::-webkit-scrollbar {
   width: 5px;
-  height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #ffff;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   @apply bg-grey-700;
+}
+
+#cart_products::-webkit-scrollbar {
+  width: 3px;
+}
+#cart_products::-webkit-scrollbar-thumb {
+  @apply bg-grey-500;
 }

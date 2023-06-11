@@ -22,9 +22,8 @@ function showError($msg, $location)
     header("Location: $location");
 }
 
-function rememberedUser()
+function rememberedUser($conn)
 {
-    require 'db.php';
     $token = $_COOKIE['remember_token'];
 
     $sql = "SELECT * FROM `users` WHERE `Token` = :token ";
@@ -33,8 +32,9 @@ function rememberedUser()
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $stmt->rowCount();
     if ($count === 1) {
-        $username =  ($data['First Name']);
-        return $username;
+        $userName =  $data['First Name'];
+        $userId = $data['id'];
+        return array($userId, $userName);
     }
 }
 function showAllProducts()
@@ -71,6 +71,8 @@ function showAllProducts()
 
 </div>";
     }
+    // CLose the connection
+    $conn = null;
 }
 function countProductsByType($value)
 {
@@ -80,6 +82,8 @@ function countProductsByType($value)
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
+    // CLose the connection
+    $conn = null;
 }
 
 function capacityGt6()
@@ -90,6 +94,8 @@ function capacityGt6()
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
+    // CLose the connection
+    $conn = null;
 }
 function capacityGt2AndLs5()
 {
@@ -99,6 +105,8 @@ function capacityGt2AndLs5()
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
+    // CLose the connection
+    $conn = null;
 }
 function customRecGt70()
 {
@@ -108,6 +116,8 @@ function customRecGt70()
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
+    // CLose the connection
+    $conn = null;
 }
 function customRecBt40And70()
 {
@@ -117,6 +127,8 @@ function customRecBt40And70()
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
+    // CLose the connection
+    $conn = null;
 }
 function customRecLt39()
 {
@@ -126,4 +138,29 @@ function customRecLt39()
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
+    // CLose the connection
+    $conn = null;
+}
+// Check if cart is empty
+function isCartEmpty($conn)
+{
+
+    $stmt = $conn->prepare('SELECT * FROM carts');
+    $stmt->execute();
+    $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if ($stmt->rowCount() > 0) {
+        return false;
+    } else {
+        return true;
+    }
+}
+// Get Count of cart items
+function countCartItems($conn, $userId)
+{
+    if (isCartEmpty($conn) == false) {
+        $stmt = $conn->prepare('SELECT COUNT(*) as Count FROM carts WHERE user_id = :userId GROUP BY user_id');
+        $stmt->execute(['userId' => $userId]);
+        $results = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $results['Count'];
+    }
 }

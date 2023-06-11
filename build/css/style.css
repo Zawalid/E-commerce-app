@@ -590,6 +590,16 @@ aside.show {
   padding-top: 1rem;
 }
 
+#cart.show {
+  z-index: 10;
+  --tw-translate-x: -80%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+#dropDown:has(#cart.show) {
+  overflow: visible;
+}
+
 #sideBar.show {
   --tw-translate-y: 0px;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -636,6 +646,10 @@ body:has(#sideBar.show)::before {
 
 .relative {
   position: relative;
+}
+
+.-top-\[69px\] {
+  top: -69px;
 }
 
 .bottom-14 {
@@ -710,6 +724,10 @@ body:has(#sideBar.show)::before {
   margin-bottom: 3rem;
 }
 
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
 .mb-3 {
   margin-bottom: 0.75rem;
 }
@@ -761,6 +779,10 @@ body:has(#sideBar.show)::before {
 
 .mt-3 {
   margin-top: 0.75rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
 }
 
 .mt-5 {
@@ -835,6 +857,10 @@ body:has(#sideBar.show)::before {
   height: 1px;
 }
 
+.h-\[309px\] {
+  height: 309px;
+}
+
 .h-\[530px\] {
   height: 530px;
 }
@@ -861,6 +887,14 @@ body:has(#sideBar.show)::before {
 
 .w-12 {
   width: 3rem;
+}
+
+.w-16 {
+  width: 4rem;
+}
+
+.w-24 {
+  width: 6rem;
 }
 
 .w-36 {
@@ -905,6 +939,10 @@ body:has(#sideBar.show)::before {
 
 .w-\[2px\] {
   width: 2px;
+}
+
+.w-\[300px\] {
+  width: 300px;
 }
 
 .w-\[85\%\] {
@@ -978,6 +1016,10 @@ body:has(#sideBar.show)::before {
 
 .place-content-center {
   place-content: center;
+}
+
+.place-items-center {
+  place-items: center;
 }
 
 .items-start {
@@ -1066,10 +1108,6 @@ body:has(#sideBar.show)::before {
 
 .rounded-xl {
   border-radius: 0.75rem;
-}
-
-.rounded {
-  border-radius: 0.25rem;
 }
 
 .rounded-bl-\[30px\] {
@@ -1247,6 +1285,11 @@ body:has(#sideBar.show)::before {
   padding: 2rem;
 }
 
+.px-1 {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -1255,6 +1298,11 @@ body:has(#sideBar.show)::before {
 .px-5 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
+}
+
+.px-\[33\%\] {
+  padding-left: 33%;
+  padding-right: 33%;
 }
 
 .py-10 {
@@ -1270,6 +1318,11 @@ body:has(#sideBar.show)::before {
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 
 .py-7 {
@@ -1288,6 +1341,10 @@ body:has(#sideBar.show)::before {
 
 .pb-3 {
   padding-bottom: 0.75rem;
+}
+
+.pb-5 {
+  padding-bottom: 1.25rem;
 }
 
 .pe-0 {
@@ -1444,6 +1501,11 @@ body:has(#sideBar.show)::before {
   color: rgb(10 32 230 / var(--tw-text-opacity));
 }
 
+.text-red-300 {
+  --tw-text-opacity: 1;
+  color: rgb(240 61 61 / var(--tw-text-opacity));
+}
+
 .text-transparent {
   color: transparent;
 }
@@ -1527,16 +1589,24 @@ body:has(#sideBar.show)::before {
 
 ::-webkit-scrollbar {
   width: 5px;
-  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #ffff;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
   --tw-bg-opacity: 1;
   background-color: rgb(76 92 107 / var(--tw-bg-opacity));
+}
+
+#cart_products::-webkit-scrollbar {
+  width: 3px;
+}
+
+#cart_products::-webkit-scrollbar-thumb {
+  --tw-bg-opacity: 1;
+  background-color: rgb(166 175 186 / var(--tw-bg-opacity));
 }
 
 .placeholder\:text-sm::-moz-placeholder {
@@ -1577,24 +1647,9 @@ body:has(#sideBar.show)::before {
   bottom: -26px;
 }
 
-.before\:-top-3::before {
-  content: var(--tw-content);
-  top: -0.75rem;
-}
-
-.before\:-right-3::before {
-  content: var(--tw-content);
-  right: -0.75rem;
-}
-
 .before\:-z-20::before {
   content: var(--tw-content);
   z-index: -20;
-}
-
-.before\:grid::before {
-  content: var(--tw-content);
-  display: grid;
 }
 
 .before\:h-\[2px\]::before {
@@ -1607,29 +1662,9 @@ body:has(#sideBar.show)::before {
   height: 100%;
 }
 
-.before\:h-4::before {
-  content: var(--tw-content);
-  height: 1rem;
-}
-
 .before\:w-full::before {
   content: var(--tw-content);
   width: 100%;
-}
-
-.before\:w-4::before {
-  content: var(--tw-content);
-  width: 1rem;
-}
-
-.before\:place-content-center::before {
-  content: var(--tw-content);
-  place-content: center;
-}
-
-.before\:rounded-full::before {
-  content: var(--tw-content);
-  border-radius: 9999px;
 }
 
 .before\:bg-\[rgba\(0\2c 0\2c 0\2c 0\.5\)\]::before {
@@ -1641,24 +1676,6 @@ body:has(#sideBar.show)::before {
   content: var(--tw-content);
   --tw-bg-opacity: 1;
   background-color: rgb(10 32 230 / var(--tw-bg-opacity));
-}
-
-.before\:bg-red-300::before {
-  content: var(--tw-content);
-  --tw-bg-opacity: 1;
-  background-color: rgb(240 61 61 / var(--tw-bg-opacity));
-}
-
-.before\:text-xs::before {
-  content: var(--tw-content);
-  font-size: 0.75rem;
-  line-height: 1rem;
-}
-
-.before\:text-white::before {
-  content: var(--tw-content);
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .before\:opacity-0::before {
@@ -1685,39 +1702,19 @@ body:has(#sideBar.show)::before {
   transition-duration: 500ms;
 }
 
-.before\:content-\[\'2\'\]::before {
-  --tw-content: '2';
-  content: var(--tw-content);
-}
-
-.before\:content-\[2\]::before {
-  --tw-content: 2;
-  content: var(--tw-content);
-}
-
 .after\:absolute::after {
   content: var(--tw-content);
   position: absolute;
 }
 
-.after\:-right-3::after {
+.after\:-right-2::after {
   content: var(--tw-content);
-  right: -0.75rem;
-}
-
-.after\:-top-3::after {
-  content: var(--tw-content);
-  top: -0.75rem;
+  right: -0.5rem;
 }
 
 .after\:-top-2::after {
   content: var(--tw-content);
   top: -0.5rem;
-}
-
-.after\:-right-2::after {
-  content: var(--tw-content);
-  right: -0.5rem;
 }
 
 .after\:grid::after {
@@ -1751,12 +1748,6 @@ body:has(#sideBar.show)::before {
   background-color: rgb(240 61 61 / var(--tw-bg-opacity));
 }
 
-.after\:text-xs::after {
-  content: var(--tw-content);
-  font-size: 0.75rem;
-  line-height: 1rem;
-}
-
 .after\:text-\[0\.5rem\]::after {
   content: var(--tw-content);
   font-size: 0.5rem;
@@ -1766,11 +1757,6 @@ body:has(#sideBar.show)::before {
   content: var(--tw-content);
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.after\:content-\[\'2\'\]::after {
-  --tw-content: '2';
-  content: var(--tw-content);
 }
 
 .after\:content-\[attr\(data-cart\)\]::after {

@@ -1,5 +1,6 @@
 <?php
 session_start();
+require 'db.php';
 require 'utilities.php';
 function showProfilePicture()
 {
@@ -27,6 +28,7 @@ function showProfilePicture()
 </head>
 
 <body class="relative min-h-screen font-Jakarta before:absolute before:-z-20 before:h-full before:w-full before:bg-[rgba(0,0,0,0.5)] before:opacity-0 before:backdrop-blur-sm before:transition-opacity">
+
   <header>
     <div class="container border-b-2 border-border-color py-4">
       <div class="flex items-center justify-between">
@@ -42,8 +44,8 @@ function showProfilePicture()
 
             <?php echo showProfilePicture() ?>
             <i class="fa-solid fa-chevron-up cursor-pointer text-lg text-grey-500 transition-transform duration-500" id="dropDownBtn"></i>
-            <div class="absolute right-0 top-[3.3rem] -z-10 h-0 w-52 overflow-hidden rounded-xl bg-white p-0 transition-all duration-500" id="dropDown">
-              <div class="flex items-center gap-3 border-b border-border-color px-4 pb-3">
+            <div class="absolute right-0 top-[3.3rem] -z-10 h-0 w-52  rounded-xl bg-white p-0 transition-all duration-500 " id="dropDown">
+              <div class="bg-white flex items-center gap-3 border-b border-border-color px-4 pb-3">
                 <?php echo showProfilePicture() ?>
                 <h2 class="font-semibold text-grey-900" id="userName"><?php if (isset($_SESSION['userName'])) {
                                                                         echo   $_SESSION['userName'];
@@ -52,29 +54,31 @@ function showProfilePicture()
                                                                       } ?></h2>
               </div>
               <ul>
-                <li class="cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100  ">
-                  <a href="authentication/<?= (isset($_SESSION['userName'])) ? 'login' : "login" ?>.php" class="flex items-center gap-3">
-                    <i class="fa-solid fa-cart-shopping relative cursor-pointer text-lg text-grey-500 after:w-4 after:h-4 after:rounded-full after:bg-red-300 after:absolute after:content-[attr(data-cart)] after:text-white after:text-[0.5rem] after:grid after:place-content-center after:-top-2 after:-right-2" data-cart="0" id="cart_toggler"></i>
-                    Cart
-                  </a>
+                <!-- authentication/#<?= (isset($_SESSION['userName'])) ?  'main' : "login" ?>.php -->
+                <li class="bg-white cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100  flex items-center gap-3" id="cart_toggler">
+                  <i class="w-5 fa-solid fa-cart-shopping relative cursor-pointer text-lg text-grey-500 <?php if (isset($_SESSION['userName'])) echo 'after:w-4 after:h-4 after:rounded-full after:bg-red-300 after:absolute   after:content-[attr(data-cart)] after:text-white after:text-[0.5rem] after:grid after:place-content-center after:-top-2 after:-right-2' ?>" data-cart="<?php
+
+                                                                                                                                                                                                                                                                                                                                                                                      if (isCartEmpty($conn) == false) {
+                                                                                                                                                                                                                                                                                                                                                                                        $userId = $_SESSION['userId'];
+                                                                                                                                                                                                                                                                                                                                                                                        echo countCartItems($conn, $userId);
+                                                                                                                                                                                                                                                                                                                                                                                      } else {
+                                                                                                                                                                                                                                                                                                                                                                                        echo 0;
+                                                                                                                                                                                                                                                                                                                                                                                      } ?>" id="cart_count"></i>
+                  Cart
                 </li>
-                <li class="cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100">
-                  <a href="authentication/<?= (isset($_SESSION['userName'])) ? 'login' : "login" ?>.php" class="flex items-center gap-3">
-                    <i class="fa-regular fa-bell cursor-pointer text-lg text-grey-500"></i>
-                    Notifications
-                  </a>
+                <li class="bg-white cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100 flex items-center gap-3">
+                  <i class="w-5 fa-regular fa-bell cursor-pointer text-lg text-grey-500"></i>
+                  Notifications
                 </li>
-                <li class="cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100">
-                  <a href="#" class="flex items-center gap-3">
-                    <i class="fa-solid fa-gear cursor-pointer text-lg text-grey-500"></i>
-                    Settings
-                  </a>
+                <li class="bg-white cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100 flex items-center gap-3">
+                  <i class="w-5 fa-solid fa-gear cursor-pointer text-lg text-grey-500"></i>
+                  Settings
                 </li>
-                <li class="cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100">
+                <li class="bg-white cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100">
                   <a href="authentication/<?= (isset($_SESSION['userName'])) ? 'logout' : "login" ?>.php" class="flex items-center gap-3">
                     <?php if (isset($_SESSION['userName'])) {
                       echo '<i
-                      class="fa-solid fa-right-from-bracket rotate-180 cursor-pointer text-lg text-grey-500"
+                      class="w-5 fa-solid fa-right-from-bracket rotate-180 cursor-pointer text-lg text-grey-500"
                     ></i>';
                       echo   'Log out';
                     } else {
@@ -87,12 +91,46 @@ function showProfilePicture()
                 </li>
               </ul>
             </div>
+
           </div>
           <i class="fa-solid fa-bars cursor-pointer text-xl text-grey-500 md:hidden" id="sideBarOpenBtn"></i>
         </div>
       </div>
     </div>
   </header>
+  <div class="absolute h-[309px] w-[300px] rounded-xl py-5 bg-white  right-0 -top-[69px] border-2 border-border-color -z-10 flex flex-col justify-between transition-transform duration-500" id="cart">
+    <h4 class="px-5 text-grey-900 font-bold pb-5 border-b border-border-color">Cart</h4>
+    <div class="flex-1  h-64 overflow-y-scroll px-5" id="cart_products">
+      <?php
+      if (isCartEmpty($conn) == false) {
+        // Get user id
+        $userId = $_SESSION['userId'];
+        $stmt = $conn->prepare('SELECT name , price , image , quantity  FROM cars INNER JOIN carts ON cars.id = carts.car_id  WHERE user_id = :userId ');
+        $stmt->execute(['userId' => $userId]);
+        $results = $stmt->fetchAll(PDO::FETCH_OBJ);
+        foreach ($results as $car) {
+          echo  " <div class='flex gap-3 items-center mt-4'>
+           <div class='rounded-lg shadow-shadow-1 px-1'>
+             <img src='$car->image' class='w-16 h-12' alt=''>
+           </div>
+           <div class='flex-1'>
+             <h5 class='text-grey-700 font-bold mb-2'>$car->name</h5>
+             <span class='text-grey-500 text-sm'>$<span class='font-semibold'>$car->price</span> x <span>$car->quantity</span></span>
+           </div>
+           <i class='fa-solid fa-trash-can text-lg cursor-pointer text-red-300' id='removeFromCart'></i>
+           </div> ";
+        }
+      } else {
+        echo " <div class='grid place-items-center place-content-center h-full'>
+        <img src='./imgs/empty-cart.png' alt='' class='w-24' >
+        <p class='text-grey-600 font-bold mt-2 text-lg'>Your cart is empty</p>
+      </div>";
+      }
+      ?>
+    </div>
+    <button class="hidden mx-auto px-[33%]  mt-4 text-center text-white bg-primary-500 rounded-xl py-3 font-bold text-sm">Checkout</button>
+
+  </div>
   <div class="absolute left-0 top-0 z-10 flex h-screen max-xs:h-sideBar -translate-y-full flex-col justify-between bg-white px-5 py-7 shadow-shadow-1 transition-transform duration-500" id="sideBar">
     <div class="flex flex-col">
       <a href="#" class="mb-8 text-lg font-semibold text-grey-500 transition-colors duration-500 hover:text-grey-900 hover:before:opacity-100">
