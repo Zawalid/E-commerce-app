@@ -580,8 +580,7 @@ aside.show {
   opacity: 1;
 }
 
-#sideBarDropDown.show,
-  #dropDown.show {
+#dropDown.show {
   z-index: 10;
   height: 309px;
   border-width: 2px;
@@ -591,9 +590,17 @@ aside.show {
 }
 
 #cart.show {
-  z-index: 10;
+  z-index: 20;
   --tw-translate-x: -80%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+@media not all and (min-width: 768px) {
+  #cart.show {
+    --tw-translate-x: 0px;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    opacity: 1;
+  }
 }
 
 #dropDown:has(#cart.show) {
@@ -605,7 +612,7 @@ aside.show {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-body:has(#sideBar.show) {
+body:has(#sideBar.show, #cart.show) {
   height: 100vh;
   overflow: hidden;
 }
@@ -648,10 +655,6 @@ body:has(#sideBar.show)::before {
   position: relative;
 }
 
-.-top-\[69px\] {
-  top: -69px;
-}
-
 .bottom-14 {
   bottom: 3.5rem;
 }
@@ -686,6 +689,10 @@ body:has(#sideBar.show)::before {
 
 .top-\[3\.3rem\] {
   top: 3.3rem;
+}
+
+.top-\[69px\] {
+  top: 69px;
 }
 
 .-z-10 {
@@ -1600,10 +1607,12 @@ body:has(#sideBar.show)::before {
   background-color: rgb(76 92 107 / var(--tw-bg-opacity));
 }
 
+aside > div::-webkit-scrollbar,
 #cart_products::-webkit-scrollbar {
   width: 3px;
 }
 
+aside > div::-webkit-scrollbar-thumb,
 #cart_products::-webkit-scrollbar-thumb {
   --tw-bg-opacity: 1;
   background-color: rgb(166 175 186 / var(--tw-bg-opacity));
@@ -1829,6 +1838,10 @@ body:has(#sideBar.show)::before {
     left: 1.25rem;
   }
 
+  .max-md\:top-0 {
+    top: 0px;
+  }
+
   .max-md\:top-24 {
     top: 6rem;
   }
@@ -1853,8 +1866,16 @@ body:has(#sideBar.show)::before {
     height: 500px;
   }
 
+  .max-md\:h-full {
+    height: 100%;
+  }
+
   .max-md\:max-h-\[650px\] {
     max-height: 650px;
+  }
+
+  .max-md\:w-full {
+    width: 100%;
   }
 
   .max-md\:flex-col {
@@ -1867,6 +1888,10 @@ body:has(#sideBar.show)::before {
 
   .max-md\:overflow-y-scroll {
     overflow-y: scroll;
+  }
+
+  .max-md\:rounded-none {
+    border-radius: 0px;
   }
 
   .max-md\:ps-7 {
@@ -1893,6 +1918,12 @@ body:has(#sideBar.show)::before {
     transition-duration: 150ms;
   }
 
+  .max-md\:transition-opacity {
+    transition-property: opacity;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
   .max-md\:duration-500 {
     transition-duration: 500ms;
   }
@@ -1909,10 +1940,6 @@ body:has(#sideBar.show)::before {
 }
 
 @media not all and (min-width: 420px) {
-  .max-xs\:h-sideBar {
-    height: calc(100vh - 40px);
-  }
-
   .max-xs\:w-full {
     width: 100%;
   }

@@ -41,8 +41,8 @@ const showAndHideElement = (element, elementBtn) => {
     if (
       ![element, elementBtn].includes(e.target) &&
       !element.contains(e.target) &&
-      !e.target.classList.contains("fa-trash-can")
-
+      !e.target.classList.contains("fa-trash-can") &&
+      e.target.id !== "close_cart"
     ) {
       element.classList.remove("show");
       element === sideBar && dropDownBtn.classList.remove("rotate-180");
@@ -231,3 +231,11 @@ const removeFromCart = (buttons) => {
     });
   });
 };
+
+//* CLose cart
+document.getElementById("close_cart").addEventListener("click", () => {
+  cart.classList.remove("show");
+});
+
+if (document.getElementById("cart_count").dataset.cart !== "0")
+  cart.querySelector("button").classList.remove("hidden");
