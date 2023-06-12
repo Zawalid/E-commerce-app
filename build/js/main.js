@@ -203,6 +203,7 @@ const addToCart = (buttons) => {
 };
 addToCart(document.querySelectorAll("#addToCart"));
 
+//* Remove from Cart
 const removeFromCart = (buttons) => {
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -237,5 +238,18 @@ document.getElementById("close_cart").addEventListener("click", () => {
   cart.classList.remove("show");
 });
 
-if (document.getElementById("cart_count").dataset.cart !== "0")
+//* Check if cart is full and show the checkout button
+if (document.getElementById("cart_count").dataset.cart !== "0") {
   cart.querySelector("button").classList.remove("hidden");
+}
+
+//* Product view
+[...document.getElementById("search_results").children].forEach((product) => {
+  product.addEventListener("click", () => {
+    document.getElementById("product_view").classList.add("show");
+  });
+});
+
+document.getElementById("close_product_view").addEventListener("click", () => {
+  document.getElementById("product_view").classList.remove("show");
+});

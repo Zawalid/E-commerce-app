@@ -45,7 +45,7 @@ function showAllProducts()
     $cars = $stmt->fetchAll(PDO::FETCH_OBJ);
 
     foreach ($cars as $car) {
-        echo " <div class='rounded-xl bg-white p-5 shadow-shadow-1'>
+        echo " <div class='rounded-xl bg-white p-5 shadow-shadow-1 cursor-pointer'>
         <div class='mb-3 flex items-center justify-between'>
         <h4 class='font-bold text-grey-900 '>$car->name</h4>
         <div class='grid place-content-center w-8 h-8 rounded-full bg-grey-500 p1 transition-colors duration-500'>

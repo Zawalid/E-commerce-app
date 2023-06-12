@@ -365,6 +365,50 @@ function showProfilePicture()
       </div>
     </section>
   </main>
+  <div class="opacity-0 -z-10 transition-opacity duration-500 absolute w-full h-screen bg-[#0005] backdrop-blur-[2px] inset-0" id="product_view">
+    <div class="absolute bg-grey-100 w-[80%] h-[80%] top-1/2 gap-10 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl flex items-center p-7">
+      <i class="fa-solid fa-xmark text-2xl absolute top-4 right-4 text-grey-600 cursor-pointer" id="close_product_view"></i>
+      <div class="flex-1 grid place-content-center">
+        <div class="shadow-shadow-1 rounded-xl">
+          <img src="imgs/car-01.svg" alt="" class="w-[500px] h-[350px]  mx-auto ">
+        </div>
+        <div class="flex gap-5 justify-center mt-7">
+          <div class="rounded-xl overflow-hidden cursor-pointer shadow-[0_0_10px_#0002] transition-shadow duration-500  hover:shadow-[-5px_6px_6px_#0005] w-40 p-3">
+            <img src="imgs/car-01.svg" alt="">
+          </div>
+          <div class="rounded-xl overflow-hidden cursor-pointer shadow-[0_0_10px_#0002] transition-shadow duration-500  hover:shadow-[-5px_6px_6px_#0005] w-40 p-3">
+            <img src="imgs/car-01.svg" alt="">
+          </div>
+          <div class="rounded-xl overflow-hidden cursor-pointer shadow-[0_0_10px_#0002] transition-shadow duration-500  hover:shadow-[-5px_6px_6px_#0005] w-40 p-3">
+            <img src="imgs/car-01.svg" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="flex-1">
+        <h2 class="text-4xl font-bold text-grey-700">Honda Accord Coupe</h2>
+        <h3 class="text-lg font-bold text-grey-600 mt-4">SUV</h3>
+        <div class="flex gap-12 my-5">
+          <div class='flex items-center'>
+            <img src='imgs/icons8-gear-stick-50.png' alt='' class='mr-1 h-5 w-5' />
+            <span class='font-semibold text-grey-500'>Automatic</span>
+          </div>
+          <span class='font-semibold text-grey-500 '>
+            <i class='fa-solid fa-user mr-2 text-primary-500'></i>
+            4 Seats
+          </span>
+        </div>
+        <h3 class="text-2xl font-bold text-grey-900">$50,000</h3>
+        <div class="mt-7 flex gap-9">
+          <div class="bg-[#eee] py-3 px-5 rounded-xl flex justify-between items-center w-40">
+            <i class="fa-solid fa-plus text-primary-500 cursor-pointer"></i>
+            <span class="font-bold text-lg">1</span>
+            <i class="fa-solid fa-minus text-primary-500 cursor-pointer"></i>
+          </div>
+          <button class="  text-center text-white bg-primary-500 rounded-xl tracking-wider  py-3 flex-1 font-bold text-sm">Add To Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>

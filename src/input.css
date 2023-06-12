@@ -33,6 +33,9 @@
   .showPasswordIcon {
     @apply absolute right-3 top-[62%] -translate-y-1/2 cursor-pointer text-sm text-nobleDark300;
   }
+  #product_view.show {
+    @apply z-30 opacity-100;
+  }
 }
 
 ::-webkit-scrollbar {
