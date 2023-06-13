@@ -139,7 +139,9 @@ function search() {
     .then(function (data) {
       document.getElementById("search_results").innerHTML = data;
       document.getElementById("search_results").scrollTop = 0;
-      addToCart(document.querySelectorAll("#addToCart"));
+      addToCart();
+      showProductView();
+      toggleLayer();
     })
     .catch(function (error) {
       console.log("An error occurred while processing the search.", error);
@@ -149,12 +151,12 @@ document.getElementById("search_input").addEventListener("keyup", search);
 document.getElementById("search_button").addEventListener("click", search);
 
 //* Add to Cart
-const addToCart = (buttons) => {
-  buttons.forEach((button) => {
+const addToCart = () => {
+  document.querySelectorAll("#addToCart").forEach((button) => {
     button.addEventListener("click", () => {
       if (checkIfUserLoggedIn()) {
         const carName = button.parentElement.previousElementSibling.textContent;
-        // Send search query using AJAX
+        // Send car name using AJAX
         fetch("addToCart.php", {
           method: "POST",
           headers: {
@@ -201,7 +203,7 @@ const addToCart = (buttons) => {
     });
   });
 };
-addToCart(document.querySelectorAll("#addToCart"));
+addToCart();
 
 //* Remove from Cart
 const removeFromCart = (buttons) => {
@@ -244,12 +246,124 @@ if (document.getElementById("cart_count").dataset.cart !== "0") {
 }
 
 //* Product view
-[...document.getElementById("search_results").children].forEach((product) => {
-  product.addEventListener("click", () => {
-    document.getElementById("product_view").classList.add("show");
+const productView = document.getElementById("product_view");
+const productQuantity = productView.querySelector("#product_quantity");
+const plusBtn = productQuantity.querySelector(".fa-plus");
+const minusBtn = productQuantity.querySelector(".fa-minus");
+const quantity = productQuantity.querySelector("span");
+
+const showProductView = () => {
+  [...document.getElementById("search_results").children].forEach((product) => {
+    product
+      .querySelector("#show_product_view")
+      .addEventListener("click", () => {
+        productView.querySelector("img").src = product.querySelector("img").src;
+
+        productView.querySelector("#name").textContent =
+          product.querySelector(".carName").innerText;
+
+        productView.querySelector("#price").textContent =
+          product.querySelector(".carPrice").innerText;
+
+        productView.querySelector("#type").textContent =
+          product.querySelector(".carType").innerText;
+
+        productView.querySelector("#capacity").textContent = `${
+          product.querySelector(".carCapacity").innerText
+        } Seats`;
+
+        productView.querySelector("#recommendation").textContent = `${
+          product.querySelector(".carRec").innerText
+        }%`;
+
+        productView.querySelector("#gear_shift").textContent =
+          product.querySelector(".carGearShift").innerText;
+
+        window.scrollTo(0, document.body.scrollHeight);
+
+        quantity.textContent = 1;
+
+        productView.classList.add("show");
+      });
   });
+};
+showProductView();
+// Close product view
+document.getElementById("close_product_view").addEventListener("click", () => {
+  productView.classList.remove("show");
+});
+productView.addEventListener(
+  "click",
+  (e) => e.target === e.currentTarget && productView.classList.remove("show")
+);
+
+// Product quantity
+plusBtn.addEventListener(
+  "click",
+  () => (quantity.textContent = +quantity.textContent + 1)
+);
+minusBtn.addEventListener("click", () => {
+  quantity.textContent = +quantity.textContent - 1;
+  if (+quantity.textContent < 1) quantity.textContent = 1;
 });
 
-document.getElementById("close_product_view").addEventListener("click", () => {
-  document.getElementById("product_view").classList.remove("show");
+// Add to cart from product view
+productView.querySelector("button").addEventListener("click", function () {
+  if (checkIfUserLoggedIn()) {
+    const carName = productView.querySelector("#name").textContent;
+    const button = this;
+    const request = {
+      carName,
+      quantity: quantity.textContent,
+    };
+    // Send car name using AJAX
+    fetch("addToCart.php", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded",
+      },
+      body: JSON.stringify(request),
+    })
+      .then(function (response) {
+        return response.text();
+      })
+      .then(function (data) {
+        console.log(data);
+        button.innerHTML =
+          "<i class='fa-solid fa-check mr-2 text-lg text-white'></i> Added";
+        setTimeout(() => {
+          button.innerHTML =
+            "<i class='fa-solid fa-cart-plus mr-2 text-lg text-white'></i> Add to Cart";
+        }, 1500);
+
+        // document.getElementById("cart_products").innerHTML = data.cars;
+        // document.getElementById("cart_count").dataset.cart = data.count;
+        // cart.querySelector("button").classList.contains("hidden") &&
+        cart.querySelector("button").classList.remove("hidden");
+      })
+      .catch(function (error) {
+        console.log("An error occurred while processing the search.", error);
+      });
+  } else {
+    window.location.href = "authentication/login.php";
+  }
 });
+
+// Toggle Product layer
+const toggleLayer = () => {
+  const products = [...document.getElementById("search_results").children];
+
+  // SHow the layer when hover on a product
+  products.forEach((product) => {
+    product.addEventListener("mouseover", () => {
+      product.querySelector("#layer").classList.remove("opacity-0");
+    });
+  });
+  // Hide the layer when leaving
+  products.forEach((product) => {
+    product.addEventListener("mouseleave", () => {
+      product.querySelector("#layer").classList.add("opacity-0");
+    });
+  });
+};
+toggleLayer();

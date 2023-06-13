@@ -46,6 +46,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $conn->prepare('DELETE FROM carts WHERE car_id = :car_id');
     $stmt->execute([':car_id' => $carId]);
   }
+  // Check if the request iś for adding a new product to the cart from the product view  
+  if ($jsonData = file_get_contents('php://input')) {
+    $data = json_decode($jsonData, true);
+    // Get the car name
+    $carName = $data['carName'];
+    // Get the car quantity
+    $carQuantity = $data['quantity'];
+    // Car id
+    $carId = getCarId($conn, $carName);
+    // Check if the product already exists and if so increment the quantity
+    $stmt = $conn->prepare("SELECT car_id , quantity  FROM carts WHERE car_id = :car_id");
+    $stmt->execute([':car_id' => $carId]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($row) {
+      $quantity = $row['quantity'] + $carQuantity;
+      $stmt = $conn->prepare("UPDATE carts SET quantity = :quantity WHERE car_id = :car_id");
+      $stmt->execute([':quantity' => $quantity, ':car_id' => $carId]);
+    } else {
+      // Add the product to the carts table
+      $stmt = $conn->prepare('INSERT INTO carts (user_id , car_id , quantity) VALUES (:user_id , :car_id , :quantity)');
+      $stmt->execute([':user_id' => $userId, ':car_id' => $carId, ':quantity' => $carQuantity]);
+    }
+  }
 
   $response = "";
   if (isCartEmpty($conn) == false) {
@@ -72,10 +95,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <p class='text-grey-600 font-bold mt-2 text-lg'>Your cart is empty</p>
     </div>";
   }
-  echo json_encode(array(
-    'cars' => $response,
-    'count' => isCartEmpty($conn) == false ? countCartItems($conn, $userId) : 0,
-  ));
+  // echo json_encode(array(
+  //   'cars' => $response,
+  //   'count' => isCartEmpty($conn) == false ? countCartItems($conn, $userId) : 0,
+  // ));
 }
 // CLose the connection
 $conn = null;
