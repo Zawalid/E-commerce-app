@@ -15,11 +15,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $results = $stmt->fetch(PDO::FETCH_ASSOC);
     return $results['id'];
   }
-
-  // Check if the request iś for showing the cart products or for adding new product to the cart
-  if (isset($_POST['carNameToAdd'])) {
-    // Get the car name
-    $carName =  $_POST['carNameToAdd'];
+  // Add product
+  function addProduct($conn, $userId, $quantity, $carName)
+  {
     // Car id
     $carId = getCarId($conn, $carName);
     // Check if the product already exists and if so increment the quantity
@@ -28,14 +26,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($row) {
-      $quantity = $row['quantity'] + 1;
+      $carQuantity = $row['quantity'] + $quantity;
       $stmt = $conn->prepare("UPDATE carts SET quantity = :quantity WHERE car_id = :car_id");
-      $stmt->execute([':quantity' => $quantity, ':car_id' => $carId]);
+      $stmt->execute([':quantity' => $carQuantity, ':car_id' => $carId]);
     } else {
       // Add the product to the carts table
-      $stmt = $conn->prepare('INSERT INTO carts (user_id , car_id , quantity) VALUES (:user_id , :car_id , 1)');
-      $stmt->execute([':user_id' => $userId, ':car_id' => $carId]);
+      $stmt = $conn->prepare('INSERT INTO carts (user_id , car_id , quantity) VALUES (:user_id , :car_id , :quantity)');
+      $stmt->execute([':user_id' => $userId, ':car_id' => $carId, ':quantity' => $quantity]);
     }
+  }
+  // Check if the request iś for showing the cart products or for adding new product to the cart
+  if (isset($_POST['carNameToAdd'])) {
+    // Get the car name
+    $carName =  $_POST['carNameToAdd'];
+
+    addProduct($conn, $userId, 1, $carName);
+  }
+  // Check if the request iś for adding a new product to the cart from the product view  
+  $jsonData = file_get_contents('php://input');
+  $data = json_decode($jsonData, true);
+  if (!empty($data)) {
+    // Get the car name
+    $carName = $data['carName'];
+    // Get the car quantity
+    $quantity = $data['quantity'];
+
+    addProduct($conn, $userId, $quantity, $carName);
   }
   // Check if the request iś for removing a product from  the cart 
   if (isset($_POST['carNameToRemove'])) {
@@ -46,30 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $conn->prepare('DELETE FROM carts WHERE car_id = :car_id');
     $stmt->execute([':car_id' => $carId]);
   }
-  // Check if the request iś for adding a new product to the cart from the product view  
-  if ($jsonData = file_get_contents('php://input')) {
-    $data = json_decode($jsonData, true);
-    // Get the car name
-    $carName = $data['carName'];
-    // Get the car quantity
-    $carQuantity = $data['quantity'];
-    // Car id
-    $carId = getCarId($conn, $carName);
-    // Check if the product already exists and if so increment the quantity
-    $stmt = $conn->prepare("SELECT car_id , quantity  FROM carts WHERE car_id = :car_id");
-    $stmt->execute([':car_id' => $carId]);
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($row) {
-      $quantity = $row['quantity'] + $carQuantity;
-      $stmt = $conn->prepare("UPDATE carts SET quantity = :quantity WHERE car_id = :car_id");
-      $stmt->execute([':quantity' => $quantity, ':car_id' => $carId]);
-    } else {
-      // Add the product to the carts table
-      $stmt = $conn->prepare('INSERT INTO carts (user_id , car_id , quantity) VALUES (:user_id , :car_id , :quantity)');
-      $stmt->execute([':user_id' => $userId, ':car_id' => $carId, ':quantity' => $carQuantity]);
-    }
-  }
-
+  // Send the response
   $response = "";
   if (isCartEmpty($conn) == false) {
     // Get all cart items
@@ -95,10 +88,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <p class='text-grey-600 font-bold mt-2 text-lg'>Your cart is empty</p>
     </div>";
   }
-  // echo json_encode(array(
-  //   'cars' => $response,
-  //   'count' => isCartEmpty($conn) == false ? countCartItems($conn, $userId) : 0,
-  // ));
+  echo json_encode(array(
+    'cars' => $response,
+    'count' => isCartEmpty($conn) == false ? countCartItems($conn, $userId) : 0,
+  ));
 }
 // CLose the connection
 $conn = null;

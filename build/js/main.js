@@ -245,7 +245,7 @@ if (document.getElementById("cart_count").dataset.cart !== "0") {
   cart.querySelector("button").classList.remove("hidden");
 }
 
-//* Product view
+//* Show Product view
 const productView = document.getElementById("product_view");
 const productQuantity = productView.querySelector("#product_quantity");
 const plusBtn = productQuantity.querySelector(".fa-plus");
@@ -288,7 +288,8 @@ const showProductView = () => {
   });
 };
 showProductView();
-// Close product view
+
+//* Close product view
 document.getElementById("close_product_view").addEventListener("click", () => {
   productView.classList.remove("show");
 });
@@ -297,7 +298,7 @@ productView.addEventListener(
   (e) => e.target === e.currentTarget && productView.classList.remove("show")
 );
 
-// Product quantity
+//* Product quantity
 plusBtn.addEventListener(
   "click",
   () => (quantity.textContent = +quantity.textContent + 1)
@@ -307,7 +308,7 @@ minusBtn.addEventListener("click", () => {
   if (+quantity.textContent < 1) quantity.textContent = 1;
 });
 
-// Add to cart from product view
+//* Add to cart from product view
 productView.querySelector("button").addEventListener("click", function () {
   if (checkIfUserLoggedIn()) {
     const carName = productView.querySelector("#name").textContent;
@@ -325,7 +326,7 @@ productView.querySelector("button").addEventListener("click", function () {
       body: JSON.stringify(request),
     })
       .then(function (response) {
-        return response.text();
+        return response.json();
       })
       .then(function (data) {
         console.log(data);
@@ -336,10 +337,10 @@ productView.querySelector("button").addEventListener("click", function () {
             "<i class='fa-solid fa-cart-plus mr-2 text-lg text-white'></i> Add to Cart";
         }, 1500);
 
-        // document.getElementById("cart_products").innerHTML = data.cars;
-        // document.getElementById("cart_count").dataset.cart = data.count;
-        // cart.querySelector("button").classList.contains("hidden") &&
-        cart.querySelector("button").classList.remove("hidden");
+        document.getElementById("cart_products").innerHTML = data.cars;
+        document.getElementById("cart_count").dataset.cart = data.count;
+        cart.querySelector("button").classList.contains("hidden") &&
+          cart.querySelector("button").classList.remove("hidden");
       })
       .catch(function (error) {
         console.log("An error occurred while processing the search.", error);
@@ -349,7 +350,7 @@ productView.querySelector("button").addEventListener("click", function () {
   }
 });
 
-// Toggle Product layer
+//* Toggle Product layer
 const toggleLayer = () => {
   const products = [...document.getElementById("search_results").children];
 
