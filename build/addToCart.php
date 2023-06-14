@@ -15,12 +15,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $results = $stmt->fetch(PDO::FETCH_ASSOC);
     return $results['id'];
   }
-  // Add product
-  function addProduct($conn, $userId, $quantity, $carName)
+  // Add car
+  function addCar($conn, $userId, $quantity, $carName)
   {
     // Car id
     $carId = getCarId($conn, $carName);
-    // Check if the product already exists and if so increment the quantity
+    // Check if the car already exists and if so increment the quantity
     $stmt = $conn->prepare("SELECT car_id , quantity  FROM carts WHERE car_id = :car_id");
     $stmt->execute([':car_id' => $carId]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -30,19 +30,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $stmt = $conn->prepare("UPDATE carts SET quantity = :quantity WHERE car_id = :car_id");
       $stmt->execute([':quantity' => $carQuantity, ':car_id' => $carId]);
     } else {
-      // Add the product to the carts table
+      // Add the car to the carts table
       $stmt = $conn->prepare('INSERT INTO carts (user_id , car_id , quantity) VALUES (:user_id , :car_id , :quantity)');
       $stmt->execute([':user_id' => $userId, ':car_id' => $carId, ':quantity' => $quantity]);
     }
   }
-  // Check if the request iś for showing the cart products or for adding new product to the cart
+  // Check if the request iś for showing the cart cars or for adding new car to the cart
   if (isset($_POST['carNameToAdd'])) {
     // Get the car name
     $carName =  $_POST['carNameToAdd'];
 
-    addProduct($conn, $userId, 1, $carName);
+    addCar($conn, $userId, 1, $carName);
   }
-  // Check if the request iś for adding a new product to the cart from the product view  
+  // Check if the request iś for adding a new car to the cart from the car view  
   $jsonData = file_get_contents('php://input');
   $data = json_decode($jsonData, true);
   if (!empty($data)) {
@@ -51,14 +51,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get the car quantity
     $quantity = $data['quantity'];
 
-    addProduct($conn, $userId, $quantity, $carName);
+    addCar($conn, $userId, $quantity, $carName);
   }
-  // Check if the request iś for removing a product from  the cart 
+  // Check if the request iś for removing a car from  the cart 
   if (isset($_POST['carNameToRemove'])) {
     $carName =  $_POST['carNameToRemove'];
     // Car id
     $carId = getCarId($conn, $carName);
-    // Remove product from cart
+    // Remove car from cart
     $stmt = $conn->prepare('DELETE FROM carts WHERE car_id = :car_id');
     $stmt->execute([':car_id' => $carId]);
   }

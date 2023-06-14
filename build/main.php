@@ -104,7 +104,7 @@ function showProfilePicture()
       <h4 class=" text-grey-900 font-bold">Cart</h4>
       <i class="fa-solid fa-xmark text-lg text-grey-600 cursor-pointer md:hidden" id="close_cart"></i>
     </div>
-    <div class="flex-1  h-64 overflow-y-scroll px-5" id="cart_products">
+    <div class="flex-1  h-64 overflow-y-scroll px-5" id="cart_cars">
       <?php
       if (isCartEmpty($conn) == false) {
         // Get user id
@@ -255,42 +255,42 @@ function showProfilePicture()
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">Sports Car <span class="ml-2" id="quantity">(<?= countProductsByType("Sports Car") ?>)</span>
+                  <label class="font-semibold text-grey-500">Sports Car <span class="ml-2" id="quantity">(<?= countCarsByType("Sports Car") ?>)</span>
                   </label>
                 </li>
                 <li class="mb-3 flex items-center gap-3">
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">Hatchback <span class="ml-2" id="quantity">(<?= countProductsByType("Hatchback") ?>)</span>
+                  <label class="font-semibold text-grey-500">Hatchback <span class="ml-2" id="quantity">(<?= countCarsByType("Hatchback") ?>)</span>
                   </label>
                 </li>
                 <li class="mb-3 flex items-center gap-3">
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">Sedan <span class="ml-2" id="quantity">(<?= countProductsByType("Sedan") ?>)</span>
+                  <label class="font-semibold text-grey-500">Sedan <span class="ml-2" id="quantity">(<?= countCarsByType("Sedan") ?>)</span>
                   </label>
                 </li>
                 <li class="mb-3 flex items-center gap-3">
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">Truck <span class="ml-2" id="quantity">(<?= countProductsByType("Truck") ?>)</span>
+                  <label class="font-semibold text-grey-500">Truck <span class="ml-2" id="quantity">(<?= countCarsByType("Truck") ?>)</span>
                   </label>
                 </li>
                 <li class="mb-3 flex items-center gap-3">
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">SUV <span class="ml-2" id="quantity">(<?= countProductsByType("SUV") ?>)</span>
+                  <label class="font-semibold text-grey-500">SUV <span class="ml-2" id="quantity">(<?= countCarsByType("SUV") ?>)</span>
                   </label>
                 </li>
                 <li class="flex items-center gap-3">
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">Electric <span class="ml-2" id="quantity">(<?= countProductsByType("Electric") ?>)</span>
+                  <label class="font-semibold text-grey-500">Electric <span class="ml-2" id="quantity">(<?= countCarsByType("Electric") ?>)</span>
                   </label>
                 </li>
               </ul>
@@ -359,19 +359,37 @@ function showProfilePicture()
             </div>
           </div>
           <div class="mt-5 grid max-h-[575px] max-md:max-h-[650px] grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-9 overflow-y-scroll pb-1 pr-4" id="search_results">
-            <?= showAllProducts() ?>
+            <?= showAllCars() ?>
           </div>
         </div>
       </div>
     </section>
   </main>
-  <div class=" opacity-0 -z-10 max-md:h-full  transition-opacity duration-500 absolute w-full h-full bg-[#0005] backdrop-blur-[2px] inset-0" id="product_view">
-    <div class="absolute bg-grey-100 w-[80%] h-[50%] top-1/2 gap-10 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl flex items-center p-7 max-md:flex-col max-md:w-full max-md:h-full max-md:gap-0 max-md:rounded-none">
-      <i class="fa-solid fa-xmark text-2xl absolute top-4 right-4 text-grey-600 cursor-pointer" id="close_product_view"></i>
+  <div class=" opacity-0 -z-10 max-md:h-full  transition-opacity duration-500 absolute w-full h-full bg-[#0005] backdrop-blur-[2px] inset-0" id="car_view">
+    <div class="absolute bg-grey-100 w-[80%] h-[50%] top-1/2 gap-10 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl flex md:items-center px-7 pb-5 max-md:flex-col max-md:w-full max-md:h-screen max-md:gap-0 max-md:rounded-none max-md:top-0 max-md:translate-x-0 max-md:translate-y-0 max-md:left-0 max-md:overflow-y-scroll">
+      <i class="fa-solid fa-ellipsis text-2xl absolute top-4 left-4 text-grey-600 cursor-pointer" id="actionsBtn"></i>
+      <i class="fa-solid fa-xmark text-2xl absolute top-4 right-4 text-grey-600 cursor-pointer" id="close_car_view"></i>
+      <div class="shadow-shadow-1 absolute left-4 top-12 -z-10 h-0 w-52  rounded-xl bg-white p-0 transition-all duration-500 overflow-hidden" id="actions">
+        <ul>
+          <li class="bg-white cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100  flex items-center gap-3" id="add_new_car">
+            <i class="w-5 fa-solid fa-circle-plus relative cursor-pointer text-lg text-grey-500 "></i>
+            Add car
+          </li>
+          <li class="bg-white cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100 flex items-center gap-3" id="edit_car">
+            <i class="w-5 fa-solid fa-pen cursor-pointer text-lg text-grey-500"></i>
+            Edit car
+          </li>
+          <li class="bg-white cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100 flex items-center gap-3" id="delete_car">
+            <i class="w-5 fa-solid fa-trash-can cursor-pointer text-lg text-grey-500"></i>
+            Delete car
+          </li>
+
+        </ul>
+      </div>
       <div class="flex-1 grid place-content-center">
         <img src="imgs/car-01.svg" alt="" class="w-[500px] h-[350px]  mx-auto ">
       </div>
-      <div class="flex-1 flex flex-col gap-6">
+      <div class="flex-1 flex flex-col max-md:justify-center gap-6">
         <h2 class="text-4xl font-bold text-grey-700" id="name">Honda Accord Coupe</h2>
         <h3 class="text-lg font-bold text-grey-600" id="type">SUV</h3>
         <div class="flex gap-12 max-sm:justify-between">
@@ -389,12 +407,72 @@ function showProfilePicture()
         <p class="font-semibold text-grey-600"><span class="bg-primary-500 px-2 py-1 mr-2 text-sm rounded-lg  text-white font-bold" id="recommendation">70%</span>Of our customers recommend this car.</p>
         <h3 class="text-xl font-bold text-grey-900" id="price">$50,000</h3>
         <div class=" flex gap-9 max-xs:flex-col">
-          <div class="bg-[#eee] py-3 px-5 rounded-xl flex justify-between items-center flex-1 xs:w-40" id="product_quantity">
+          <div class="bg-[#eee] py-3 px-5 rounded-xl flex justify-between items-center flex-1 xs:w-40" id="car_quantity">
             <i class="fa-solid fa-plus text-primary-500 cursor-pointer"></i>
             <span class="font-bold text-lg">1</span>
             <i class="fa-solid fa-minus text-primary-500 cursor-pointer"></i>
           </div>
-          <button class="  text-center text-white bg-primary-500 rounded-xl tracking-wider  py-3 flex-1 font-bold text-sm hover:bg-grey-900 transition-colors duration-500"><i class='fa-solid fa-cart-plus  mr-2 text-lg text-white'></i> Add To Cart</button>
+          <button class="  text-center text-white bg-primary-500 rounded-xl tracking-wider  py-3 flex-[1.5] font-bold text-sm hover:bg-grey-900 transition-colors duration-500"><i class='fa-solid fa-cart-plus  mr-2 text-lg text-white'></i> Add To Cart</button>
+        </div>
+      </div>
+    </div>
+    <div class="max-md:overflow-y-scroll absolute bg-white w-0 h-0 overflow-hidden p-0 transition-all duration-500  top-1/2 gap-10 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl  max-md:flex-col  max-md:gap-0 max-md:rounded-none" id="add_edit_car_modal">
+      <div class="flex justify-between items-center pb-7 border-b border-border-color">
+        <h2 class="text-2xl font-bold text-grey-900">Add New Car</h2>
+        <i class="fa-solid fa-xmark text-2xl  text-grey-600 cursor-pointer" id="close"></i>
+      </div>
+      <form action="">
+        <div class="flex max-sm:flex-col gap-4 my-7">
+          <label class="font-semibold text-grey-900 flex-1">
+            Name
+            <input type="text" placeholder="Name" required name="Name" class="mt-3 w-full rounded-full bg-grey-100 py-3 px-5 font-semibold text-grey-700 focus:outline-none" />
+          </label>
+          <label class="font-semibold text-grey-900 flex-1">
+            Type
+            <input type="text" placeholder="Type" required name="Type" class="mt-3 w-full rounded-full bg-grey-100 py-3 px-5 font-semibold text-grey-700 focus:outline-none" />
+          </label>
+        </div>
+        <div class="flex max-sm:flex-col gap-4 ">
+          <label class="pb-2 font-semibold text-grey-900 flex-1 sm:flex-col sm:flex sm:justify-between ">
+            Capacity (2-10)
+            <input type="range" min="2" required max="10" name="Capacity" step="1" title="5" class="max-sm:mt-6 outline-none bg-transparent cursor-pointer appearance-none w-full ">
+          </label>
+          <div class="flex-1">
+            <label class="font-semibold text-grey-900 block mb-6">Transmission</label>
+            <div class="flex justify-between">
+              <label class="font-semibold text-grey-900  flex items-center">
+                <input type="radio" id="Manual" required name="gearShift" class="text-grey-700 w-5 cursor-pointer h-5 mr-3" checked>
+                Manual
+              </label>
+              <label class="font-semibold text-grey-900 flex items-center">
+                <input type="radio" id="Automatic" required name="gearShift" class="text-grey-700 w-5 cursor-pointer h-5 mr-3">
+                Automatic
+              </label>
+            </div>
+          </div>
+        </div>
+        <label class="font-semibold text-grey-900 flex-1 block my-7">
+          Price ($)
+          <input type="number" placeholder="Price" required name="Price" class="mt-3 w-full rounded-full bg-grey-100 py-3 px-5 font-semibold text-grey-700 focus:outline-none" />
+        </label>
+        <div class="flex max-sm:flex-col gap-4 items-start">
+          <label class="font-semibold text-grey-900 flex-1 max-sm:w-full">
+            Image
+            <input type="file" name="Image" required class="block w-full text-sm text-grey-700  file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-grey-500 file:cursor-pointer file:text-white  rounded-full bg-grey-100 p-[6px] mt-3 " />
+          </label>
+          <div class=" w-64 h-40 shadow-shadow-1 bg-no-repeat rounded-xl bg-center bg-cover max-sm:w-full" id="image_preview"></div>
+        </div>
+
+        <button type="submit" class=" max-sm:block max-sm:mx-auto max-sm:mt-6 max-sm:w-[60%]  text-center text-white bg-primary-500 rounded-2xl tracking-wider px-12  py-3 font-bold text-lg hover:bg-grey-900 transition-colors duration-500">
+          Add</button>
+      </form>
+    </div>
+    <div class=" absolute inset-0 max-md:rounded-none  h-[50%] w-[80%] max-md:h-full max-md:w-full opacity-0 -z-10 top-1/2  rounded-xl left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0004] backdrop-blur-[1px] grid place-content-center transition-opacity duration-300" id="delete_car_modal">
+      <div class="bg-white w-fit px-7 text-center max-xs:w-full h-[250px] rounded-xl  grid place-content-center">
+        <h2 class="font-bold text-grey-700 text-lg">Are you sure you want to delete this car ?</h2>
+        <div class="flex justify-evenly mt-12">
+          <button class="bg-red-300 py-2 px-4 text-white font-bold rounded-xl cursor-pointer hover:opacity-80 transition-opacity" id="yes_button">Yes</button>
+          <button class="bg-blue-300 py-2 px-4 text-white font-bold rounded-xl cursor-pointer hover:opacity-80 transition-opacity" id="no_button">No</button>
         </div>
       </div>
     </div>

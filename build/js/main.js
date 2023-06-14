@@ -14,7 +14,7 @@ checkBoxes.forEach((checkBox) => {
   });
 });
 
-//* Show and hide aside and dropdown and sidebar
+//* Show and hide aside , dropdown , sidebar and cart
 const aside = document.querySelector("aside");
 const filterBtn = document.getElementById("filterBtn");
 const dropDownBtn = document.getElementById("dropDownBtn");
@@ -23,6 +23,8 @@ const sideBar = document.getElementById("sideBar");
 const sideBarOpenBtn = document.getElementById("sideBarOpenBtn");
 const showCart = document.getElementById("cart_toggler");
 const cart = document.getElementById("cart");
+const actions = document.getElementById("actions");
+const actionsBtn = document.getElementById("actionsBtn");
 const showAndHideElement = (element, elementBtn) => {
   elementBtn?.addEventListener("click", () => {
     if (element === cart) {
@@ -42,7 +44,8 @@ const showAndHideElement = (element, elementBtn) => {
       ![element, elementBtn].includes(e.target) &&
       !element.contains(e.target) &&
       !e.target.classList.contains("fa-trash-can") &&
-      e.target.id !== "close_cart"
+      e.target.id !== "close_cart" &&
+      !cart.contains(e.target)
     ) {
       element.classList.remove("show");
       element === sideBar && dropDownBtn.classList.remove("rotate-180");
@@ -53,6 +56,7 @@ showAndHideElement(aside, filterBtn);
 showAndHideElement(dropDown, dropDownBtn);
 showAndHideElement(sideBar, sideBarOpenBtn);
 showAndHideElement(cart, showCart);
+showAndHideElement(actions, actionsBtn);
 
 //* Keep track of the media query to know when to change the dropdown position
 const headerDropDownParent = document.getElementById("headerDropDownParent");
@@ -140,8 +144,7 @@ function search() {
       document.getElementById("search_results").innerHTML = data;
       document.getElementById("search_results").scrollTop = 0;
       addToCart();
-      showProductView();
-      toggleLayer();
+      showCarView();
     })
     .catch(function (error) {
       console.log("An error occurred while processing the search.", error);
@@ -168,7 +171,7 @@ const addToCart = () => {
             return response.json();
           })
           .then(function (data) {
-            document.getElementById("cart_products").innerHTML = data.cars;
+            document.getElementById("cart_cars").innerHTML = data.cars;
             document.getElementById("cart_count").dataset.cart = data.count;
             cart.querySelector("button").classList.contains("hidden") &&
               cart.querySelector("button").classList.remove("hidden");
@@ -224,7 +227,7 @@ const removeFromCart = (buttons) => {
         .then(function (data) {
           data.count === 0 &&
             cart.querySelector("button").classList.add("hidden");
-          document.getElementById("cart_products").innerHTML = data.cars;
+          document.getElementById("cart_cars").innerHTML = data.cars;
           document.getElementById("cart_count").dataset.cart = data.count;
           removeFromCart(document.querySelectorAll("#removeFromCart"));
         })
@@ -245,73 +248,71 @@ if (document.getElementById("cart_count").dataset.cart !== "0") {
   cart.querySelector("button").classList.remove("hidden");
 }
 
-//* Show Product view
-const productView = document.getElementById("product_view");
-const productQuantity = productView.querySelector("#product_quantity");
-const plusBtn = productQuantity.querySelector(".fa-plus");
-const minusBtn = productQuantity.querySelector(".fa-minus");
-const quantity = productQuantity.querySelector("span");
+//* Show car view
+const carView = document.getElementById("car_view");
+const carQuantity = carView.querySelector("#car_quantity");
+const plusBtn = carQuantity.querySelector(".fa-plus");
+const minusBtn = carQuantity.querySelector(".fa-minus");
+const quantity = carQuantity.querySelector("span");
+const carViewName = carView.querySelector("#name");
+const carViewPrice = carView.querySelector("#price");
+const carViewType = carView.querySelector("#type");
+const carViewCapacity = carView.querySelector("#capacity");
+const carViewRecommendation = carView.querySelector("#recommendation");
+const carViewGearShift = carView.querySelector("#gear_shift");
+const carViewImage = carView.querySelector("img");
 
-const showProductView = () => {
-  [...document.getElementById("search_results").children].forEach((product) => {
-    product
-      .querySelector("#show_product_view")
-      .addEventListener("click", () => {
-        productView.querySelector("img").src = product.querySelector("img").src;
+const showCarView = () => {
+  [...document.getElementById("search_results").children].forEach((car) => {
+    car.querySelector("#show_car_view").addEventListener("click", () => {
+      carViewImage.src = car.querySelector("img").src;
 
-        productView.querySelector("#name").textContent =
-          product.querySelector(".carName").innerText;
+      carViewName.textContent = car.querySelector(".carName").innerText;
 
-        productView.querySelector("#price").textContent =
-          product.querySelector(".carPrice").innerText;
+      carViewPrice.textContent = car.querySelector(".carPrice").innerText;
 
-        productView.querySelector("#type").textContent =
-          product.querySelector(".carType").innerText;
+      carViewType.textContent = car.querySelector(".carType").innerText;
 
-        productView.querySelector("#capacity").textContent = `${
-          product.querySelector(".carCapacity").innerText
-        } Seats`;
+      carViewCapacity.textContent = `${
+        car.querySelector(".carCapacity").innerText
+      } Seats`;
 
-        productView.querySelector("#recommendation").textContent = `${
-          product.querySelector(".carRec").innerText
-        }%`;
+      carViewRecommendation.textContent = `${
+        car.querySelector(".carRec").innerText
+      }%`;
 
-        productView.querySelector("#gear_shift").textContent =
-          product.querySelector(".carGearShift").innerText;
+      carViewGearShift.textContent =
+        car.querySelector(".carGearShift").innerText;
 
-        window.scrollTo(0, document.body.scrollHeight);
+      window.scrollTo(0, 0);
 
-        quantity.textContent = 1;
+      quantity.textContent = 1;
 
-        productView.classList.add("show");
-      });
+      carView.classList.add("show");
+    });
   });
 };
-showProductView();
+showCarView();
 
-//* Close product view
-document.getElementById("close_product_view").addEventListener("click", () => {
-  productView.classList.remove("show");
+//* Close car view
+document.getElementById("close_car_view").addEventListener("click", () => {
+  carView.classList.remove("show");
 });
-productView.addEventListener(
-  "click",
-  (e) => e.target === e.currentTarget && productView.classList.remove("show")
-);
 
-//* Product quantity
-plusBtn.addEventListener(
-  "click",
-  () => (quantity.textContent = +quantity.textContent + 1)
-);
+//* car quantity
+plusBtn.addEventListener("click", () => {
+  quantity.textContent = +quantity.textContent + 1;
+  if (+quantity.textContent > 100) quantity.textContent = 100;
+});
 minusBtn.addEventListener("click", () => {
   quantity.textContent = +quantity.textContent - 1;
   if (+quantity.textContent < 1) quantity.textContent = 1;
 });
 
-//* Add to cart from product view
-productView.querySelector("button").addEventListener("click", function () {
+//* Add to cart from car view
+carView.querySelector("button").addEventListener("click", function () {
   if (checkIfUserLoggedIn()) {
-    const carName = productView.querySelector("#name").textContent;
+    const carName = carView.querySelector("#name").textContent;
     const button = this;
     const request = {
       carName,
@@ -337,7 +338,7 @@ productView.querySelector("button").addEventListener("click", function () {
             "<i class='fa-solid fa-cart-plus mr-2 text-lg text-white'></i> Add to Cart";
         }, 1500);
 
-        document.getElementById("cart_products").innerHTML = data.cars;
+        document.getElementById("cart_cars").innerHTML = data.cars;
         document.getElementById("cart_count").dataset.cart = data.count;
         cart.querySelector("button").classList.contains("hidden") &&
           cart.querySelector("button").classList.remove("hidden");
@@ -350,21 +351,110 @@ productView.querySelector("button").addEventListener("click", function () {
   }
 });
 
-//* Toggle Product layer
-const toggleLayer = () => {
-  const products = [...document.getElementById("search_results").children];
+//* Show and hide add new car modal
+const addAndEditCarModal = document.getElementById("add_edit_car_modal");
+const addAndEditCarForm = addAndEditCarModal.querySelector("form");
+const deleteCarModal = document.getElementById("delete_car_modal");
 
-  // SHow the layer when hover on a product
-  products.forEach((product) => {
-    product.addEventListener("mouseover", () => {
-      product.querySelector("#layer").classList.remove("opacity-0");
+const addNewCarBtn = document.getElementById("add_new_car");
+const editCarBtn = document.getElementById("edit_car");
+const deleteCarBtn = document.getElementById("delete_car");
+
+const addAndEditCarCloseBtn = document.getElementById("close");
+
+addNewCarBtn.addEventListener("click", () => {
+  // Change modal title and button text
+  addAndEditCarModal.querySelector("h2").textContent = "Add New Car";
+  addAndEditCarModal.querySelector("button").innerHTML =
+    "  <i class='fa-solid fa-circle-plus  mr-2 text-lg text-white'></i> Add";
+  // Reset the form
+  addAndEditCarForm.reset();
+  addAndEditCarModal.querySelector("#image_preview").style.backgroundImage =
+    "unset";
+  //  Show the 'No chosen file'
+  addAndEditCarForm
+    .querySelector("[name='Image']")
+    .classList.remove("text-transparent");
+  const image = addAndEditCarForm.querySelector("[name='Image']");
+  const getImportedImage = async (img) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.addEventListener("load", (event) => {
+        resolve(event.target.result);
+      });
+      reader.readAsDataURL(img);
+    });
+  };
+  image.addEventListener("change", () => {
+    console.log(image.files[0]);
+    getImportedImage(image.files[0]).then((src) => {
+      addAndEditCarModal.querySelector(
+        "#image_preview"
+      ).style.backgroundImage = `url(${src}`;
     });
   });
-  // Hide the layer when leaving
-  products.forEach((product) => {
-    product.addEventListener("mouseleave", () => {
-      product.querySelector("#layer").classList.add("opacity-0");
-    });
+  // Fix the bg size
+  addAndEditCarModal.querySelector("#image_preview").style.backgroundSize =
+    "cover";
+  addAndEditCarModal.classList.add("show");
+});
+editCarBtn.addEventListener("click", () => {
+  // Change modal title and button text
+  addAndEditCarModal.querySelector("h2").textContent = "Edit Car";
+  addAndEditCarModal.querySelector("button").innerHTML =
+    ' <i class="fa-solid fa-floppy-disk  mr-2 text-lg text-white"></i> Save';
+  // Set the values of the inputs
+  addAndEditCarModal.querySelector(
+    "#image_preview"
+  ).style.backgroundImage = `url(${carViewImage.src}`;
+  addAndEditCarForm.querySelector("[name='Name']").value =
+    carViewName.textContent;
+  addAndEditCarForm.querySelector("[name='Price']").value =
+    +carViewPrice.textContent.replace(/[$,]/g, "");
+  addAndEditCarForm.querySelector("[name='Type']").value =
+    carViewType.textContent;
+  addAndEditCarForm.querySelector("[name='Capacity']").value = parseInt(
+    carViewCapacity.textContent
+  );
+  // Remove the checked from both and add it to the current
+  addAndEditCarForm
+    .querySelectorAll("[type='radio']")
+    .forEach((radio) => radio.removeAttribute("checked"));
+  addAndEditCarForm
+    .querySelector(`#${carViewGearShift.textContent}`)
+    .setAttribute("checked", "checked");
+  // Hide the 'No chosen file'
+  addAndEditCarForm
+    .querySelector("[name='Image']")
+    .classList.add("text-transparent");
+  // Set the value as the title attribute
+  addAndEditCarForm
+    .querySelector("[name='Capacity']")
+    .setAttribute("title", parseInt(carViewCapacity.textContent));
+  // Fix the bg size
+  addAndEditCarModal.querySelector("#image_preview").style.backgroundSize =
+    "contain";
+  // Show modal
+  addAndEditCarModal.classList.add("show");
+});
+deleteCarBtn.addEventListener("click", () => {
+  actions.classList.remove("show");
+  deleteCarModal.classList.add("show");
+});
+deleteCarModal.querySelector("#yes_button").addEventListener("click", () => {
+  [deleteCarModal, carView].forEach((element) => {
+    element.classList.remove("show");
   });
-};
-toggleLayer();
+});
+deleteCarModal.querySelector("#no_button").addEventListener("click", () => {
+  deleteCarModal.classList.remove("show");
+});
+addAndEditCarCloseBtn.addEventListener("click", () => {
+  addAndEditCarModal.classList.remove("show");
+});
+
+document
+  .querySelector("[type='range']")
+  .addEventListener("change", function () {
+    this.setAttribute("title", this.value);
+  });

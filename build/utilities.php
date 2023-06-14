@@ -37,7 +37,7 @@ function rememberedUser($conn)
         return array($userId, $userName);
     }
 }
-function showAllProducts()
+function showAllCars()
 {
     require 'db.php';
     $stmt = $conn->prepare("SELECT * FROM `cars`");
@@ -46,9 +46,9 @@ function showAllProducts()
 
     foreach ($cars as $car) {
         echo " 
-        <div class='rounded-xl bg-white p-5 shadow-shadow-1 relative  overflow-hidden'>
-        <div class='absolute w-full h-full backdrop-blur-[2px] grid place-content-center inset-0 opacity-0 transition-opacity duration-500 show' id='layer'>
-        <i class='fa-solid fa-eye cursor-pointer text-3xl text-white ' id='show_product_view'></i>
+        <div class='group rounded-xl bg-white p-5 shadow-shadow-1 relative  overflow-hidden'>
+        <div class='group-hover:opacity-100 absolute w-full h-full backdrop-blur-[2px] grid place-content-center inset-0 opacity-0 transition-opacity duration-500 show'>
+        <i class='fa-solid fa-eye cursor-pointer text-3xl text-white ' id='show_car_view'></i>
         </div>
                 <div class='mb-3 flex items-center justify-between'>
                 <h4 class='font-bold text-grey-900 carName'>$car->name</h4>
@@ -78,7 +78,7 @@ function showAllProducts()
     // CLose the connection
     $conn = null;
 }
-function countProductsByType($value)
+function countCarsByType($value)
 {
     require 'db.php';
     $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE type = :value ");
