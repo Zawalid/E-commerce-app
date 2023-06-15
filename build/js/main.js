@@ -1,10 +1,83 @@
 "use strict";
+//! Utility Functions
+
 //* Check if user is logged in
 const userName = document.getElementById("userName");
 const checkIfUserLoggedIn = () => {
   if (userName.textContent === "Guest") return false;
   return true;
 };
+
+//* Get the uploaded image
+const getUploadedImage = async (img) => {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", (event) => {
+      resolve(event.target.result);
+    });
+    reader.readAsDataURL(img);
+  });
+};
+
+//* Preview the image
+const previewImage = () => {
+  uploadedImage.addEventListener("change", () => {
+    try {
+      if (!uploadedImage?.files[0].type.startsWith("image/")) {
+        document.querySelector("#type_error").classList.remove("opacity-0");
+        addAndEditCarModal.querySelector(
+          "#image_preview"
+        ).style.backgroundImage = "unset";
+        return;
+      } else {
+        document.querySelector("#type_error").classList.add("opacity-0");
+        addAndEditCarForm
+          .querySelector("[name='Image']")
+          .classList.remove("text-transparent");
+        getUploadedImage(uploadedImage.files[0]).then((src) => {
+          addAndEditCarModal.querySelector(
+            "#image_preview"
+          ).style.backgroundImage = `url(${src}`;
+        });
+      }
+    } catch (err) {}
+  });
+};
+
+//* Response actions after sending a request
+const responseActions = (data) => {
+  document.getElementById("search_results").innerHTML = data;
+  showCarView();
+};
+
+//* Show error
+const showError = (errorModal) => {
+  errorModal.style.top = "0";
+  setTimeout(() => {
+    errorModal.style.top = "-70px";
+  }, 3200);
+};
+
+//* Check for empty input fields
+const checkForEmptyFields = (inputs) => {
+  const emptyFieldsError = document.querySelector("#empty_fields");
+  const fields = emptyFieldsError.querySelector("#fields");
+  fields.textContent = "";
+  const emptyFields = inputs.filter((input) => input.value == "");
+  emptyFields.forEach((field) => {
+    fields.textContent += `${field.name} ${
+      emptyFields.length > 1 &&
+      emptyFields.indexOf(field) != emptyFields.length - 1
+        ? ", "
+        : ""
+    }`;
+    field.classList.add("field_error");
+    setTimeout(() => field.classList.remove("field_error"), 3200);
+  });
+  showError(emptyFieldsError);
+};
+
+//! Main Code
 
 //* Filter Checkboxes
 const checkBoxes = document.querySelectorAll("#checkBox");
@@ -141,10 +214,9 @@ function search() {
       return response.text();
     })
     .then(function (data) {
-      document.getElementById("search_results").innerHTML = data;
+      responseActions(data);
       document.getElementById("search_results").scrollTop = 0;
       addToCart();
-      showCarView();
     })
     .catch(function (error) {
       console.log("An error occurred while processing the search.", error);
@@ -351,56 +423,17 @@ carView.querySelector("button").addEventListener("click", function () {
   }
 });
 
-//* Show and hide add new car modal
+//* car modal
 const addAndEditCarModal = document.getElementById("add_edit_car_modal");
 const addAndEditCarForm = addAndEditCarModal.querySelector("form");
 const deleteCarModal = document.getElementById("delete_car_modal");
-
 const addNewCarBtn = document.getElementById("add_new_car");
 const editCarBtn = document.getElementById("edit_car");
 const deleteCarBtn = document.getElementById("delete_car");
-
 const uploadedImage = addAndEditCarForm.querySelector("[name='Image']");
-
 const addAndEditCarCloseBtn = document.getElementById("close");
-const getImportedImage = async (img) => {
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.addEventListener("load", (event) => {
-      resolve(event.target.result);
-    });
-    reader.readAsDataURL(img);
-  });
-};
-const previewImage = () => {
-  uploadedImage.addEventListener("change", () => {
-    try {
-      if (!uploadedImage?.files[0].type.startsWith("image/")) {
-        document.querySelector("#type_error").classList.remove("opacity-0");
-        addAndEditCarModal.querySelector(
-          "#image_preview"
-        ).style.backgroundImage = "unset";
-        return;
-      } else {
-        document.querySelector("#type_error").classList.add("opacity-0");
-        addAndEditCarForm
-          .querySelector("[name='Image']")
-          .classList.remove("text-transparent");
-        getImportedImage(uploadedImage.files[0]).then((src) => {
-          addAndEditCarModal.querySelector(
-            "#image_preview"
-          ).style.backgroundImage = `url(${src}`;
-        });
-      }
-    } catch (err) {}
-  });
-};
-const responseActions = (data) => {
-  console.log(data);
-  document.getElementById("search_results").innerHTML = data;
-  addToCart();
-  showCarView();
-};
+
+//* Add new car
 addNewCarBtn.addEventListener("click", () => {
   // Change modal title and button text and
   addAndEditCarModal.querySelector("h2").textContent = "Add New Car";
@@ -426,6 +459,8 @@ addNewCarBtn.addEventListener("click", () => {
   // Show the modal
   addAndEditCarModal.classList.add("show");
 });
+
+//* Edit car
 editCarBtn.addEventListener("click", () => {
   // Change modal title and button text and
   addAndEditCarModal.querySelector("h2").textContent = "Edit Car";
@@ -468,12 +503,14 @@ editCarBtn.addEventListener("click", () => {
   // Show modal
   addAndEditCarModal.classList.add("show");
 });
+
+//* Delete car
 deleteCarBtn.addEventListener("click", () => {
   actions.classList.remove("show");
   deleteCarModal.classList.add("show");
 });
 deleteCarModal.querySelector("#yes_button").addEventListener("click", () => {
-  fetch("files.php", {
+  fetch("adminPrivileges.php", {
     method: "DELETE",
     body: JSON.stringify({ carName: carViewName.textContent }),
   })
@@ -493,43 +530,8 @@ deleteCarModal.querySelector("#yes_button").addEventListener("click", () => {
 deleteCarModal.querySelector("#no_button").addEventListener("click", () => {
   deleteCarModal.classList.remove("show");
 });
-addAndEditCarCloseBtn.addEventListener("click", () => {
-  addAndEditCarModal.classList.remove("show");
-});
 
-//* Set the title attribute of the range input to the value of the input
-document
-  .querySelector("[type='range']")
-  .addEventListener("change", function () {
-    this.setAttribute("title", this.value);
-  });
-
-//* Show error
-const showError = (errorModal) => {
-  errorModal.style.top = "0";
-  setTimeout(() => {
-    errorModal.style.top = "-70px";
-  }, 3200);
-};
-//* Check for empty input fields
-const checkForEmptyFields = (inputs) => {
-  const emptyFieldsError = document.querySelector("#empty_fields");
-  const fields = emptyFieldsError.querySelector("#fields");
-  fields.textContent = "";
-  const emptyFields = inputs.filter((input) => input.value == "");
-  emptyFields.forEach((field) => {
-    fields.textContent += `${field.name} ${
-      emptyFields.length > 1 &&
-      emptyFields.indexOf(field) != emptyFields.length - 1
-        ? ", "
-        : ""
-    }`;
-    field.classList.add("field_error");
-    setTimeout(() => field.classList.remove("field_error"), 3200);
-  });
-  showError(emptyFieldsError);
-};
-
+//* Send the form data to adminPrivileges.php
 addAndEditCarForm.addEventListener("submit", function (e) {
   e.preventDefault();
   const sendFormData = (func) => {
@@ -552,7 +554,7 @@ addAndEditCarForm.addEventListener("submit", function (e) {
       const data = new FormData(this);
       this.querySelector("[name='action']").value === "edit" &&
         data.append("carName", carViewName.textContent);
-      fetch("files.php", {
+      fetch("adminPrivileges.php", {
         method: "POST",
         body: data,
       })
@@ -577,6 +579,10 @@ addAndEditCarForm.addEventListener("submit", function (e) {
     console.log("Editing");
     sendFormData((data) => {
       responseActions(data);
+      // Update the cart
+      addToCart();
+
+      // Update the car view
       const newData = new FormData(this);
       carViewName.textContent = newData.get("Name");
       carViewPrice.textContent = `$${newData.get("Price")}`;
@@ -586,9 +592,20 @@ addAndEditCarForm.addEventListener("submit", function (e) {
       carViewImage.src = addAndEditCarModal
         .querySelector("#image_preview")
         .style.backgroundImage.slice(5, -2);
+      // Close the form
       setTimeout(() => {
         addAndEditCarModal.classList.remove("show");
       }, 700);
     });
   }
+});
+
+//* Set the little box text content to the value of the range input
+document.querySelector("[type='range']").addEventListener("input", function () {
+  document.querySelector("#capacityValue").textContent = this.value;
+});
+
+//* Close the modal
+addAndEditCarCloseBtn.addEventListener("click", () => {
+  addAndEditCarModal.classList.remove("show");
 });

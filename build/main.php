@@ -434,9 +434,10 @@ function showProfilePicture()
           </label>
         </div>
         <div class="flex max-sm:flex-col gap-4 ">
-          <label class="pb-2 font-semibold text-grey-900 flex-1 sm:flex-col sm:flex sm:justify-between ">
+          <label class="pb-2 font-semibold text-grey-900 flex-1 sm:flex-col sm:flex sm:justify-between relative">
             Capacity (2-10)
-            <input type="range" min="2" max="10" name="Capacity" step="1" title="5" class="max-sm:mt-6 outline-none bg-transparent cursor-pointer appearance-none w-full ">
+            <input type="range" min="2" max="10" value="5" name="Capacity" step="1" class="max-sm:mt-6 outline-none bg-transparent cursor-pointer appearance-none w-full ">
+            <div id="capacityValue" class="absolute -translate-x-1/2 top-4 left-1/2 w-10 py-1 text-center text-grey-700 rounded-md shadow-shadow-1 text-xs">5</div>
           </label>
           <div class="flex-1">
             <label class="font-semibold text-grey-900 block mb-6">Transmission</label>

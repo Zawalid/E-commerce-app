@@ -7,7 +7,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   session_start();
   $userId = $_SESSION['userId'];
 
-
   // Add car
   function addCar($conn, $userId, $quantity, $carName)
   {
