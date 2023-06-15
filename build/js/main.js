@@ -259,7 +259,7 @@ const carViewPrice = carView.querySelector("#price");
 const carViewType = carView.querySelector("#type");
 const carViewCapacity = carView.querySelector("#capacity");
 const carViewRecommendation = carView.querySelector("#recommendation");
-const carViewGearShift = carView.querySelector("#gear_shift");
+const carViewTransmission = carView.querySelector("#gear_shift");
 const carViewImage = carView.querySelector("img");
 
 const showCarView = () => {
@@ -281,8 +281,8 @@ const showCarView = () => {
         car.querySelector(".carRec").innerText
       }%`;
 
-      carViewGearShift.textContent =
-        car.querySelector(".carGearShift").innerText;
+      carViewTransmission.textContent =
+        car.querySelector(".carTransmission").innerText;
 
       window.scrollTo(0, 0);
 
@@ -360,49 +360,81 @@ const addNewCarBtn = document.getElementById("add_new_car");
 const editCarBtn = document.getElementById("edit_car");
 const deleteCarBtn = document.getElementById("delete_car");
 
-const addAndEditCarCloseBtn = document.getElementById("close");
+const uploadedImage = addAndEditCarForm.querySelector("[name='Image']");
 
+const addAndEditCarCloseBtn = document.getElementById("close");
+const getImportedImage = async (img) => {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", (event) => {
+      resolve(event.target.result);
+    });
+    reader.readAsDataURL(img);
+  });
+};
+const previewImage = () => {
+  uploadedImage.addEventListener("change", () => {
+    try {
+      if (!uploadedImage?.files[0].type.startsWith("image/")) {
+        document.querySelector("#type_error").classList.remove("opacity-0");
+        addAndEditCarModal.querySelector(
+          "#image_preview"
+        ).style.backgroundImage = "unset";
+        return;
+      } else {
+        document.querySelector("#type_error").classList.add("opacity-0");
+        addAndEditCarForm
+          .querySelector("[name='Image']")
+          .classList.remove("text-transparent");
+        getImportedImage(uploadedImage.files[0]).then((src) => {
+          addAndEditCarModal.querySelector(
+            "#image_preview"
+          ).style.backgroundImage = `url(${src}`;
+        });
+      }
+    } catch (err) {}
+  });
+};
+const responseActions = (data) => {
+  console.log(data);
+  document.getElementById("search_results").innerHTML = data;
+  addToCart();
+  showCarView();
+};
 addNewCarBtn.addEventListener("click", () => {
-  // Change modal title and button text
+  // Change modal title and button text and
   addAndEditCarModal.querySelector("h2").textContent = "Add New Car";
   addAndEditCarModal.querySelector("button").innerHTML =
     "  <i class='fa-solid fa-circle-plus  mr-2 text-lg text-white'></i> Add";
+
+  // Set the action to add
+  addAndEditCarForm.querySelector("[name='action']").value = "add";
+
   // Reset the form
   addAndEditCarForm.reset();
   addAndEditCarModal.querySelector("#image_preview").style.backgroundImage =
     "unset";
+
   //  Show the 'No chosen file'
   addAndEditCarForm
     .querySelector("[name='Image']")
     .classList.remove("text-transparent");
-  const image = addAndEditCarForm.querySelector("[name='Image']");
-  const getImportedImage = async (img) => {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.addEventListener("load", (event) => {
-        resolve(event.target.result);
-      });
-      reader.readAsDataURL(img);
-    });
-  };
-  image.addEventListener("change", () => {
-    console.log(image.files[0]);
-    getImportedImage(image.files[0]).then((src) => {
-      addAndEditCarModal.querySelector(
-        "#image_preview"
-      ).style.backgroundImage = `url(${src}`;
-    });
-  });
-  // Fix the bg size
-  addAndEditCarModal.querySelector("#image_preview").style.backgroundSize =
-    "cover";
+
+  // Preview the image
+  previewImage();
+
+  // Show the modal
   addAndEditCarModal.classList.add("show");
 });
 editCarBtn.addEventListener("click", () => {
-  // Change modal title and button text
+  // Change modal title and button text and
   addAndEditCarModal.querySelector("h2").textContent = "Edit Car";
   addAndEditCarModal.querySelector("button").innerHTML =
     ' <i class="fa-solid fa-floppy-disk  mr-2 text-lg text-white"></i> Save';
+
+  // Set the action to edit
+  addAndEditCarForm.querySelector("[name='action']").value = "edit";
+
   // Set the values of the inputs
   addAndEditCarModal.querySelector(
     "#image_preview"
@@ -421,7 +453,7 @@ editCarBtn.addEventListener("click", () => {
     .querySelectorAll("[type='radio']")
     .forEach((radio) => radio.removeAttribute("checked"));
   addAndEditCarForm
-    .querySelector(`#${carViewGearShift.textContent}`)
+    .querySelector(`#${carViewTransmission.textContent}`)
     .setAttribute("checked", "checked");
   // Hide the 'No chosen file'
   addAndEditCarForm
@@ -431,9 +463,8 @@ editCarBtn.addEventListener("click", () => {
   addAndEditCarForm
     .querySelector("[name='Capacity']")
     .setAttribute("title", parseInt(carViewCapacity.textContent));
-  // Fix the bg size
-  addAndEditCarModal.querySelector("#image_preview").style.backgroundSize =
-    "contain";
+  // Preview the image
+  previewImage();
   // Show modal
   addAndEditCarModal.classList.add("show");
 });
@@ -442,6 +473,19 @@ deleteCarBtn.addEventListener("click", () => {
   deleteCarModal.classList.add("show");
 });
 deleteCarModal.querySelector("#yes_button").addEventListener("click", () => {
+  fetch("files.php", {
+    method: "DELETE",
+    body: JSON.stringify({ carName: carViewName.textContent }),
+  })
+    .then(function (response) {
+      return response.text();
+    })
+    .then((data) => {
+      responseActions(data);
+    })
+    .catch(function (error) {
+      console.log("An error occurred while processing the request ", error);
+    });
   [deleteCarModal, carView].forEach((element) => {
     element.classList.remove("show");
   });
@@ -453,8 +497,98 @@ addAndEditCarCloseBtn.addEventListener("click", () => {
   addAndEditCarModal.classList.remove("show");
 });
 
+//* Set the title attribute of the range input to the value of the input
 document
   .querySelector("[type='range']")
   .addEventListener("change", function () {
     this.setAttribute("title", this.value);
   });
+
+//* Show error
+const showError = (errorModal) => {
+  errorModal.style.top = "0";
+  setTimeout(() => {
+    errorModal.style.top = "-70px";
+  }, 3200);
+};
+//* Check for empty input fields
+const checkForEmptyFields = (inputs) => {
+  const emptyFieldsError = document.querySelector("#empty_fields");
+  const fields = emptyFieldsError.querySelector("#fields");
+  fields.textContent = "";
+  const emptyFields = inputs.filter((input) => input.value == "");
+  emptyFields.forEach((field) => {
+    fields.textContent += `${field.name} ${
+      emptyFields.length > 1 &&
+      emptyFields.indexOf(field) != emptyFields.length - 1
+        ? ", "
+        : ""
+    }`;
+    field.classList.add("field_error");
+    setTimeout(() => field.classList.remove("field_error"), 3200);
+  });
+  showError(emptyFieldsError);
+};
+
+addAndEditCarForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const sendFormData = (func) => {
+    const inputs = [...this.querySelectorAll("input")];
+    addAndEditCarModal.querySelector("#image_preview").style.backgroundImage !==
+      "unset" && inputs.pop();
+    if (inputs.some((input) => input.value == "")) {
+      checkForEmptyFields(inputs);
+    } else if (
+      addAndEditCarModal.querySelector("#image_preview").style
+        .backgroundImage === "unset"
+    ) {
+      if (!uploadedImage.files[0].type.startsWith("image/")) {
+        document.querySelector("#type_error").classList.remove("opacity-0");
+        addAndEditCarModal.querySelector(
+          "#image_preview"
+        ).style.backgroundImage = "unset";
+      }
+    } else {
+      const data = new FormData(this);
+      this.querySelector("[name='action']").value === "edit" &&
+        data.append("carName", carViewName.textContent);
+      fetch("files.php", {
+        method: "POST",
+        body: data,
+      })
+        .then(function (response) {
+          return response.text();
+        })
+        .then((data) => {
+          func(data);
+        })
+        .catch(function (error) {
+          console.log("An error occurred while processing the request ", error);
+        });
+    }
+  };
+  if (this.querySelector("[name='action']").value === "add") {
+    console.log("Adding");
+    sendFormData((data) => {
+      responseActions(data);
+      addAndEditCarModal.classList.remove("show");
+    });
+  } else if (this.querySelector("[name='action']").value === "edit") {
+    console.log("Editing");
+    sendFormData((data) => {
+      responseActions(data);
+      const newData = new FormData(this);
+      carViewName.textContent = newData.get("Name");
+      carViewPrice.textContent = `$${newData.get("Price")}`;
+      carViewType.textContent = newData.get("Type");
+      carViewCapacity.textContent = `${newData.get("Capacity")} Seats`;
+      carViewTransmission.textContent = newData.get("Transmission");
+      carViewImage.src = addAndEditCarModal
+        .querySelector("#image_preview")
+        .style.backgroundImage.slice(5, -2);
+      setTimeout(() => {
+        addAndEditCarModal.classList.remove("show");
+      }, 700);
+    });
+  }
+});

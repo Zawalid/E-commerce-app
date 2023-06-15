@@ -40,7 +40,7 @@ function rememberedUser($conn)
 function showAllCars()
 {
     require 'db.php';
-    $stmt = $conn->prepare("SELECT * FROM `cars`");
+    $stmt = $conn->prepare("SELECT * FROM cars order by id desc");
     $stmt->execute();
     $cars = $stmt->fetchAll(PDO::FETCH_OBJ);
 
@@ -48,7 +48,7 @@ function showAllCars()
         echo " 
         <div class='group rounded-xl bg-white p-5 shadow-shadow-1 relative  overflow-hidden'>
         <div class='group-hover:opacity-100 absolute w-full h-full backdrop-blur-[2px] grid place-content-center inset-0 opacity-0 transition-opacity duration-500 show'>
-        <i class='fa-solid fa-eye cursor-pointer text-3xl text-white ' id='show_car_view'></i>
+        <i class='fa-solid fa-eye cursor-pointer text-3xl text-white drop-shadow-[0px_0px_4px_#0005]' id='show_car_view'></i>
         </div>
                 <div class='mb-3 flex items-center justify-between'>
                 <h4 class='font-bold text-grey-900 carName'>$car->name</h4>
@@ -66,7 +66,7 @@ function showAllCars()
                     </span>
                     <div class='flex items-center'>
                         <img src='imgs/icons8-gear-stick-50.png' alt='' class='mr-1 h-5 w-5' />
-                        <span class='font-semibold text-grey-500 carGearShift'>$car->gearShift</span>
+                        <span class='font-semibold text-grey-500 carTransmission'>$car->transmission</span>
                     </div>
                     </div>
                     <div class='flex items-center justify-between'>
@@ -167,4 +167,12 @@ function countCartItems($conn, $userId)
         $results = $stmt->fetch(PDO::FETCH_ASSOC);
         return $results['Count'];
     }
+}
+// Get car id
+function getCarId($conn, $carName)
+{
+    $stmt = $conn->prepare('SELECT * from cars WHERE name = :name');
+    $stmt->execute([':name' => $carName]);
+    $results = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $results['id'];
 }

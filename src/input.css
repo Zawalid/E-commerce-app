@@ -22,13 +22,13 @@
     @apply overflow-visible;
   }
   #sideBar.show {
-    @apply translate-y-0;
+    @apply translate-x-0;
   }
   .showPasswordIcon {
     @apply absolute right-3 top-[62%] -translate-y-1/2 cursor-pointer text-sm text-nobleDark300;
   }
   #car_view.show {
-    @apply z-30 opacity-100 ;
+    @apply z-30 opacity-100;
   }
   #actions.show {
     @apply z-10  h-[180px] opacity-100;
@@ -39,9 +39,12 @@
   #delete_car_modal.show {
     @apply z-10 opacity-100;
   }
+  input.field_error {
+    @apply outline outline-1 outline-red-300;
+  }
 }
 @media (max-width: 768px) {
-  body:has(#sideBar.show, #cart.show,#car_view.show) {
+  body:has(#sideBar.show, #cart.show, #car_view.show) {
     @apply h-screen overflow-hidden;
   }
   body:has(#sideBar.show)::before {

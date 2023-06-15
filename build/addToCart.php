@@ -7,14 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   session_start();
   $userId = $_SESSION['userId'];
 
-  // Get car id
-  function getCarId($conn, $carName)
-  {
-    $stmt = $conn->prepare('SELECT * from cars WHERE name = :name');
-    $stmt->execute([':name' => $carName]);
-    $results = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $results['id'];
-  }
+
   // Add car
   function addCar($conn, $userId, $quantity, $carName)
   {

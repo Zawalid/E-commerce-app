@@ -135,7 +135,7 @@ function showProfilePicture()
     <button class="hidden mx-auto px-[33%]  mt-4 text-center text-white bg-primary-500 rounded-xl py-3 font-bold text-sm hover:bg-grey-900 transition-colors duration-500">Checkout</button>
 
   </div>
-  <div class="absolute left-0 top-0 z-10 flex h-screen  -translate-y-full flex-col justify-between bg-white px-5 py-7 shadow-shadow-1 transition-transform duration-500" id="sideBar">
+  <div class="absolute left-0 top-0 z-10 flex h-screen  -translate-x-full flex-col justify-between bg-white px-5 py-7 shadow-shadow-1 transition-transform duration-500" id="sideBar">
     <div class="flex flex-col">
       <a href="#" class="mb-8 text-lg font-semibold text-grey-500 transition-colors duration-500 hover:text-grey-900 hover:before:opacity-100">
         <i class="fa-solid fa-ticket-simple mr-3"></i>
@@ -416,36 +416,37 @@ function showProfilePicture()
         </div>
       </div>
     </div>
-    <div class="max-md:overflow-y-scroll absolute bg-white w-0 h-0 overflow-hidden p-0 transition-all duration-500  top-1/2 gap-10 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl  max-md:flex-col  max-md:gap-0 max-md:rounded-none" id="add_edit_car_modal">
+    <div class=" max-md:overflow-y-scroll absolute bg-white w-0 h-0 overflow-hidden p-0 transition-all duration-500  top-1/2 gap-10 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl  max-md:flex-col  max-md:gap-0 max-md:rounded-none" id="add_edit_car_modal">
       <div class="flex justify-between items-center pb-7 border-b border-border-color">
         <h2 class="text-2xl font-bold text-grey-900">Add New Car</h2>
         <i class="fa-solid fa-xmark text-2xl  text-grey-600 cursor-pointer" id="close"></i>
       </div>
       <form action="">
+        <input type="hidden" name="action" value="add">
         <div class="flex max-sm:flex-col gap-4 my-7">
           <label class="font-semibold text-grey-900 flex-1">
             Name
-            <input type="text" placeholder="Name" required name="Name" class="mt-3 w-full rounded-full bg-grey-100 py-3 px-5 font-semibold text-grey-700 focus:outline-none" />
+            <input type="text" placeholder="Name" name="Name" class="mt-3 w-full rounded-full bg-grey-100 py-3 px-5 font-semibold text-grey-700 focus:outline-none" />
           </label>
           <label class="font-semibold text-grey-900 flex-1">
             Type
-            <input type="text" placeholder="Type" required name="Type" class="mt-3 w-full rounded-full bg-grey-100 py-3 px-5 font-semibold text-grey-700 focus:outline-none" />
+            <input type="text" placeholder="Type" name="Type" class="mt-3 w-full rounded-full bg-grey-100 py-3 px-5 font-semibold text-grey-700 focus:outline-none" />
           </label>
         </div>
         <div class="flex max-sm:flex-col gap-4 ">
           <label class="pb-2 font-semibold text-grey-900 flex-1 sm:flex-col sm:flex sm:justify-between ">
             Capacity (2-10)
-            <input type="range" min="2" required max="10" name="Capacity" step="1" title="5" class="max-sm:mt-6 outline-none bg-transparent cursor-pointer appearance-none w-full ">
+            <input type="range" min="2" max="10" name="Capacity" step="1" title="5" class="max-sm:mt-6 outline-none bg-transparent cursor-pointer appearance-none w-full ">
           </label>
           <div class="flex-1">
             <label class="font-semibold text-grey-900 block mb-6">Transmission</label>
             <div class="flex justify-between">
               <label class="font-semibold text-grey-900  flex items-center">
-                <input type="radio" id="Manual" required name="gearShift" class="text-grey-700 w-5 cursor-pointer h-5 mr-3" checked>
+                <input type="radio" id="Manual" value="Manual" name="Transmission" class="text-grey-700 w-5 cursor-pointer h-5 mr-3" checked>
                 Manual
               </label>
               <label class="font-semibold text-grey-900 flex items-center">
-                <input type="radio" id="Automatic" required name="gearShift" class="text-grey-700 w-5 cursor-pointer h-5 mr-3">
+                <input type="radio" id="Automatic" value="Automatic" name="Transmission" class="text-grey-700 w-5 cursor-pointer h-5 mr-3">
                 Automatic
               </label>
             </div>
@@ -453,16 +454,18 @@ function showProfilePicture()
         </div>
         <label class="font-semibold text-grey-900 flex-1 block my-7">
           Price ($)
-          <input type="number" placeholder="Price" required name="Price" class="mt-3 w-full rounded-full bg-grey-100 py-3 px-5 font-semibold text-grey-700 focus:outline-none" />
+          <input type="number" placeholder="Price" name="Price" class="mt-3 w-full rounded-full bg-grey-100 py-3 px-5 font-semibold text-grey-700 focus:outline-none" />
         </label>
         <div class="flex max-sm:flex-col gap-4 items-start">
           <label class="font-semibold text-grey-900 flex-1 max-sm:w-full">
             Image
-            <input type="file" name="Image" required class="block w-full text-sm text-grey-700  file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-grey-500 file:cursor-pointer file:text-white  rounded-full bg-grey-100 p-[6px] mt-3 " />
+            <input type="file" name="Image" accept="image/*" multiple="false" class=" block w-full text-sm text-grey-700  file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-grey-500 file:cursor-pointer file:text-white  rounded-full bg-grey-100 p-[6px] mt-3 " />
+            <p class="text-sm font-bold text-red-300 mt-4 opacity-0" id="type_error">
+              Please select an image file (e.g., JPG, PNG, SVG)
+            </p>
           </label>
-          <div class=" w-64 h-40 shadow-shadow-1 bg-no-repeat rounded-xl bg-center bg-cover max-sm:w-full" id="image_preview"></div>
+          <div class=" w-64 h-40 shadow-shadow-1 bg-no-repeat rounded-xl bg-center bg-contain max-sm:w-full" id="image_preview"></div>
         </div>
-
         <button type="submit" class=" max-sm:block max-sm:mx-auto max-sm:mt-6 max-sm:w-[60%]  text-center text-white bg-primary-500 rounded-2xl tracking-wider px-12  py-3 font-bold text-lg hover:bg-grey-900 transition-colors duration-500">
           Add</button>
       </form>
@@ -477,6 +480,18 @@ function showProfilePicture()
       </div>
     </div>
   </div>
+  <div class="absolute -top-[70px] left-0 w-full p-5 bg-red-300 transition-all duration-500 z-40" id="empty_fields">
+    <p class="text-white text-lg font-bold text-center">
+      Please fill out all required fields. Missing fields: [
+      <span id="fields"></span> ]
+    </p>
+  </div>
 </body>
 
 </html>
+<!-- 
+  <p class="error_content">
+        Sorry, the current password you entered is incorrect. Please check and
+        try again.
+      </p>
+ -->
