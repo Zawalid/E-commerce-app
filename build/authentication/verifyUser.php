@@ -25,7 +25,7 @@ if (rememberedUser($conn)) {
             foreach ($data as $key) {
                 $_SESSION['userName'] = ($key['First Name']);
                 $_SESSION['userId'] = ($key['id']);
-
+                $_SESSION['isAdmin'] = ($key['is_admin']);
                 $sql = 'UPDATE users SET Token = :token WHERE id = :id';
                 $stmt = $conn->prepare($sql);
                 $token = bin2hex(random_bytes(32));

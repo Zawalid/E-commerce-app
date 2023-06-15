@@ -1,10 +1,4 @@
 "use strict";
-// const rememberMe = document.getElementById("rememberMe");
-// const illustration = document.getElementById("illustration");
-
-// rememberMe.addEventListener("click", () =>
-//   rememberMe.classList.toggle("checkedRememberMe")
-// );
 
 //* Show password
 const showPassword = () => {
@@ -35,3 +29,13 @@ const showPassword = () => {
   });
 };
 showPassword();
+
+const forgotPassword = document.getElementById("forgot_password");
+const forgotPasswordModal = document.getElementById("forgot_password_modal");
+
+forgotPassword.addEventListener("click", () => {
+  forgotPasswordModal.classList.add("show");
+});
+forgotPasswordModal.querySelector("button").addEventListener("click", () => {
+  forgotPasswordModal.classList.remove("show");
+});

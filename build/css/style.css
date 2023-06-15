@@ -649,7 +649,8 @@ aside.show {
   }
 }
 
-#delete_car_modal.show {
+#forgot_password_modal.show,
+  #delete_car_modal.show {
   z-index: 10;
   opacity: 1;
 }
@@ -938,6 +939,10 @@ input.field_error {
   height: 1px;
 }
 
+.h-\[200px\] {
+  height: 200px;
+}
+
 .h-\[250px\] {
   height: 250px;
 }
@@ -980,6 +985,10 @@ input.field_error {
 
 .w-1\/2 {
   width: 50%;
+}
+
+.w-10 {
+  width: 2.5rem;
 }
 
 .w-12 {
@@ -1042,6 +1051,10 @@ input.field_error {
   width: 300px;
 }
 
+.w-\[400px\] {
+  width: 400px;
+}
+
 .w-\[500px\] {
   width: 500px;
 }
@@ -1061,10 +1074,6 @@ input.field_error {
 
 .w-full {
   width: 100%;
-}
-
-.w-10 {
-  width: 2.5rem;
 }
 
 .flex-1 {
@@ -1095,16 +1104,6 @@ input.field_error {
 
 .-translate-y-1\/2 {
   --tw-translate-y: -50%;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.translate-x-0 {
-  --tw-translate-x: 0px;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.translate-x-1\/2 {
-  --tw-translate-x: 50%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -1216,6 +1215,10 @@ input.field_error {
   gap: 2.25rem;
 }
 
+.self-end {
+  align-self: flex-end;
+}
+
 .overflow-hidden {
   overflow: hidden;
 }
@@ -1246,10 +1249,6 @@ input.field_error {
 
 .rounded-xl {
   border-radius: 0.75rem;
-}
-
-.rounded {
-  border-radius: 0.25rem;
 }
 
 .rounded-bl-\[30px\] {
@@ -1551,6 +1550,10 @@ input.field_error {
 
 .pb-3 {
   padding-bottom: 0.75rem;
+}
+
+.pb-4 {
+  padding-bottom: 1rem;
 }
 
 .pb-5 {
@@ -2431,4 +2434,3 @@ input[type="range"]:focus::-webkit-slider-thumb {
     flex-direction: row;
   }
 }
-

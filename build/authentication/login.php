@@ -17,7 +17,7 @@ session_start();
   <script defer src="../js/authentication.js"></script>
 </head>
 
-<body class="flex min-h-screen flex-col bg-nobleDark700 font-Jakarta md:flex-row">
+<body class="flex min-h-screen flex-col bg-nobleDark700 font-Jakarta md:flex-row relative">
   <section class="flex min-h-screen flex-col justify-between gap-12 bg-nobleDark700 p-8 max-xs:p-4 lg:w-1/2">
     <a href="../main.php">
       <img src="../imgs/Logo.svg" alt="" class="w-7 cursor-pointer" />
@@ -53,7 +53,7 @@ session_start();
             </div>
             <span class="text-nobleDark200 max-xs:text-sm">Remember me</span>
           </div>
-          <a class="bg-gradient-to-br from-Blue to-Green500 bg-clip-text font-semibold text-transparent max-xs:text-sm" href="#">Forgot password?</a>
+          <a class="bg-gradient-to-br from-Blue to-Green500 bg-clip-text font-semibold text-transparent max-xs:text-sm" href="#" id="forgot_password">Forgot password?</a>
         </div>
         <input type="submit" name="login" value="Login" class="cursor-pointer text-l w-full rounded-2xl bg-stemGreen500 py-3 font-bold transition hover:bg-stemGreen400 focus:bg-stemGreen300">
       </form>
@@ -67,14 +67,14 @@ session_start();
         <span class="h-[1px] w-full flex-1 bg-nobleDark400"></span>
       </div>
       <div class="flex justify-between gap-6 max-xs:flex-col md:flex-col xl:flex-row">
-        <button class="flex w-1/2 cursor-pointer items-center justify-center gap-3 rounded-xl bg-nobleDark600 py-3 text-nobleDark400 transition-colors duration-500 hover:bg-nobleDark500 focus:bg-nobleDark400 focus:text-nobleDark200 max-xs:w-full md:w-full xl:w-1/2">
+        <a href="https://accounts.google.com/" class="flex w-1/2 cursor-pointer items-center justify-center gap-3 rounded-xl bg-nobleDark600 py-3 text-nobleDark400 transition-colors duration-500 hover:bg-nobleDark500 focus:bg-nobleDark400 focus:text-nobleDark200 max-xs:w-full md:w-full xl:w-1/2">
           <img src="../imgs/Google Logo.svg" alt="" />
           <span class="font-semibold">Google Account</span>
-        </button>
-        <button class="flex w-1/2 cursor-pointer items-center justify-center gap-3 rounded-xl bg-nobleDark600 py-3 text-nobleDark400 transition-colors duration-500 hover:bg-nobleDark500 focus:bg-nobleDark400 focus:text-nobleDark200 max-xs:w-full md:w-full xl:w-1/2">
+        </a>
+        <a href="https://appleid.apple.com/account/home" class="flex w-1/2 cursor-pointer items-center justify-center gap-3 rounded-xl bg-nobleDark600 py-3 text-nobleDark400 transition-colors duration-500 hover:bg-nobleDark500 focus:bg-nobleDark400 focus:text-nobleDark200 max-xs:w-full md:w-full xl:w-1/2">
           <img src="../imgs/Apple Logo.svg" alt="" />
           <span class="font-semibold">Apple Account</span>
-        </button>
+        </a>
       </div>
     </div>
     <div>
@@ -83,6 +83,14 @@ session_start();
     </div>
   </section>
   <section class="w-1/2 rounded-bl-[30px] rounded-tl-[30px] bg-abstract-4 bg-cover bg-center transition-all duration-1000 max-md:hidden" id="illustration"></section>
+  <div class=" absolute inset-0 max-md:rounded-none   h-full w-full opacity-0 -z-10 top-1/2  rounded-xl left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0004] backdrop-blur-[1px] grid place-content-center transition-opacity duration-300" id="forgot_password_modal">
+    <div class="bg-white  p-5 w-[400px]  max-sm:w-full h-[200px] rounded-xl flex flex-col justify-between">
+      <h2 class="font-bold text-grey-700 text-xl pb-4 border-b-2 border-border-color">Forgot Password ?</h2>
+      <p class="text-grey-500 font-bold text-sm flex-1 mt-6">Relax and try to remember your password.</p>
+      <button class="bg-red-300 py-2 px-4 self-end text-white font-bold rounded-xl cursor-pointer hover:opacity-80 transition-opacity">Thanks</button>
+
+    </div>
+  </div>
 </body>
 
 </html>

@@ -367,7 +367,7 @@ function showProfilePicture()
   </main>
   <div class=" opacity-0 -z-10 max-md:h-full  transition-opacity duration-500 absolute w-full h-full bg-[#0005] backdrop-blur-[2px] inset-0" id="car_view">
     <div class="absolute bg-grey-100 w-[80%] h-[50%] top-1/2 gap-10 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl flex md:items-center px-7 pb-5 max-md:flex-col max-md:w-full max-md:h-screen max-md:gap-0 max-md:rounded-none max-md:top-0 max-md:translate-x-0 max-md:translate-y-0 max-md:left-0 max-md:overflow-y-scroll">
-      <i class="fa-solid fa-ellipsis text-2xl absolute top-4 left-4 text-grey-600 cursor-pointer" id="actionsBtn"></i>
+      <i class="fa-solid fa-ellipsis text-2xl absolute top-4 left-4 text-grey-600 cursor-pointer <?php if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] !== 'YES') echo 'hidden' ?>" id="actionsBtn"></i>
       <i class="fa-solid fa-xmark text-2xl absolute top-4 right-4 text-grey-600 cursor-pointer" id="close_car_view"></i>
       <div class="shadow-shadow-1 absolute left-4 top-12 -z-10 h-0 w-52  rounded-xl bg-white p-0 transition-all duration-500 overflow-hidden" id="actions">
         <ul>
