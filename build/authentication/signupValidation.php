@@ -1,6 +1,6 @@
 <?php
-require 'db.php';
-require 'utilities.php';
+require '../db.php';
+require '../utilities.php';
 session_start();
 
 $_SESSION['firstName'] = $firstName = $_POST['firstName'];
@@ -18,7 +18,7 @@ $validationCount = $validationStmt->rowCount();
 
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    showError("Invalid email address", "signUp.php");
+    showError("Invalid Email: Retry with a valid email", "signUp.php");
 } else if ($validationCount > 0) {
     showError("Email already exists", "signUp.php");
 } else if (checkPassword($password) != 'valid') {
@@ -31,7 +31,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $count = $stmt->rowCount();
         header("Location: login.php");
     } else {
-        showError("Passwords do not match", "signUp.php");
+        showError("Passwords Do Not Match: Please re-enter your password correctly.", "signUp.php");
     }
 }
 

@@ -13,14 +13,13 @@ if (rememberedUser($conn)) {
     $rememberMe = $_POST["rememberMe"];
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        showError("Invalid email address", "signUp.php");
+        showError("Invalid Email: Retry with a valid email.", "login.php");
     } else {
         $sql = "SELECT * FROM `users` WHERE `email` = :email AND `password` = :password";
         $stmt = $conn->prepare($sql);
         $stmt->execute([':email' => $email, ':password' => $password]);
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $count = $stmt->rowCount();
-
         if ($count == 1) {
             foreach ($data as $key) {
                 $_SESSION['userName'] = ($key['First Name']);
@@ -37,11 +36,8 @@ if (rememberedUser($conn)) {
             header("Location: ../main.php");
         } else {
             $_SESSION['email'] = $email;
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                showError("Invalid email address", "login.php");
-            } else {
-                showError("Invalid email or password", "login.php");
-            }
+
+            showError("Invalid Email or Password: Try again.", "login.php");
         }
     }
 }

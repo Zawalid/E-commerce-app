@@ -55,12 +55,12 @@ session_start();
       </form>
       <?php
       if (isset($_SESSION['error_msg'])) : ?>
-        <div class="text-xl text-red-300 text-center mt-5 font-bold"><?= $_SESSION['error_msg'] ?></div>
+        <div class=" text-red-300 text-center mt-5 font-bold"><?= $_SESSION['error_msg'] ?></div>
       <?php endif; ?>
       <div class="my-12 flex items-center justify-center gap-4">
-        <span class="h-[1px] w-full flex-1 bg-nobleDark400"></span>
-        <span class="text-nobleDark400">or continue with</span>
-        <span class="h-[1px] w-full flex-1 bg-nobleDark400"></span>
+        <span class="h-[1px] w-full flex-1 bg-grey-500"></span>
+        <span class="text-grey-500">or continue with</span>
+        <span class="h-[1px] w-full flex-1 bg-grey-500"></span>
       </div>
       <div class="flex justify-between gap-6 max-xs:flex-col md:flex-col xl:flex-row">
         <a href="https://accounts.google.com/" class="flex w-1/2 cursor-pointer items-center justify-center gap-3 rounded-xl hover:bg-grey-900 hover:text-white py-3 text-grey-600 transition-colors duration-500 bg-white  max-xs:w-full md:w-full xl:w-1/2 shadow-shadow-1">

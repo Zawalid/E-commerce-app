@@ -49,15 +49,25 @@ session_start();
             Password
             <div class="relative">
 
-              <input class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-700" type="password" required placeholder="Password" name="password" />
+              <input class="peer focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-700" type="password" required placeholder="Password" name="password" />
               <i class="fa-solid fa-eye eye-icon showPasswordIcon" id="show_password"></i>
+              <div class="absolute w-[110%]  rounded-xl shadow-shadow-1 bg-white p-5 -top-[210px] transition-opacity duration-500 opacity-0 -z-10 peer-focus:opacity-100 peer-focus:z-10" id="password_validation">
+                <h3 class="font-bold text-grey-700">Password requirements</h3>
+                <ul class="mt-3">
+                  <li class="text-sm mb-2  text-grey-500"><i id="chars_long_validation" class="fa-regular fa-circle-check mr-3 text-red-300"></i>Should be at least 8 characters</li>
+                  <li class="text-sm mb-2  text-grey-500"><i id="uppercase_validation" class="fa-regular fa-circle-check mr-3 text-red-300"></i>Contain at least one uppercase</li>
+                  <li class="text-sm mb-2  text-grey-500"><i id="lowercase_validation" class="fa-regular fa-circle-check mr-3 text-red-300"></i>Contain at least one lowercase</li>
+                  <li class="text-sm mb-2  text-grey-500"><i id="numbers_validation" class="fa-regular fa-circle-check mr-3 text-red-300"></i>Contain at least one digit</li>
+                  <li class="text-sm  text-grey-500"><i id="special_chars_validation" class="fa-regular fa-circle-check mr-3 text-red-300"></i>Contain at least one special character</li>
+                </ul>
+              </div>
             </div>
           </label>
           <label class="w-1/2 font-semibold text-grey-700 max-sm:w-full">
             Repeat password
             <div class="relative">
 
-              <input class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-700" type="password" placeholder=" Repeat password" name="repeatPassword" />
+              <input class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-700" type="password" required placeholder="Repeat password" name="repeatPassword" />
               <i class="fa-solid fa-eye eye-icon showPasswordIcon" id="show_password"></i>
             </div>
           </label>
@@ -67,7 +77,7 @@ session_start();
       </form>
       <?php
       if (isset($_SESSION['error_msg'])) : ?>
-        <div class="text-xl text-red-300 text-center mt-5 font-bold"><?= $_SESSION['error_msg'] ?></div>
+        <div class=" text-red-300 text-center mt-5 font-bold"><?= $_SESSION['error_msg'] ?></div>
       <?php endif; ?>
     </div>
 

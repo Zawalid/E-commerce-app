@@ -482,7 +482,7 @@ function showProfilePicture()
       </div>
     </div>
   </div>
-  <div class="absolute -top-[70px] left-0 w-full p-5 bg-red-300 transition-all duration-500 z-40" id="empty_fields">
+  <div class="absolute -top-[120px] left-0 w-full p-5 bg-red-300 transition-all duration-500 z-40" id="empty_fields">
     <p class="text-white text-lg font-bold text-center">
       Please fill out all required fields. Missing fields: [
       <span id="fields"></span> ]
