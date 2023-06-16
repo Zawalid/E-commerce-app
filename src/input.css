@@ -3,9 +3,7 @@
 @tailwind utilities;
 
 @layer components {
-  #activeRememberMe:checked ~ div {
-    @apply grid place-content-center border-none bg-white bg-gradient-to-br from-DayBlue via-Blue to-Green500  text-sm text-black !important;
-  }
+  #activeRememberMe:checked ~ div,
   .checkedBox {
     @apply border-none bg-primary-500 text-white !important;
   }

@@ -22,17 +22,6 @@ module.exports = {
         ],
       },
       colors: {
-        // Noble Dark
-        nobleDark200: "#CDCECF",
-        nobleDark300: "#9B9C9E",
-        nobleDark400: "#686B6E",
-        nobleDark500: "#363A3D",
-        nobleDark600: "#1A1D21",
-        nobleDark700: "#131619",
-        // Stem Green
-        stemGreen300: "#EDFBE6",
-        stemGreen400: "#C8F4B4",
-        stemGreen500: "#B6F09C",
         "primary-500": "#0A20E6",
         "light-grey": "#F5F6F8",
         "grey-100": "#F6F7F9",
