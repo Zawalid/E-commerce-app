@@ -53,7 +53,6 @@ if (window.location.pathname === "/Project/build/authentication/signUp.php") {
   const lowercaseValidation = document.getElementById("lowercase_validation");
   const checked = "fa-solid fa-check-circle text-green-500  mr-3";
   const unchecked = "fa-regular fa-check-circle text-red-300 mr-3";
-  console.log(charsLongValidation);
   passwordInput.addEventListener("input", function () {
     function validatePassword(condition, icon) {
       if (condition) {
@@ -76,8 +75,8 @@ if (window.location.pathname === "/Project/build/authentication/signUp.php") {
         lowercaseValidation.className === unchecked
       ) {
         e.preventDefault();
+        passwordInput.focus();
       }
     });
   });
 }
-

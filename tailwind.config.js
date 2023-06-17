@@ -33,15 +33,11 @@ module.exports = {
         "border-color": "#EEF0F1",
       },
       backgroundImage: {
-        "abstract-1": "url('../imgs/abstract-01.svg')",
-        "abstract-2": "url('../imgs/abstract-02.svg')",
-        "abstract-3": "url('../imgs/abstract-03.svg')",
-        "abstract-4": "url('../imgs/abstract-04.svg')",
-        "abstract-5": "url('../imgs/abstract-05.svg')",
-        "illustration-1": "url('../imgs/Illustration.svg')",
         person1: "url('../imgs/Person-1.svg')",
         person2: "url('../imgs/Person-2.svg')",
         person3: "url('../imgs/Person-3.svg')",
+        login: "url('../imgs/login.jpg')",
+        signup: "url('../imgs/signup.jpg')",
       },
       fontFamily: {
         Jakarta: ["Plus Jakarta Sans", "sans-serif"],

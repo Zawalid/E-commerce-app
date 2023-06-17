@@ -32,8 +32,8 @@ function showProfilePicture()
   <header>
     <div class="container border-b-2 border-border-color py-4">
       <div class="flex items-center justify-between">
-        <!-- <h2 class="text-logo uppercase text-primary-500">Optimum</h2> -->
-        <img src="./imgs/logo.jpg" alt="" class="w-10 h-10">
+        <h2 class="text-logo uppercase text-primary-500">Optimum</h2>
+        <!-- <img src="./imgs/logo.jpg" alt="" class="w-10 h-10"> -->
         <div class="flex items-center max-md:hidden">
           <a href="#" class="relative mr-6 text-sm font-semibold text-grey-500 transition-colors duration-500 before:absolute before:-bottom-[26px] before:h-[2px] before:w-full before:bg-primary-500 before:opacity-0 before:transition-opacity before:duration-500 hover:text-grey-900 hover:before:opacity-100">Booking</a>
           <a href="#" class="relative mr-6 text-sm font-semibold text-grey-500 transition-colors duration-500 before:absolute before:-bottom-[26px] before:h-[2px] before:w-full before:bg-primary-500 before:opacity-0 before:transition-opacity before:duration-500 hover:text-grey-900 hover:before:opacity-100">About Us</a>

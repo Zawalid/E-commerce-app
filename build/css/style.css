@@ -667,12 +667,12 @@ input.field_error {
   inset: 0px;
 }
 
-.-top-\[210px\] {
-  top: -210px;
+.-top-\[120px\] {
+  top: -120px;
 }
 
-.-top-\[70px\] {
-  top: -70px;
+.-top-\[210px\] {
+  top: -210px;
 }
 
 .bottom-14 {
@@ -733,10 +733,6 @@ input.field_error {
 
 .top-\[69px\] {
   top: 69px;
-}
-
-.-top-\[120px\] {
-  top: -120px;
 }
 
 .-z-10 {
@@ -1037,10 +1033,6 @@ input.field_error {
   width: 2.25rem;
 }
 
-.w-\[110\%\] {
-  width: 110%;
-}
-
 .w-\[2px\] {
   width: 2px;
 }
@@ -1249,14 +1241,6 @@ input.field_error {
   border-radius: 0.75rem;
 }
 
-.rounded-bl-\[30px\] {
-  border-bottom-left-radius: 30px;
-}
-
-.rounded-tl-\[30px\] {
-  border-top-left-radius: 30px;
-}
-
 .border {
   border-width: 1px;
 }
@@ -1349,12 +1333,8 @@ input.field_error {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
-.bg-abstract-2 {
-  background-image: url('../imgs/abstract-02.svg');
-}
-
-.bg-abstract-4 {
-  background-image: url('../imgs/abstract-04.svg');
+.bg-login {
+  background-image: url('../imgs/login.jpg');
 }
 
 .bg-person1 {
@@ -1367,6 +1347,10 @@ input.field_error {
 
 .bg-person3 {
   background-image: url('../imgs/Person-3.svg');
+}
+
+.bg-signup {
+  background-image: url('../imgs/signup.jpg');
 }
 
 .bg-contain {
@@ -1860,6 +1844,67 @@ input[type="range"]:focus::-webkit-slider-thumb {
   outline-color: #0A20E6;
 }
 
+@keyframes pan-image {
+  0% {
+    background-position: 36% 42%;
+    background-size: 200%;
+  }
+
+  20% {
+    background-position: 30% 35%;
+    background-size: 200%;
+  }
+
+  20.0001% {
+    /* -- View 2 -- */
+    background-position: 60% 85%;
+    background-size: 500%;
+  }
+
+  40% {
+    background-position: 49% 81%;
+    background-size: 500%;
+  }
+
+  40.0001% {
+    /* -- View 3 -- */
+    background-position: 80% 42%;
+    background-size: 300%;
+  }
+
+  60% {
+    background-position: 84% 33%;
+    background-size: 300%;
+  }
+
+  60.0001% {
+    /* -- View 4 -- */
+    background-position: 0% 0%;
+    background-size: 300%;
+  }
+
+  80% {
+    background-position: 15% 4%;
+    background-size: 300%;
+  }
+
+  80.0001% {
+    /* -- View 5 -- */
+    background-position: 80% 10%;
+    background-size: 300%;
+  }
+
+  100% {
+    background-position: 72% 14%;
+    background-size: 300%;
+  }
+}
+
+#signup_image {
+  background-size: 200%;
+  animation: pan-image 15s linear infinite;
+}
+
 .file\:mr-4::file-selector-button {
   margin-right: 1rem;
 }
@@ -2070,6 +2115,11 @@ input[type="range"]:focus::-webkit-slider-thumb {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.hover\:text-grey-600:hover {
+  --tw-text-opacity: 1;
+  color: rgb(118 136 152 / var(--tw-text-opacity));
+}
+
 .hover\:text-grey-900:hover {
   --tw-text-opacity: 1;
   color: rgb(19 23 27 / var(--tw-text-opacity));
@@ -2095,14 +2145,6 @@ input[type="range"]:focus::-webkit-slider-thumb {
 }
 
 .group:hover .group-hover\:opacity-100 {
-  opacity: 1;
-}
-
-.peer:checked ~ .peer-checked\:z-10 {
-  z-index: 10;
-}
-
-.peer:checked ~ .peer-checked\:opacity-100 {
   opacity: 1;
 }
 
@@ -2311,6 +2353,10 @@ input[type="range"]:focus::-webkit-slider-thumb {
     display: flex;
   }
 
+  .sm\:w-\[325px\] {
+    width: 325px;
+  }
+
   .sm\:flex-col {
     flex-direction: column;
   }
@@ -2352,8 +2398,8 @@ input[type="range"]:focus::-webkit-slider-thumb {
     width: 50%;
   }
 
-  .lg\:w-4\/5 {
-    width: 80%;
+  .lg\:w-3\/5 {
+    width: 60%;
   }
 }
 

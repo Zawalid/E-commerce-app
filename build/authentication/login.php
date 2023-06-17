@@ -67,7 +67,7 @@ session_start();
           <img src="../imgs/Google Logo.svg" alt="" />
           <span class="font-semibold">Google Account</span>
         </a>
-        <a href="https://appleid.apple.com/account/home" class="flex w-1/2 cursor-pointer items-center justify-center gap-3 rounded-xl hover:bg-white hover:text-grey-900 py-3 text-white transition-colors duration-500 bg-grey-900 max-xs:w-full md:w-full xl:w-1/2 shadow-shadow-1">
+        <a href="https://appleid.apple.com/account/home" class="flex w-1/2 cursor-pointer items-center justify-center gap-3 rounded-xl hover:bg-white hover:text-grey-600 py-3 text-white transition-colors duration-500 bg-grey-900 max-xs:w-full md:w-full xl:w-1/2 shadow-shadow-1">
           <!-- <img src="../imgs/Apple Logo.svg" alt="" /> -->
           <i class="fa-brands fa-apple text-[25px]"></i>
           <span class="font-semibold">Apple Account</span>
@@ -79,7 +79,7 @@ session_start();
       <a class="text-grey-700 font-bold text-lg " href="signUp.php">Sign up</a>
     </div>
   </section>
-  <section class="w-1/2 rounded-bl-[30px] rounded-tl-[30px] bg-abstract-4 bg-cover bg-center transition-all duration-1000 max-md:hidden" id="illustration"></section>
+  <section class="w-1/2   bg-login bg-cover bg-center transition-all duration-1000 max-md:hidden" id="illustration"></section>
   <div class=" absolute inset-0 max-md:rounded-none   h-full w-full opacity-0 -z-10 top-1/2  rounded-xl left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0004] backdrop-blur-[1px] grid place-content-center transition-opacity duration-300" id="forgot_password_modal">
     <div class="bg-white  p-5 w-[400px]  max-sm:w-full h-[200px] rounded-xl flex flex-col justify-between">
       <h2 class="font-bold text-grey-700 text-xl pb-4 border-b-2 border-border-color">Forgot Password ?</h2>

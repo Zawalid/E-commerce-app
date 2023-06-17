@@ -18,7 +18,7 @@ session_start();
 </head>
 
 <body class="flex min-h-screen flex-col bg-nobleDark700 font-Jakarta md:flex-row">
-  <section class="flex min-h-screen flex-col justify-between gap-12 bg-white p-8 max-xs:p-4 lg:w-4/5">
+  <section class="flex min-h-screen flex-col justify-between gap-12 bg-white p-8 max-xs:p-4 lg:w-3/5">
     <div class="flex items-center justify-between">
       <a href="../main.php">
         <img src="../imgs/logo.jpg" alt="" class="w-20 cursor-pointer" />
@@ -51,7 +51,7 @@ session_start();
 
               <input class="peer focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-700" type="password" required placeholder="Password" name="password" />
               <i class="fa-solid fa-eye eye-icon showPasswordIcon" id="show_password"></i>
-              <div class="absolute w-[110%]  rounded-xl shadow-shadow-1 bg-white p-5 -top-[210px] transition-opacity duration-500 opacity-0 -z-10 peer-focus:opacity-100 peer-focus:z-10" id="password_validation">
+              <div class="absolute w-full sm:w-[325px]  rounded-xl shadow-shadow-1 bg-white p-5 -top-[210px] transition-opacity duration-500 opacity-0 -z-10 peer-focus:opacity-100 peer-focus:z-10" id="password_validation">
                 <h3 class="font-bold text-grey-700">Password requirements</h3>
                 <ul class="mt-3">
                   <li class="text-sm mb-2  text-grey-500"><i id="chars_long_validation" class="fa-regular fa-circle-check mr-3 text-red-300"></i>Should be at least 8 characters</li>
@@ -84,7 +84,7 @@ session_start();
     <span class="text-sm font-medium text-nobleDark300">Walid.Zakan © 2023</span>
 
   </section>
-  <section class="w-1/2 rounded-bl-[30px] rounded-tl-[30px] bg-abstract-2 bg-cover bg-center transition-all duration-1000 max-md:hidden" id="illustration"></section>
+  <section class="w-1/2 bg-signup bg-cover bg-center transition-all duration-1000 max-md:hidden" id="signup_image"></section>
 
 </body>
 
