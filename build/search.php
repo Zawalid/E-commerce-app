@@ -8,6 +8,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = json_decode($jsonData, true);
     $carTypes = $data['type'];
     $carCapacity = $data['capacity'];
+    $carTransmission = $data['transmission'];
+    $carPrice = $data['price'];
     $customRecommendation =  $data['customRecommendation'];
     $searchQuery = ltrim($data['query']);
     // If there is no filter
@@ -24,26 +26,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql .= " AND capacity >= 2 AND capacity <= 5" :
             $sql .= " AND capacity >= 6";
     }
+    // If there is transmission filter
+    if (!empty($carTransmission) && count($carTransmission) === 1) {
+        $carTransmission[0] === "Manual" ?
+            $sql .= " AND transmission = 'Manual' " :
+            $sql .= " AND transmission = 'Automatic' ";
+    }
+    // If there is price filter
+    $priceConditions = [];
+    foreach ($carPrice as $option) {
+        switch ($option) {
+            case "20k - 40k":
+                $priceConditions[] = "price >= 20000 AND price <= 40000";
+                break;
+            case "45k - 65k":
+                $priceConditions[] = "price >= 45000 AND price <= 65000";
+                break;
+            case "150k - 500k":
+                $priceConditions[] = "price >= 150000 AND price <= 500000";
+                break;
+        }
+    }
+    if (!empty($carPrice)) {
+        if (count($priceConditions) === 1) {
+            $sql .= " AND " . $priceConditions[0];
+        } else {
+            $sql .= " AND (" . implode(" OR ", $priceConditions) . ")";
+        }
+    }
     // If there is custom recommendation  filter
-    $conditions = [];
+    $cusRecConditions = [];
     foreach ($customRecommendation as $option) {
         switch ($option) {
             case "70 - 100%":
-                $conditions[] = "customRecommendation >= 70";
+                $cusRecConditions[] = "customRecommendation >= 70";
                 break;
             case "40 - 69%":
-                $conditions[] = "customRecommendation >= 40 AND customRecommendation <= 69";
+                $cusRecConditions[] = "customRecommendation >= 40 AND customRecommendation <= 69";
                 break;
             case "0 - 39%":
-                $conditions[] = "customRecommendation <= 39";
+                $cusRecConditions[] = "customRecommendation <= 39";
                 break;
         }
     }
     if (!empty($customRecommendation)) {
-        if (count($conditions) === 1) {
-            $sql .= " AND " . $conditions[0];
+        if (count($cusRecConditions) === 1) {
+            $sql .= " AND " . $cusRecConditions[0];
         } else {
-            $sql .= " AND (" . implode(" OR ", $conditions) . ")";
+            $sql .= " AND (" . implode(" OR ", $cusRecConditions) . ")";
         }
     }
     $stmt = $conn->prepare($sql);
@@ -89,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>";
         }
     } else {
-        echo "<div class='flex flex-col justify-center items-center h-[530px]'>
+        echo "<div class='flex flex-col justify-center items-center h-[830px] max-md:h-[640px]'>
             <img src='./imgs/no result search icon.png' alt='' class='w-64 h-64'>
             <h2 class='text-grey-900 font-bold mb-3 text-lg'>No Result Found</h2>
             <h3 class=' font-bold text-grey-500'>

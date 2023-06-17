@@ -166,6 +166,8 @@ handleMediaQueryChange(mediaQuery);
 //* Get the filters
 const type = [];
 const capacity = [];
+const transmission = [];
+const price = [];
 const customRecommendation = [];
 
 aside.addEventListener("click", (e) => {
@@ -183,13 +185,19 @@ aside.addEventListener("click", (e) => {
       ? capacity.includes(filterEl)
         ? capacity.splice(capacity.indexOf(filterEl), 1)
         : capacity.push(filterEl)
-      : customRecommendation.includes(filterEl)
-      ? customRecommendation.splice(customRecommendation.indexOf(filterEl), 1)
-      : customRecommendation.push(filterEl);
-
-    console.log(type);
-    console.log(capacity);
-    console.log(customRecommendation);
+      : e.target.closest("#checkBox").nextElementSibling.parentElement
+          .parentElement.id == "filterByRecommendation"
+      ? customRecommendation.includes(filterEl)
+        ? customRecommendation.splice(customRecommendation.indexOf(filterEl), 1)
+        : customRecommendation.push(filterEl)
+      : e.target.closest("#checkBox").nextElementSibling.parentElement
+          .parentElement.id == "filterByTransmission"
+      ? transmission.includes(filterEl)
+        ? transmission.splice(transmission.indexOf(filterEl), 1)
+        : transmission.push(filterEl)
+      : price.includes(filterEl)
+      ? price.splice(price.indexOf(filterEl), 1)
+      : price.push(filterEl);
   }
 });
 
@@ -200,6 +208,8 @@ function search() {
     query: searchQuery,
     type,
     capacity,
+    transmission,
+    price,
     customRecommendation,
   };
   // Send search query using AJAX
@@ -336,7 +346,7 @@ const carViewImage = carView.querySelector("img");
 
 const showCarView = () => {
   [...document.getElementById("search_results").children].forEach((car) => {
-    car.querySelector("#show_car_view").addEventListener("click", () => {
+    car.querySelector("#show_car_view")?.addEventListener("click", () => {
       carViewImage.src = car.querySelector("img").src;
 
       carViewName.textContent = car.querySelector(".carName").innerText;

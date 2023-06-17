@@ -78,6 +78,7 @@ function showAllCars()
     // CLose the connection
     $conn = null;
 }
+// Filters
 function countCarsByType($value)
 {
     require 'db.php';
@@ -89,7 +90,6 @@ function countCarsByType($value)
     // CLose the connection
     $conn = null;
 }
-
 function capacityGt6()
 {
     require 'db.php';
@@ -105,6 +105,50 @@ function capacityGt2AndLs5()
 {
     require 'db.php';
     $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE capacity >= 2 AND capacity <= 5 ");
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $count = $result['total'];
+    echo  $count;
+    // CLose the connection
+    $conn = null;
+}
+function countCarsByTransmission($value)
+{
+    require 'db.php';
+    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE transmission = :value ");
+    $stmt->execute([':value' => $value]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $count = $result['total'];
+    echo  $count;
+    // CLose the connection
+    $conn = null;
+}
+function priceBet20And40()
+{
+    require 'db.php';
+    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE price >= 20000 AND price <= 40000 ");
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $count = $result['total'];
+    echo  $count;
+    // CLose the connection
+    $conn = null;
+}
+function priceBet40And65()
+{
+    require 'db.php';
+    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE price >= 40000 AND price <= 65000 ");
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $count = $result['total'];
+    echo  $count;
+    // CLose the connection
+    $conn = null;
+}
+function priceBet150And500()
+{
+    require 'db.php';
+    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE price >= 150000 AND price <= 500000 ");
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];

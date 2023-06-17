@@ -243,11 +243,11 @@ function showProfilePicture()
     </section>
     <section class="bg-light-grey">
       <div class="container relative flex items-start gap-9 pt-10 py-8">
-        <aside class="w-fit rounded-xl border-2 border-border-color bg-white p-8 pe-0 max-md:absolute max-md:left-5 max-md:top-24 max-md:-z-10  max-md:h-[500px] max-md:overflow-hidden  max-md:opacity-0 max-md:transition-all max-md:duration-500">
+        <aside class="w-fit rounded-xl border-2 border-border-color bg-white p-8 pe-0 max-md:absolute max-md:left-5 max-md:top-24 max-md:-z-10  max-md:h-[640px] max-md:overflow-hidden  max-md:opacity-0 max-md:transition-all max-md:duration-500">
           <h2 class="border-b border-border-color pb-3 font-semibold text-grey-900">
             Filter By
           </h2>
-          <div class="max-md:h-[400px] pe-8 max-md:overflow-y-scroll">
+          <div class="max-md:h-[530px] pe-8 max-md:overflow-y-scroll">
 
             <div class="mt-5">
               <p class="mb-4 text-sm font-semibold text-grey-700">Car type</p>
@@ -317,6 +317,56 @@ function showProfilePicture()
             </div>
             <div class="mt-5">
               <p class="mb-4 text-sm font-semibold text-grey-700">
+                Transmission
+              </p>
+              <ul id="filterByTransmission">
+                <li class="mb-3 flex items-center gap-3">
+                  <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
+                    <i class="fa-solid fa-check text-sm"></i>
+                  </div>
+                  <label class="font-semibold text-grey-500">Manual <span class="ml-2" id="quantity">(<?= countCarsByTransmission("Manual") ?>)</span>
+                  </label>
+                </li>
+                <li class="mb-3 flex items-center gap-3">
+                  <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
+                    <i class="fa-solid fa-check text-sm"></i>
+                  </div>
+                  <label class="font-semibold text-grey-500">Automatic <span class="ml-2" id="quantity">(<?= countCarsByTransmission("Automatic") ?>)</span>
+                  </label>
+                </li>
+
+              </ul>
+            </div>
+            <div class="mt-5">
+              <p class="mb-4 text-sm font-semibold text-grey-700">
+                Price
+              </p>
+              <ul id="filterByPrice">
+                <li class="mb-3 flex items-center gap-3">
+                  <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
+                    <i class="fa-solid fa-check text-sm"></i>
+                  </div>
+                  <label class="font-semibold text-grey-500">20k - 40k <span class="ml-2" id="quantity">(<?= priceBet20And40() ?>)</span>
+                  </label>
+                </li>
+                <li class="mb-3 flex items-center gap-3">
+                  <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
+                    <i class="fa-solid fa-check text-sm"></i>
+                  </div>
+                  <label class="font-semibold text-grey-500">45k - 65k <span class="ml-2" id="quantity">(<?= priceBet40And65() ?>)</span>
+                  </label>
+                </li>
+                <li class="mb-3 flex items-center gap-3">
+                  <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
+                    <i class="fa-solid fa-check text-sm"></i>
+                  </div>
+                  <label class="font-semibold text-grey-500">150k - 500k <span class="ml-2" id="quantity">(<?= priceBet150And500() ?>)</span>
+                  </label>
+                </li>
+              </ul>
+            </div>
+            <div class="mt-5">
+              <p class="mb-4 text-sm font-semibold text-grey-700">
                 Customer Recommendation
               </p>
               <ul id="filterByRecommendation">
@@ -343,6 +393,7 @@ function showProfilePicture()
                 </li>
               </ul>
             </div>
+
           </div>
 
         </aside>
@@ -359,7 +410,7 @@ function showProfilePicture()
 
             </div>
           </div>
-          <div class="mt-5 grid max-h-[575px] max-md:max-h-[650px] grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-9 overflow-y-scroll pb-1 pr-4" id="search_results">
+          <div class="mt-5 grid max-h-[840px] max-md:max-h-[650px] grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-9 overflow-y-scroll pb-1 pr-4" id="search_results">
             <?= showAllCars() ?>
           </div>
         </div>
