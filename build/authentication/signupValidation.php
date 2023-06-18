@@ -27,6 +27,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     if ($password == $repeatPassword) {
         $sql = "INSERT INTO `users` (`First Name`, `Last Name`, `Email`,`Password`) VALUES (:firstName, :lastName, :email , :password)";
         $stmt = $conn->prepare($sql);
+        $password = password_hash($password, PASSWORD_DEFAULT);
         $stmt->execute([':firstName' => $firstName, ':lastName' => $lastName, ':email' => $email, ':password' => $password]);
         $count = $stmt->rowCount();
         header("Location: login.php");

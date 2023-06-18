@@ -580,13 +580,16 @@ addAndEditCarForm.addEventListener("submit", function (e) {
     }
   };
   if (this.querySelector("[name='action']").value === "add") {
-    console.log("Adding");
     sendFormData((data) => {
-      responseActions(data);
-      addAndEditCarModal.classList.remove("show");
+      if (data === "already exist") {
+        search();
+        document.getElementById("car_already_exists").classList.add("show");
+      } else {
+        responseActions(data);
+        addAndEditCarModal.classList.remove("show");
+      }
     });
   } else if (this.querySelector("[name='action']").value === "edit") {
-    console.log("Editing");
     sendFormData((data) => {
       responseActions(data);
       // Update the cart
@@ -619,3 +622,22 @@ document.querySelector("[type='range']").addEventListener("input", function () {
 addAndEditCarCloseBtn.addEventListener("click", () => {
   addAndEditCarModal.classList.remove("show");
 });
+
+//* Cars slider
+const slide = document.getElementById("slide");
+const slides = document.querySelectorAll(".slide_img");
+let index = 0;
+// setInterval(() => {
+//   slide.src = slides[index].src;
+//   index === document.getElementById("search_results").children.length - 1
+//     ? (index = 0)
+//     : index++;
+// }, 3500);
+
+//* Car already exists error
+document
+  .getElementById("car_already_exists")
+  .querySelector("button")
+  .addEventListener("click", () => {
+    document.getElementById("car_already_exists").classList.remove("show");
+  });

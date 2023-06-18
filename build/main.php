@@ -10,6 +10,7 @@ function showProfilePicture()
     return '<img src="imgs/no profile.png" alt="" class="h-9 w-9 rounded-full" />';
   }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -156,14 +157,13 @@ function showProfilePicture()
   </div>
   <main>
     <section>
-      <div class="container flex items-center bg-white gap-8 py-10 max-md:flex-col">
+      <div class="container flex items-center bg-white gap-8 py-10 max-md:flex-col max-md:h-[80vh] ">
         <div class="flex-1">
           <h1 class="text-[2.1rem] font-bold text-grey-900">
-            Book car in easy steps
+            Purchase a car in easy steps
           </h1>
           <p class="my-5 w-[85%] text-lg text-grey-500">
-            Renting a car brings you freedom, we’ll help you find the best car
-            for you at a great price.
+            Experience the freedom of car ownership. Let us help you find the perfect vehicle, offering exceptional value and an unforgettable driving experience.
           </p>
           <div class="flex items-center gap-7">
             <div class="relative flex h-12 w-36">
@@ -199,46 +199,7 @@ function showProfilePicture()
             </div>
           </div>
         </div>
-        <div class="flex flex-[1.5] gap-4 rounded-2xl border-2 border-border-color p-8 max-sm:flex-col">
-          <div>
-            <label class="font-semibold text-grey-900">
-              <i class="fa-solid fa-location-dot mr-2 text-primary-500"></i>
-              Pick-up
-              <input type="text" value="London (LHR - Heathrow)" class="mt-3 w-full rounded-2xl bg-grey-100 p-3 font-semibold text-grey-700 focus:outline-none" />
-            </label>
-            <div class="mt-6 flex gap-3 max-xs:flex-col">
-              <label class="font-semibold text-grey-900">
-                <i class="fa-regular fa-calendar mr-2 text-primary-500"></i>
-                Pick-up Date
-                <input type="text" value="18 December" class="mt-3 w-full rounded-2xl bg-grey-100 p-3 font-semibold text-grey-700 focus:outline-none" />
-              </label>
-              <label class="font-semibold text-grey-900">
-                <i class="fa-regular fa-calendar mr-2 text-primary-500"></i>
-                Drop-off Date
-                <input type="text" value="19 December" class="mt-3 w-full rounded-2xl bg-grey-100 p-3 font-semibold text-grey-700 focus:outline-none" />
-              </label>
-            </div>
-          </div>
-          <div>
-            <label class="font-semibold text-grey-900">
-              <i class="fa-solid fa-location-dot mr-2 text-primary-500"></i>
-              Drop-off
-              <input type="text" value="London (LGW - Gatwick)" class="mt-3 w-full rounded-2xl bg-grey-100 p-3 font-semibold text-grey-700 focus:outline-none" />
-            </label>
-            <div class="mt-6 flex gap-3 max-xs:flex-col">
-              <label class="font-semibold text-grey-900">
-                <i class="fa-regular fa-clock mr-2 text-primary-500"></i>
-                Pick-up Time
-                <input type="text" value="10:00" class="mt-3 w-full rounded-2xl bg-grey-100 p-3 font-semibold text-grey-700 focus:outline-none" />
-              </label>
-              <label class="font-semibold text-grey-900">
-                <i class="fa-regular fa-clock mr-2 text-primary-500"></i>
-                Drop-off Date
-                <input type="text" value="10:00" class="mt-3 w-full rounded-2xl bg-grey-100 p-3 font-semibold text-grey-700 focus:outline-none" />
-              </label>
-            </div>
-          </div>
-        </div>
+        <img src="./imgs/car-01.svg" alt="" class="flex-1 h-72 w-full" id="slide">
       </div>
     </section>
     <section class="bg-light-grey">
@@ -256,42 +217,42 @@ function showProfilePicture()
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">Sports Car <span class="ml-2" id="quantity">(<?= countCarsByType("Sports Car") ?>)</span>
+                  <label class="font-semibold text-grey-500">Sports Car <span class="ml-2" id="quantity">(<?= countCarsByType($conn, "Sports Car") ?>)</span>
                   </label>
                 </li>
                 <li class="mb-3 flex items-center gap-3">
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">Hatchback <span class="ml-2" id="quantity">(<?= countCarsByType("Hatchback") ?>)</span>
+                  <label class="font-semibold text-grey-500">Hatchback <span class="ml-2" id="quantity">(<?= countCarsByType($conn, "Hatchback") ?>)</span>
                   </label>
                 </li>
                 <li class="mb-3 flex items-center gap-3">
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">Sedan <span class="ml-2" id="quantity">(<?= countCarsByType("Sedan") ?>)</span>
+                  <label class="font-semibold text-grey-500">Sedan <span class="ml-2" id="quantity">(<?= countCarsByType($conn, "Sedan") ?>)</span>
                   </label>
                 </li>
                 <li class="mb-3 flex items-center gap-3">
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">Truck <span class="ml-2" id="quantity">(<?= countCarsByType("Truck") ?>)</span>
+                  <label class="font-semibold text-grey-500">Truck <span class="ml-2" id="quantity">(<?= countCarsByType($conn, "Truck") ?>)</span>
                   </label>
                 </li>
                 <li class="mb-3 flex items-center gap-3">
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">SUV <span class="ml-2" id="quantity">(<?= countCarsByType("SUV") ?>)</span>
+                  <label class="font-semibold text-grey-500">SUV <span class="ml-2" id="quantity">(<?= countCarsByType($conn, "SUV") ?>)</span>
                   </label>
                 </li>
                 <li class="flex items-center gap-3">
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">Electric <span class="ml-2" id="quantity">(<?= countCarsByType("Electric") ?>)</span>
+                  <label class="font-semibold text-grey-500">Electric <span class="ml-2" id="quantity">(<?= countCarsByType($conn, "Electric") ?>)</span>
                   </label>
                 </li>
               </ul>
@@ -303,14 +264,14 @@ function showProfilePicture()
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">2 - 5 <span class="ml-2" id="quantity">(<?= capacityGt2AndLs5() ?>)</span>
+                  <label class="font-semibold text-grey-500">2 - 5 <span class="ml-2" id="quantity">(<?= capacityGt2AndLs5($conn) ?>)</span>
                   </label>
                 </li>
                 <li class="mb-3 flex items-center gap-3">
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">6 or more <span class="ml-2" id="quantity">(<?= capacityGt6() ?>)</span>
+                  <label class="font-semibold text-grey-500">6 or more <span class="ml-2" id="quantity">(<?= capacityGt6($conn) ?>)</span>
                   </label>
                 </li>
               </ul>
@@ -324,14 +285,14 @@ function showProfilePicture()
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">Manual <span class="ml-2" id="quantity">(<?= countCarsByTransmission("Manual") ?>)</span>
+                  <label class="font-semibold text-grey-500">Manual <span class="ml-2" id="quantity">(<?= countCarsByTransmission($conn, "Manual") ?>)</span>
                   </label>
                 </li>
                 <li class="mb-3 flex items-center gap-3">
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">Automatic <span class="ml-2" id="quantity">(<?= countCarsByTransmission("Automatic") ?>)</span>
+                  <label class="font-semibold text-grey-500">Automatic <span class="ml-2" id="quantity">(<?= countCarsByTransmission($conn, "Automatic") ?>)</span>
                   </label>
                 </li>
 
@@ -346,21 +307,21 @@ function showProfilePicture()
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">20k - 40k <span class="ml-2" id="quantity">(<?= priceBet20And40() ?>)</span>
+                  <label class="font-semibold text-grey-500">20k - 40k <span class="ml-2" id="quantity">(<?= priceBet20And40($conn) ?>)</span>
                   </label>
                 </li>
                 <li class="mb-3 flex items-center gap-3">
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">45k - 65k <span class="ml-2" id="quantity">(<?= priceBet40And65() ?>)</span>
+                  <label class="font-semibold text-grey-500">45k - 65k <span class="ml-2" id="quantity">(<?= priceBet40And65($conn) ?>)</span>
                   </label>
                 </li>
                 <li class="mb-3 flex items-center gap-3">
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">150k - 500k <span class="ml-2" id="quantity">(<?= priceBet150And500() ?>)</span>
+                  <label class="font-semibold text-grey-500">150k - 500k <span class="ml-2" id="quantity">(<?= priceBet150And500($conn) ?>)</span>
                   </label>
                 </li>
               </ul>
@@ -374,21 +335,21 @@ function showProfilePicture()
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">70 - 100% <span class="ml-2" id="quantity">(<?= customRecGt70() ?>)</span>
+                  <label class="font-semibold text-grey-500">70 - 100% <span class="ml-2" id="quantity">(<?= customRecGt70($conn) ?>)</span>
                   </label>
                 </li>
                 <li class="mb-3 flex items-center gap-3">
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">40 - 69% <span class="ml-2" id="quantity">(<?= customRecBt40And70() ?>)</span>
+                  <label class="font-semibold text-grey-500">40 - 69% <span class="ml-2" id="quantity">(<?= customRecBt40And70($conn) ?>)</span>
                   </label>
                 </li>
                 <li class="mb-3 flex items-center gap-3">
                   <div class="grid h-5 w-5 cursor-pointer place-content-center rounded-md border-2 border-border-color bg-white text-transparent" id="checkBox">
                     <i class="fa-solid fa-check text-sm"></i>
                   </div>
-                  <label class="font-semibold text-grey-500">0 - 39% <span class="ml-2" id="quantity">(<?= customRecLt39() ?>)</span>
+                  <label class="font-semibold text-grey-500">0 - 39% <span class="ml-2" id="quantity">(<?= customRecLt39($conn) ?>)</span>
                   </label>
                 </li>
               </ul>
@@ -410,16 +371,16 @@ function showProfilePicture()
 
             </div>
           </div>
-          <div class="mt-5 grid max-h-[840px] max-md:max-h-[650px] grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-9 overflow-y-scroll pb-1 pr-4" id="search_results">
-            <?= showAllCars() ?>
+          <div class="mt-5 grid max-h-[845px] max-md:max-h-[650px] grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-9 overflow-y-scroll pb-1 pr-4" id="search_results">
+            <?= showAllCars($conn) ?>
           </div>
         </div>
       </div>
     </section>
   </main>
   <div class=" opacity-0 -z-10 max-md:h-full  transition-opacity duration-500 absolute w-full h-full bg-[#0005] backdrop-blur-[2px] inset-0" id="car_view">
-    <div class="absolute bg-grey-100 w-[80%] h-[50%] top-1/2 gap-10 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl flex md:items-center px-7 pb-5 max-md:flex-col max-md:w-full max-md:h-screen max-md:gap-0 max-md:rounded-none max-md:top-0 max-md:translate-x-0 max-md:translate-y-0 max-md:left-0 max-md:overflow-y-scroll">
-      <i class="fa-solid fa-ellipsis text-2xl absolute top-4 left-4 text-grey-600 cursor-pointer <?php if (!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] !== 'YES') echo 'hidden' ?>" id="actionsBtn"></i>
+    <div class="absolute bg-grey-100 w-[80%] h-[35%] top-1/2 gap-10 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl flex md:items-center px-7 pb-5 max-md:flex-col max-md:w-full max-md:h-screen max-md:gap-0 max-md:rounded-none max-md:top-0 max-md:translate-x-0 max-md:translate-y-0 max-md:left-0 max-md:overflow-y-scroll">
+      <i class="fa-solid fa-ellipsis text-2xl absolute top-4 left-4 text-grey-600 cursor-pointer <?php if (!checkIfAdmin($conn)) echo 'hidden' ?>" id="actionsBtn"></i>
       <i class="fa-solid fa-xmark text-2xl absolute top-4 right-4 text-grey-600 cursor-pointer" id="close_car_view"></i>
       <div class="shadow-shadow-1 absolute left-4 top-12 -z-10 h-0 w-52  rounded-xl bg-white p-0 transition-all duration-500 overflow-hidden" id="actions">
         <ul>
@@ -523,7 +484,7 @@ function showProfilePicture()
           Add</button>
       </form>
     </div>
-    <div class=" absolute inset-0 max-md:rounded-none  h-[50%] w-[80%] max-md:h-full max-md:w-full opacity-0 -z-10 top-1/2  rounded-xl left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0004] backdrop-blur-[1px] grid place-content-center transition-opacity duration-300" id="delete_car_modal">
+    <div class=" absolute inset-0 max-md:rounded-none  h-[35%] w-[80%] max-md:h-full max-md:w-full opacity-0 -z-10 top-1/2  rounded-xl left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0004] backdrop-blur-[1px] grid place-content-center transition-opacity duration-300" id="delete_car_modal">
       <div class="bg-white w-fit px-7 text-center max-xs:w-full h-[250px] rounded-xl  grid place-content-center">
         <h2 class="font-bold text-grey-700 text-lg">Are you sure you want to delete this car ?</h2>
         <div class="flex justify-evenly mt-12">
@@ -532,19 +493,26 @@ function showProfilePicture()
         </div>
       </div>
     </div>
+    <div class="absolute inset-0 max-md:rounded-none  h-[48%] w-[80%] max-md:h-full max-md:w-full opacity-0 -z-10 top-1/2  rounded-xl left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0004] backdrop-blur-[1px] grid place-content-center transition-opacity duration-300" id="car_already_exists">
+      <div class="bg-white w-fit px-7 text-center max-xs:w-full h-[150px] rounded-xl  grid place-content-center">
+        <h2 class="font-bold text-grey-700 text-lg">The car you added already exists.Please try again.</h2>
+        <button class="w-fit mx-auto mt-7 bg-red-300 py-2 px-4 text-white font-bold rounded-xl cursor-pointer hover:opacity-80 transition-opacity">Ok</button>
+
+      </div>
+    </div>
   </div>
-  <div class="absolute -top-[120px] left-0 w-full p-5 bg-red-300 transition-all duration-500 z-40" id="empty_fields">
+  <div class="fixed -top-[120px] left-0 w-full p-5 bg-red-300 transition-all duration-500 z-40" id="empty_fields">
     <p class="text-white text-lg font-bold text-center">
       Please fill out all required fields. Missing fields: [
       <span id="fields"></span> ]
     </p>
   </div>
+
 </body>
 
 </html>
-<!-- 
-  <p class="error_content">
-        Sorry, the current password you entered is incorrect. Please check and
-        try again.
-      </p>
- -->
+
+<?php
+// close the connection to the database 
+$conn = null
+?>

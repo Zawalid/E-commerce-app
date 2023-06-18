@@ -37,10 +37,9 @@ function rememberedUser($conn)
         return array($userId, $userName);
     }
 }
-function showAllCars()
+function showAllCars($conn)
 {
-    require 'db.php';
-    $stmt = $conn->prepare("SELECT * FROM cars order by id desc");
+    $stmt = $conn->prepare("SELECT * FROM cars");
     $stmt->execute();
     $cars = $stmt->fetchAll(PDO::FETCH_OBJ);
 
@@ -57,7 +56,7 @@ function showAllCars()
                 </div>
             </div>
             <p class='font-semibold text-grey-500 carType'>$car->type</p>
-            <img src='$car->image' alt='' class='mx-auto my-3 h-28 ' />
+            <img src='$car->image' alt='' class='mx-auto my-3 h-28 slide_img' />
             <div class='flex items-center justify-between gap-3 mb-4'>
                 
                     <span class='font-semibold text-grey-500 carCapacity'>
@@ -75,119 +74,97 @@ function showAllCars()
                     </div>
         </div>";
     }
-    // CLose the connection
-    $conn = null;
 }
 // Filters
-function countCarsByType($value)
+function countCarsByType($conn, $value)
 {
-    require 'db.php';
+
     $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE type = :value ");
     $stmt->execute([':value' => $value]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
-    // CLose the connection
-    $conn = null;
 }
-function capacityGt6()
+function capacityGt6($conn)
 {
-    require 'db.php';
+
     $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE capacity >= 6 ");
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
-    // CLose the connection
-    $conn = null;
 }
-function capacityGt2AndLs5()
+function capacityGt2AndLs5($conn)
 {
-    require 'db.php';
+
     $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE capacity >= 2 AND capacity <= 5 ");
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
-    // CLose the connection
-    $conn = null;
 }
-function countCarsByTransmission($value)
+function countCarsByTransmission($conn, $value)
 {
-    require 'db.php';
+
     $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE transmission = :value ");
     $stmt->execute([':value' => $value]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
-    // CLose the connection
-    $conn = null;
 }
-function priceBet20And40()
+function priceBet20And40($conn)
 {
-    require 'db.php';
+
     $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE price >= 20000 AND price <= 40000 ");
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
-    // CLose the connection
-    $conn = null;
 }
-function priceBet40And65()
+function priceBet40And65($conn)
 {
-    require 'db.php';
+
     $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE price >= 40000 AND price <= 65000 ");
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
-    // CLose the connection
-    $conn = null;
 }
-function priceBet150And500()
+function priceBet150And500($conn)
 {
-    require 'db.php';
+
     $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE price >= 150000 AND price <= 500000 ");
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
-    // CLose the connection
-    $conn = null;
 }
-function customRecGt70()
+function customRecGt70($conn)
 {
-    require 'db.php';
+
     $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE customRecommendation >= 70 ");
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
-    // CLose the connection
-    $conn = null;
 }
-function customRecBt40And70()
+function customRecBt40And70($conn)
 {
-    require 'db.php';
+
     $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE customRecommendation >= 40 AND customRecommendation <= 69 ");
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
-    // CLose the connection
-    $conn = null;
 }
-function customRecLt39()
+function customRecLt39($conn)
 {
-    require 'db.php';
+
     $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE customRecommendation <= 39 ");
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
-    // CLose the connection
-    $conn = null;
 }
 // Check if cart is empty
 function isCartEmpty($conn)
@@ -219,4 +196,19 @@ function getCarId($conn, $carName)
     $stmt->execute([':name' => $carName]);
     $results = $stmt->fetch(PDO::FETCH_ASSOC);
     return $results['id'];
+}
+// Check if user is admin
+function checkIfAdmin($conn)
+{
+    if (isset($_SESSION['userId'])) {
+
+        $stmt = $conn->prepare("SELECT is_admin FROM `users` WHERE `id` = :id");
+        $stmt->execute([':id' => $_SESSION['userId']]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($result['is_admin'] == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

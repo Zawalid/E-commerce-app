@@ -32,8 +32,9 @@
     @apply z-10  h-[180px] opacity-100;
   }
   #add_edit_car_modal.show {
-    @apply h-[60%] w-[80%] p-7 max-md:h-full max-md:w-full;
+    @apply h-[48%] w-[80%] p-7 max-md:h-full max-md:w-full;
   }
+  #car_already_exists.show ,
   #forgot_password_modal.show,
   #delete_car_modal.show {
     @apply z-10 opacity-100;

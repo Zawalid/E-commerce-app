@@ -20,13 +20,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         }
         // Move the uploaded image to the imgs directory
-        move_uploaded_file($_FILES["Image"]["tmp_name"], $image);
+        if (!file_exists($image)) {
+            move_uploaded_file($_FILES["Image"]["tmp_name"], $image);
+        }
     }
     if ($action == 'add') {
         // Add the car 
-        $sql = 'INSERT INTO CARS (name,type,capacity,transmission,price,image) VALUES(:name,:type,:capacity,:transmission,:price,:image)';
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([':name' => $name, ':type' => $type, ':capacity' => $capacity, ':transmission' => $transmission, ':price' => $price, ':image' => $image]);
+        try {
+
+            $sql = 'INSERT INTO CARS (name,type,capacity,transmission,price,image) VALUES(:name,:type,:capacity,:transmission,:price,:image)';
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([':name' => $name, ':type' => $type, ':capacity' => $capacity, ':transmission' => $transmission, ':price' => $price, ':image' => $image]);
+        } catch (PDOException $e) {
+            echo "already exist";
+            exit;
+        }
     } elseif ($action === 'edit') {
         // Edit the car
         $id = getCarId($conn, $_POST['carName']);
@@ -41,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     // Send the response
-    showAllCars();
+    showAllCars($conn);
 }
 if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
     $jsonData = file_get_contents('php://input');
@@ -61,5 +69,5 @@ if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
         }
     }
     // Send the response
-    showAllCars();
+    showAllCars($conn);
 }
