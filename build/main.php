@@ -117,7 +117,7 @@ function showProfilePicture()
         foreach ($results as $car) {
           echo  " <div class='flex gap-3 items-center mt-4'>
                        <div class='rounded-lg shadow-shadow-1 px-1'>
-                         <img src='$car->image' class='w-16 h-12' alt=''>
+                         <img src='$car->image' class='w-16 h-12 object-contain' alt=''>
                        </div>
                        <div class='flex-1'>
                          <h5 class='text-grey-700 font-bold mb-2'>$car->name</h5>
@@ -199,7 +199,7 @@ function showProfilePicture()
             </div>
           </div>
         </div>
-        <img src="" alt="" class="flex-1 h-72 w-full max-md:hidden" id="slide">
+        <img src="./imgs/ford-mustang.png" alt="" class="flex-1 h-72 object-contain w-full max-md:hidden" id="slide">
       </div>
     </section>
     <section class="bg-light-grey">

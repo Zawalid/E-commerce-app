@@ -628,12 +628,12 @@ addAndEditCarCloseBtn.addEventListener("click", () => {
 const slide = document.getElementById("slide");
 const slides = document.querySelectorAll(".slide_img");
 let index = 0;
-// setInterval(() => {
-//   slide.src = slides[index].src;
-//   index === document.getElementById("search_results").children.length - 1
-//     ? (index = 0)
-//     : index++;
-// }, 3500);
+setInterval(() => {
+  slide.src = slides[index].src;
+  index === document.getElementById("search_results").children.length - 1
+    ? (index = 0)
+    : index++;
+}, 3500);
 
 //* Car already exists error
 document
