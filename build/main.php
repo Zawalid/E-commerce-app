@@ -199,7 +199,7 @@ function showProfilePicture()
             </div>
           </div>
         </div>
-        <img src="./imgs/car-01.svg" alt="" class="flex-1 h-72 w-full max-md:hidden" id="slide">
+        <img src="" alt="" class="flex-1 h-72 w-full max-md:hidden" id="slide">
       </div>
     </section>
     <section class="bg-light-grey">
@@ -397,7 +397,7 @@ function showProfilePicture()
         </ul>
       </div>
       <div class="flex-1 grid place-content-center">
-        <img src="imgs/car-01.svg" alt="" class="w-[500px] h-[350px] object-contain mx-auto ">
+        <img src="" alt="" class="w-[500px] h-[350px] object-contain mx-auto ">
       </div>
       <div class="flex-1 flex flex-col max-md:justify-center gap-6">
         <h2 class="text-4xl font-bold text-grey-700" id="name">Honda Accord Coupe</h2>
