@@ -157,7 +157,7 @@ function showProfilePicture()
   </div>
   <main>
     <section>
-      <div class="container flex items-center bg-white gap-8 py-10 max-md:flex-col max-md:h-[80vh] ">
+      <div class="container flex items-center bg-white gap-8 py-10 max-md:flex-col ">
         <div class="flex-1">
           <h1 class="text-[2.1rem] font-bold text-grey-900">
             Purchase a car in easy steps
@@ -199,7 +199,7 @@ function showProfilePicture()
             </div>
           </div>
         </div>
-        <img src="./imgs/car-01.svg" alt="" class="flex-1 h-72 w-full" id="slide">
+        <img src="./imgs/car-01.svg" alt="" class="flex-1 h-72 w-full max-md:hidden" id="slide">
       </div>
     </section>
     <section class="bg-light-grey">
@@ -354,9 +354,6 @@ function showProfilePicture()
                 </li>
               </ul>
             </div>
-
-          </div>
-
         </aside>
         <div class="flex-1">
           <div>
@@ -400,7 +397,7 @@ function showProfilePicture()
         </ul>
       </div>
       <div class="flex-1 grid place-content-center">
-        <img src="imgs/car-01.svg" alt="" class="w-[500px] h-[350px]  mx-auto ">
+        <img src="imgs/car-01.svg" alt="" class="w-[500px] h-[350px] object-contain mx-auto ">
       </div>
       <div class="flex-1 flex flex-col max-md:justify-center gap-6">
         <h2 class="text-4xl font-bold text-grey-700" id="name">Honda Accord Coupe</h2>

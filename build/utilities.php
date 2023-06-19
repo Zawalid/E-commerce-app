@@ -56,7 +56,7 @@ function showAllCars($conn)
                 </div>
             </div>
             <p class='font-semibold text-grey-500 carType'>$car->type</p>
-            <img src='$car->image' alt='' class='mx-auto my-3 h-28 slide_img' />
+            <img src='$car->image' alt='' class='mx-auto my-3 h-28 slide_img object-contain' />
             <div class='flex items-center justify-between gap-3 mb-4'>
                 
                     <span class='font-semibold text-grey-500 carCapacity'>

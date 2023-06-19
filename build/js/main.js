@@ -365,8 +365,9 @@ const showCarView = () => {
 
       carViewTransmission.textContent =
         car.querySelector(".carTransmission").innerText;
-
-      window.scrollTo(0, 0);
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        window.scrollTo(0, 0);
+      }
 
       quantity.textContent = 1;
 
