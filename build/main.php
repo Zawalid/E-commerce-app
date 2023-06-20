@@ -71,10 +71,6 @@ function showProfilePicture()
                   Cart
                 </li>
                 <li class="bg-white cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100 flex items-center gap-3">
-                  <i class="w-5 fa-regular fa-bell cursor-pointer text-lg text-grey-500"></i>
-                  Notifications
-                </li>
-                <li class="bg-white cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100 flex items-center gap-3">
                   <i class="w-5 fa-solid fa-gear cursor-pointer text-lg text-grey-500"></i>
                   Settings
                 </li>
@@ -194,7 +190,7 @@ function showProfilePicture()
                 </span>
               </div>
               <p class="mt-2 text-xs text-grey-500">
-                Trusted by 10 million customers
+                Trusted by 1M customers
               </p>
             </div>
           </div>
@@ -492,7 +488,7 @@ function showProfilePicture()
     </div>
     <div class="absolute inset-0 max-md:rounded-none  h-[48%] w-[80%] max-md:h-full max-md:w-full opacity-0 -z-10 top-1/2  rounded-xl left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0004] backdrop-blur-[1px] grid place-content-center transition-opacity duration-300" id="car_already_exists">
       <div class="bg-white w-fit px-7 text-center max-xs:w-full h-[150px] rounded-xl  grid place-content-center">
-        <h2 class="font-bold text-grey-700 text-lg">The car you added already exists.Please try again.</h2>
+        <h2 class="font-bold text-grey-700 text-lg">The car you're trying to add already exists.Please try again.</h2>
         <button class="w-fit mx-auto mt-7 bg-red-300 py-2 px-4 text-white font-bold rounded-xl cursor-pointer hover:opacity-80 transition-opacity">Ok</button>
 
       </div>

@@ -564,7 +564,7 @@ aside.show {
 
 #dropDown.show {
   z-index: 10;
-  height: 309px;
+  height: 248px;
   border-width: 2px;
   --tw-border-opacity: 1;
   border-color: rgb(238 240 241 / var(--tw-border-opacity));
@@ -2221,10 +2221,6 @@ input[type="range"]:focus::-webkit-slider-thumb {
 
   .max-md\:h-\[640px\] {
     height: 640px;
-  }
-
-  .max-md\:h-\[80vh\] {
-    height: 80vh;
   }
 
   .max-md\:h-full {

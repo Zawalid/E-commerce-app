@@ -583,7 +583,7 @@ addAndEditCarForm.addEventListener("submit", function (e) {
   if (this.querySelector("[name='action']").value === "add") {
     sendFormData((data) => {
       if (data === "already exist") {
-        search();
+        // search();
         document.getElementById("car_already_exists").classList.add("show");
       } else {
         responseActions(data);

@@ -11,7 +11,7 @@
     @apply z-10 opacity-100;
   }
   #dropDown.show {
-    @apply z-10 h-[309px] border-2 border-border-color pt-4;
+    @apply z-10 h-[248px] border-2 border-border-color pt-4;
   }
   #cart.show {
     @apply z-20 translate-x-[-80%] max-md:translate-x-0 max-md:opacity-100;

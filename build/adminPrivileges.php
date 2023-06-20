@@ -27,7 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($action == 'add') {
         // Add the car 
         try {
-
             $sql = 'INSERT INTO CARS (name,type,capacity,transmission,price,image) VALUES(:name,:type,:capacity,:transmission,:price,:image)';
             $stmt = $conn->prepare($sql);
             $stmt->execute([':name' => $name, ':type' => $type, ':capacity' => $capacity, ':transmission' => $transmission, ':price' => $price, ':image' => $image]);
