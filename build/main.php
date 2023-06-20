@@ -205,7 +205,6 @@ function showProfilePicture()
             Filter By
           </h2>
           <div class="max-md:h-[530px] pe-8 max-md:overflow-y-scroll">
-
             <div class="mt-5">
               <p class="mb-4 text-sm font-semibold text-grey-700">Car type</p>
               <ul id="filterByType">
@@ -350,6 +349,7 @@ function showProfilePicture()
                 </li>
               </ul>
             </div>
+          </div>
         </aside>
         <div class="flex-1">
           <div>
