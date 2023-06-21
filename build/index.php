@@ -11,7 +11,7 @@
 
 <body class="grid h-screen place-content-center text-center">
   <div id="animation-container" class="w-44 h-44"></div>
-  <h2 class="text-logo uppercase text-primary-500">Optimum</h2>
+  <h2 class="text-logo uppercase text-primary-500">Wheelz</h2>
 
   <script src="../node_modules/lottie-web/build/player/lottie.js" type="module"></script>
   <script src="js/loading.js" type="module"></script>

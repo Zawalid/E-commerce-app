@@ -129,4 +129,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 // CLose the connection
-// $conn = null;
+$conn = null;

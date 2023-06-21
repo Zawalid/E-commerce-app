@@ -43,13 +43,7 @@ module.exports = {
         Jakarta: ["Plus Jakarta Sans", "sans-serif"],
         FontAwesome: ["Font Awesome 6 Free", "sans-serif"],
       },
-      gradientColorStops: {
-        DayBlue: "#4D62E5",
-        Blue: "#87DDEE",
-        Green500: "#B6F09C",
-      },
       boxShadow: {
-        activeInput: " 0px 0px 0px 4px rgba(132, 220, 245, 0.24)",
         "shadow-1":
           "0px 2px 4px rgba(76, 92, 107, 0.15), 0px 18px 36px rgba(166, 175, 186, 0.2)",
       },
