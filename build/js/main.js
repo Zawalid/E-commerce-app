@@ -8,6 +8,20 @@ const checkIfUserLoggedIn = () => {
   return true;
 };
 
+//* Check if user is an admin
+const checkIfUserIsAdmin = () => {
+  if (document.getElementById("admin_icon")) {
+    [
+      document.getElementById("cartAndQuantity"),
+      document.getElementById("cart_toggler"),
+      ...document.querySelectorAll("div:has( > #addToCart)"),
+    ].forEach((e) => e.remove());
+    document.getElementById("car_view").firstElementChild.style.height = "30%";
+    return true;
+  } else {
+    return false;
+  }
+};
 //* Get the uploaded image
 const getUploadedImage = async (img) => {
   return new Promise((resolve) => {
@@ -109,7 +123,6 @@ const showAndHideElement = (element, elementBtn) => {
       }
     } else element.classList.toggle("show");
     elementBtn === dropDownBtn && dropDownBtn.classList.toggle("rotate-180");
-    elementBtn === sideBarOpenBtn && dropDownBtn.classList.remove("rotate-180");
   });
 
   document.addEventListener("click", (e) => {
@@ -121,7 +134,6 @@ const showAndHideElement = (element, elementBtn) => {
       !cart.contains(e.target)
     ) {
       element.classList.remove("show");
-      element === sideBar && dropDownBtn.classList.remove("rotate-180");
     }
   });
 };
@@ -326,16 +338,17 @@ document.getElementById("close_cart").addEventListener("click", () => {
 });
 
 //* Check if cart is full and show the checkout button
-if (document.getElementById("cart_count").dataset.cart !== "0") {
-  cart.querySelector("button").classList.remove("hidden");
-}
+if (!checkIfUserIsAdmin())
+  if (document.getElementById("cart_count").dataset.cart !== "0") {
+    cart.querySelector("button").classList.remove("hidden");
+  }
 
 //* Show car view
 const carView = document.getElementById("car_view");
 const carQuantity = carView.querySelector("#car_quantity");
-const plusBtn = carQuantity.querySelector(".fa-plus");
-const minusBtn = carQuantity.querySelector(".fa-minus");
-const quantity = carQuantity.querySelector("span");
+const plusBtn = carQuantity?.querySelector(".fa-plus");
+const minusBtn = carQuantity?.querySelector(".fa-minus");
+const quantity = carQuantity?.querySelector("span");
 const carViewName = carView.querySelector("#name");
 const carViewPrice = carView.querySelector("#price");
 const carViewType = carView.querySelector("#type");
@@ -369,7 +382,7 @@ const showCarView = () => {
         window.scrollTo(0, 0);
       }
 
-      quantity.textContent = 1;
+      quantity ? (quantity.textContent = 1) : null;
 
       carView.classList.add("show");
     });
@@ -383,56 +396,58 @@ document.getElementById("close_car_view").addEventListener("click", () => {
 });
 
 //* car quantity
-plusBtn.addEventListener("click", () => {
+plusBtn?.addEventListener("click", () => {
   quantity.textContent = +quantity.textContent + 1;
   if (+quantity.textContent > 100) quantity.textContent = 100;
 });
-minusBtn.addEventListener("click", () => {
+minusBtn?.addEventListener("click", () => {
   quantity.textContent = +quantity.textContent - 1;
   if (+quantity.textContent < 1) quantity.textContent = 1;
 });
 
 //* Add to cart from car view
-carView.querySelector("button").addEventListener("click", function () {
-  if (checkIfUserLoggedIn()) {
-    const carName = carView.querySelector("#name").textContent;
-    const button = this;
-    const request = {
-      carName,
-      quantity: quantity.textContent,
-    };
-    // Send car name using AJAX
-    fetch("addToCart.php", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded",
-      },
-      body: JSON.stringify(request),
-    })
-      .then(function (response) {
-        return response.json();
+document
+  .querySelector("#cartAndQuantity button")
+  ?.addEventListener("click", function () {
+    if (checkIfUserLoggedIn()) {
+      const carName = carView.querySelector("#name").textContent;
+      const button = this;
+      const request = {
+        carName,
+        quantity: quantity.textContent,
+      };
+      // Send car name using AJAX
+      fetch("addToCart.php", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/x-www-form-urlencoded",
+        },
+        body: JSON.stringify(request),
       })
-      .then(function (data) {
-        console.log(data);
-        button.innerHTML =
-          "<i class='fa-solid fa-check mr-2 text-lg text-white'></i> Added";
-        setTimeout(() => {
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          console.log(data);
           button.innerHTML =
-            "<i class='fa-solid fa-cart-plus mr-2 text-lg text-white'></i> Add to Cart";
-        }, 1500);
+            "<i class='fa-solid fa-check mr-2 text-lg text-white'></i> Added";
+          setTimeout(() => {
+            button.innerHTML =
+              "<i class='fa-solid fa-cart-plus mr-2 text-lg text-white'></i> Add to Cart";
+          }, 1500);
 
-        document.getElementById("cart_cars").innerHTML = data.cars;
-        document.getElementById("cart_count").dataset.cart = data.count;
-        cart.querySelector("button").classList.contains("hidden") &&
-          cart.querySelector("button").classList.remove("hidden");
-      })
-      .catch(function (error) {
-        console.log("An error occurred while processing the search.", error);
-      });
-  } else {
-    window.location.href = "authentication/login.php";
-  }
-});
+          document.getElementById("cart_cars").innerHTML = data.cars;
+          document.getElementById("cart_count").dataset.cart = data.count;
+          cart.querySelector("button").classList.contains("hidden") &&
+            cart.querySelector("button").classList.remove("hidden");
+        })
+        .catch(function (error) {
+          console.log("An error occurred while processing the search.", error);
+        });
+    } else {
+      window.location.href = "authentication/login.php";
+    }
+  });
 
 //* car modal
 const addAndEditCarModal = document.getElementById("add_edit_car_modal");

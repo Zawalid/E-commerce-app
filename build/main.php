@@ -54,6 +54,7 @@ function showProfilePicture()
                                                                       } else {
                                                                         echo  "Guest";
                                                                       } ?></h2>
+                <?php if (checkIfAdmin($conn)) echo '<i class="fa-solid fa-lock ms-auto text-red-300" id="admin_icon"></i>' ?>
               </div>
               <ul>
                 <li class="bg-white cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100  flex items-center gap-3" id="cart_toggler">
@@ -412,7 +413,7 @@ function showProfilePicture()
         </div>
         <p class="font-semibold text-grey-600"><span class="bg-primary-500 px-2 py-1 mr-2 text-sm rounded-lg  text-white font-bold" id="recommendation">70%</span>Of our customers recommend this car.</p>
         <h3 class="text-xl font-bold text-grey-900" id="price">$50,000</h3>
-        <div class=" flex gap-9 max-xs:flex-col">
+        <div class=" flex gap-9 max-xs:flex-col" id="cartAndQuantity">
           <div class="bg-[#eee] py-3 px-5 rounded-xl flex justify-between items-center flex-1 xs:w-40" id="car_quantity">
             <i class="fa-solid fa-plus text-primary-500 cursor-pointer"></i>
             <span class="font-bold text-lg">1</span>
