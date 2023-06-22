@@ -19,11 +19,9 @@
     setTimeout(function() {
       <?php
       if (isset($_COOKIE['remember_token'])) {
-        // header("Location: authentication/verifyUser.php");
         echo 'window.location.href =  " authentication/verifyUser.php" ';
       } else {
         echo 'window.location.href =  " main.php" ';
-        // header("Location: main.php");
       }
       ?>
     }, 3000);

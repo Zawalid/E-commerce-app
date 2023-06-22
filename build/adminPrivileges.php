@@ -7,23 +7,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $capacity = $_POST['Capacity'];
     $transmission = $_POST['Transmission'];
     $price = $_POST['Price'];
-    $image = './imgs/' . basename($_FILES["Image"]["name"]);
+    $image = './imgs/' . $_FILES["Image"]["name"];
     $action = $_POST['action'];
 
-    if (!empty($_FILES['Image']['name'])) {
-        // Check if the file is an image
-        $allowedTypes = ['image/jpeg', 'image/png', 'image/svg+xml']; // Specify the allowed MIME types
-        $fileType = $_FILES["Image"]["type"];
+    move_uploaded_image();
 
-        if (!in_array($fileType, $allowedTypes)) {
-            echo "Invalid file type. Only JPEG, PNG, and SVG images are allowed.";
-            exit;
-        }
-        // Move the uploaded image to the imgs directory
-        if (!file_exists($image)) {
-            move_uploaded_file($_FILES["Image"]["tmp_name"], $image);
-        }
-    }
     if ($action == 'add') {
         // Add the car 
         try {

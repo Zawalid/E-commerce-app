@@ -68,7 +68,7 @@ const responseActions = (data) => {
 const showError = (errorModal) => {
   errorModal.style.top = "0";
   setTimeout(() => {
-    errorModal.style.top = "-70px";
+    errorModal.style.top = "-200px";
   }, 3200);
 };
 
@@ -122,7 +122,6 @@ const showAndHideElement = (element, elementBtn) => {
         window.location.href = "authentication/login.php";
       }
     } else element.classList.toggle("show");
-    elementBtn === dropDownBtn && dropDownBtn.classList.toggle("rotate-180");
   });
 
   document.addEventListener("click", (e) => {
@@ -506,9 +505,10 @@ editCarBtn.addEventListener("click", () => {
     +carViewPrice.textContent.replace(/[$,]/g, "");
   addAndEditCarForm.querySelector("[name='Type']").value =
     carViewType.textContent;
-  addAndEditCarForm.querySelector("[name='Capacity']").value = parseInt(
-    carViewCapacity.textContent
-  );
+  addAndEditCarForm.querySelector("[name='Capacity']").value =
+    document.querySelector("#capacityValue").textContent = parseInt(
+      carViewCapacity.textContent
+    );
   // Remove the checked from both and add it to the current
   addAndEditCarForm
     .querySelectorAll("[type='radio']")
@@ -657,3 +657,105 @@ document
   .addEventListener("click", () => {
     document.getElementById("car_already_exists").classList.remove("show");
   });
+
+//* Settings
+const settings = document.getElementById("settings");
+document.getElementById("show_settings").addEventListener("click", () => {
+  if (checkIfUserLoggedIn()) {
+    window.scrollTo(0, 0);
+    settings.classList.add("show");
+  } else {
+    window.location.href = "authentication/login.php";
+  }
+});
+settings.addEventListener("click", (e) => {
+  e.currentTarget === e.target && settings.classList.remove("show");
+});
+document.getElementById("close_settings").addEventListener("click", () => {
+  settings.classList.remove("show");
+});
+//* Settings : Edit user info
+const settingAction = settings.querySelector("[name='action']");
+const changePicture = settings.querySelector("#change_picture");
+const imageInput = settings.querySelector("[name='Image']");
+
+settings.querySelectorAll("#settings li").forEach((li) => {
+  li.addEventListener("click", () => {
+    document.getElementById(
+      document.querySelector("#settings .active").innerText
+    ).style.display = "none";
+
+    document.querySelector("#settings .active").classList.remove("active");
+
+    document.getElementById(li.innerText).style.display = "flex";
+    li.classList.add("active");
+  });
+});
+
+//* Edit user info
+settings.querySelector("form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  if (settingAction.value === "edit") {
+    settings.querySelector("button").textContent = "Save Changes";
+    settings.querySelectorAll("input").forEach((input) => {
+      input.removeAttribute("readonly");
+    });
+    settings.querySelectorAll("input").forEach((input) => {
+      if (input.value === "Hasn't been set") input.value = "";
+    });
+    changePicture.classList.remove("hidden");
+    changePicture.classList.add("grid");
+    settingAction.value = "save";
+    imageInput.addEventListener("change", () => {
+      if (!imageInput.files[0].type.startsWith("image/")) {
+        settings.querySelector("#profile_picture").src =
+          "./imgs/no profile.png";
+        return;
+      }
+      getUploadedImage(imageInput.files[0]).then((src) => {
+        settings.querySelector("#profile_picture").src = src;
+      });
+    });
+  } else if (settingAction.value === "save") {
+    const inputs = [
+      ...settings.querySelector("form").querySelectorAll("input"),
+    ];
+    if (inputs.some((input) => input.value == "")) {
+      checkForEmptyFields(inputs);
+    } else {
+      const data = new FormData(this);
+      if (
+        imageInput.files[0] &&
+        imageInput.files[0].type.startsWith("image/")
+      ) {
+        data.append("Image", imageInput.files[0]);
+      }
+      for (let pair of data) {
+        console.log(pair);
+      }
+      settingAction.value = "edit";
+      settings.querySelector("button").textContent = "Edit Profile";
+      settings.querySelectorAll("input").forEach((input) => {
+        input.setAttribute("readonly", "readonly");
+      });
+      changePicture.classList.add("hidden");
+      changePicture.classList.remove("grid");
+      settings.querySelector("#user_name").textContent = `${data.get(
+        "firstName"
+      )} ${data.get("lastName")}`;
+      fetch("settings.php", {
+        method: "POST",
+        body: data,
+      })
+        .then(function (response) {
+          return response.text();
+        })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch(function (error) {
+          console.log("An error occurred while processing the request ", error);
+        });
+    }
+  }
+});

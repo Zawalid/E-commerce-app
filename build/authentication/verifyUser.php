@@ -19,8 +19,8 @@ if (rememberedUser($conn)) {
         $stmt->execute([':email' => $email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($user && password_verify($password, $user['password'])) {
-            $_SESSION['userName'] = $user['First Name'];
             $_SESSION['userId'] = $user['id'];
+            setUserSession($user);
             $sql = 'UPDATE users SET Token = :token WHERE id = :id';
             $stmt = $conn->prepare($sql);
             $token = bin2hex(random_bytes(32));

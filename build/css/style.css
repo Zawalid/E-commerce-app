@@ -607,7 +607,8 @@ aside.show {
   color: rgb(166 175 186 / var(--tw-text-opacity));
 }
 
-#car_view.show {
+#settings.show,
+  #car_view.show {
   z-index: 30;
   opacity: 1;
 }
@@ -631,7 +632,7 @@ aside.show {
   }
 }
 
-#car_already_exists.show ,
+#car_already_exists.show,
   #forgot_password_modal.show,
   #delete_car_modal.show {
   z-index: 10;
@@ -642,6 +643,21 @@ input.field_error {
   outline-style: solid;
   outline-width: 1px;
   outline-color: #F03D3D;
+}
+
+#settings li.active {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+  --tw-shadow: -5px 5px 8px 0px #0005;
+  --tw-shadow-colored: -5px 5px 8px 0px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+body:has(#settings.show) {
+  height: 100vh;
+  overflow: hidden;
 }
 
 .fixed {
@@ -660,6 +676,10 @@ input.field_error {
   inset: 0px;
 }
 
+.-left-40 {
+  left: -10rem;
+}
+
 .-top-\[120px\] {
   top: -120px;
 }
@@ -670,6 +690,10 @@ input.field_error {
 
 .bottom-14 {
   bottom: 3.5rem;
+}
+
+.bottom-3 {
+  bottom: 0.75rem;
 }
 
 .left-0 {
@@ -767,6 +791,10 @@ input.field_error {
 .my-7 {
   margin-top: 1.75rem;
   margin-bottom: 1.75rem;
+}
+
+.mb-10 {
+  margin-bottom: 2.5rem;
 }
 
 .mb-2 {
@@ -899,6 +927,10 @@ input.field_error {
   height: 1rem;
 }
 
+.h-4\/5 {
+  height: 80%;
+}
+
 .h-40 {
   height: 10rem;
 }
@@ -947,6 +979,10 @@ input.field_error {
   height: 250px;
 }
 
+.h-\[30\%\] {
+  height: 30%;
+}
+
 .h-\[309px\] {
   height: 309px;
 }
@@ -961,6 +997,10 @@ input.field_error {
 
 .h-\[48\%\] {
   height: 48%;
+}
+
+.h-\[500px\] {
+  height: 500px;
 }
 
 .h-\[830px\] {
@@ -1011,12 +1051,20 @@ input.field_error {
   width: 6rem;
 }
 
+.w-28 {
+  width: 7rem;
+}
+
 .w-36 {
   width: 9rem;
 }
 
 .w-4 {
   width: 1rem;
+}
+
+.w-4\/5 {
+  width: 80%;
 }
 
 .w-44 {
@@ -1061,10 +1109,6 @@ input.field_error {
 
 .w-\[500px\] {
   width: 500px;
-}
-
-.w-\[80\%\] {
-  width: 80%;
 }
 
 .w-\[85\%\] {
@@ -1172,6 +1216,10 @@ input.field_error {
 
 .gap-2 {
   gap: 0.5rem;
+}
+
+.gap-20 {
+  gap: 5rem;
 }
 
 .gap-3 {
@@ -1367,6 +1415,11 @@ input.field_error {
      object-fit: contain;
 }
 
+.object-cover {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
 .p-0 {
   padding: 0px;
 }
@@ -1423,6 +1476,11 @@ input.field_error {
 .px-7 {
   padding-left: 1.75rem;
   padding-right: 1.75rem;
+}
+
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .px-\[33\%\] {
@@ -1800,6 +1858,10 @@ aside > div::-webkit-scrollbar-thumb,
   background-color: rgb(166 175 186 / var(--tw-bg-opacity));
 }
 
+#settings ul::-webkit-scrollbar {
+  display: none;
+}
+
 /* slider track */
 
 input[type="range"]::-webkit-slider-runnable-track {
@@ -2079,6 +2141,11 @@ input[type="range"]:focus::-webkit-slider-thumb {
   content: var(--tw-content);
 }
 
+.hover\:bg-black:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-grey-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(246 247 249 / var(--tw-bg-opacity));
@@ -2116,6 +2183,12 @@ input[type="range"]:focus::-webkit-slider-thumb {
 
 .hover\:opacity-80:hover {
   opacity: 0.8;
+}
+
+.hover\:shadow-\[-5px_5px_8px_0px_\#0005\]:hover {
+  --tw-shadow: -5px 5px 8px 0px #0005;
+  --tw-shadow-colored: -5px 5px 8px 0px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .hover\:before\:opacity-100:hover::before {
@@ -2288,12 +2361,33 @@ input[type="range"]:focus::-webkit-slider-thumb {
     width: 100%;
   }
 
+  .max-sm\:min-w-\[140px\] {
+    min-width: 140px;
+  }
+
+  .max-sm\:min-w-\[220px\] {
+    min-width: 220px;
+  }
+
   .max-sm\:flex-col {
     flex-direction: column;
   }
 
   .max-sm\:justify-between {
     justify-content: space-between;
+  }
+
+  .max-sm\:gap-5 {
+    gap: 1.25rem;
+  }
+
+  .max-sm\:overflow-scroll {
+    overflow: scroll;
+  }
+
+  .max-sm\:px-5 {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
 
   .max-sm\:text-2xl {

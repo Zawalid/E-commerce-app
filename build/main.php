@@ -71,7 +71,7 @@ function showProfilePicture()
                                                                                                                                                                                                                                                                                                                                                                                       } ?>" id="cart_count"></i>
                   Cart
                 </li>
-                <li class="bg-white cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100 flex items-center gap-3">
+                <li class="bg-white cursor-pointer p-4 font-semibold text-grey-700 duration-500 hover:bg-grey-100 flex items-center gap-3" id="show_settings">
                   <i class="w-5 fa-solid fa-gear cursor-pointer text-lg text-grey-500"></i>
                   Settings
                 </li>
@@ -372,8 +372,96 @@ function showProfilePicture()
       </div>
     </section>
   </main>
+  <div class="show opacity-0 -z-10 max-md:h-full  transition-opacity duration-500 absolute w-full h-full  bg-[#0005] backdrop-blur-[2px] inset-0 flex-col " id="settings">
+    <div class="w-4/5 h-4/5 rounded-xl flex flex-col bg-white absolute top-1/2 gap-10 left-1/2 -translate-x-1/2 -translate-y-1/2 max-md:rounded-none max-md:top-0 max-md:translate-x-0 max-md:translate-y-0 max-md:left-0 max-md:overflow-y-scroll max-md:w-full max-md:h-full">
+      <div class="shadow-shadow-1 rounded-xl flex w-full gap-5 items-center justify-center pe-3">
+        <ul class="py-2 max-sm:px-5 flex gap-8 max-sm:overflow-scroll">
+          <li class="active px-5 py-2 max-sm:min-w-[140px] rounded-md flex items-center gap-3 cursor-pointer transition duration-500 font-semibold text-grey-900 hover:text-white hover:shadow-[-5px_5px_8px_0px_#0005] hover:bg-black ">
+            <i class="fa-solid fa-user w-5"></i>
+            User info
+          </li>
+
+          <li class="px-5 py-2 max-sm:min-w-[220px] rounded-md flex items-center gap-3 cursor-pointer transition-colors duration-500 font-semibold text-grey-900 hover:text-white hover:shadow-[-5px_5px_8px_0px_#0005] hover:bg-black ">
+            <i class="fa-solid fa-key w-5"></i>
+            Change password
+          </li>
+          <li class="px-5 py-2 max-sm:min-w-[140px] rounded-md flex items-center gap-3 cursor-pointer transition-colors duration-500 font-semibold text-grey-900 hover:text-white hover:shadow-[-5px_5px_8px_0px_#0005] hover:bg-black">
+            <i class=" fa-solid fa-gear cursor-pointer w-5"></i>
+            Settings
+          </li>
+        </ul>
+        <div class="w-10 h-10 p-3 rounded-full flex justify-center items-center  shadow-shadow-1 cursor-pointer md:hidden" id="close_settings">
+          <i class="fa-solid fa-xmark text-xl text-red-300"></i>
+        </div>
+      </div>
+      <div class=" flex-1 w-full flex justify-center items-center flex-col pb-5" id="User info">
+        <div class="flex gap-4 items-center mb-10">
+          <div class="relative w-28 h-28">
+            <div class="w-6 h-6 rounded-full bg-grey-500 absolute bottom-3 right-0 overflow-hidden place-content-center hidden" id="change_picture">
+              <i class="fa-solid fa-pen  text-xs text-white"></i>
+              <input type="file" name="Image" accept="image/*" multiple="false" title=" " class="cursor-pointer opacity-0 absolute -left-40">
+            </div>
+            <img src="<?= $_SESSION['userImage'] ?>" alt="" class="w-full h-full object-cover rounded-full" id="profile_picture">
+
+          </div>
+          <div class="flex flex-col gap-3">
+            <h2 class="font-bold text-grey-700 text-xl" id="user_name"><?= $_SESSION['userName'] . " " . $_SESSION['userLastName'] ?></h2>
+          </div>
+        </div>
+        <form class="w-4/5">
+          <input type="hidden" name="action" value="edit">
+          <div class="mb-7 flex gap-20 max-sm:flex-col max-sm:gap-5">
+            <label class="w-1/2 font-semibold text-grey-900 max-sm:w-full">
+              First Name
+              <input type="text" name="firstName" value="<?= $_SESSION['userName'] ?>" readonly class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-500">
+            </label>
+            <label class="w-1/2 font-semibold text-grey-900 max-sm:w-full">
+              Last Name
+              <input type="text" name="lastName" value="<?= $_SESSION['userLastName'] ?>" readonly class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-500">
+            </label>
+          </div>
+          <div class="mb-7 flex gap-20 max-sm:flex-col max-sm:gap-5">
+            <label class="w-1/2 font-semibold text-grey-900 max-sm:w-full">
+              Email
+              <input type="text" name="email" value="<?= $_SESSION['userEmail'] ?>" readonly class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-500">
+            </label>
+            <label class="w-1/2 font-semibold text-grey-900 max-sm:w-full">
+              Phone
+              <input type="text" name="phone" value="<?php if (empty($_SESSION['userPhone'])) echo "Hasn't been set";
+                                                      else echo $_SESSION['userPhone']  ?>" readonly class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-500">
+            </label>
+          </div>
+          <label class="font-semibold text-grey-900 max-sm:w-full">
+            Address
+            <input type="text" name="address" value="<?php if (empty($_SESSION['userAddress'])) echo "Hasn't been set";
+                                                      else echo $_SESSION['userAddress']  ?>" readonly class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-500">
+          </label>
+          <button class="block mx-auto px-8 mt-12 text-center text-white bg-primary-500 rounded-xl py-3 font-bold text-sm hover:bg-grey-900 transition-colors duration-500">Edit Profile</button>
+        </form>
+      </div>
+      <div class="flex-1 w-full hidden justify-center items-center flex-col pb-5" id="Change password">
+        <form class="w-4/5">
+          <input type="hidden" name="action" value="changePassword">
+          <label class="font-semibold text-grey-900 max-sm:w-full">
+            Current Password
+            <input type="password" name="currentPassword" placeholder="Enter your current password" class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-500">
+          </label>
+          <label class="font-semibold text-grey-900 max-sm:w-full my-5">
+            New Password
+            <input type="password" name="newPassword" placeholder="Enter your new password" class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-500">
+          </label>
+          <label class="font-semibold text-grey-900 max-sm:w-full">
+            Confirm Password
+            <input type="password" name="confirmPassword" placeholder="Confirm your new password" class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-500">
+          </label>
+          <button class="block mx-auto px-8 mt-12 text-center text-white bg-primary-500 rounded-xl py-3 font-bold text-sm hover:bg-grey-900 transition-colors duration-500">Change Password</button>
+        </form>
+      </div>
+      <div class=" flex-1 w-full hidden  justify-center items-center flex-col pb-5" id="Settings"></div>
+    </div>
+  </div>
   <div class=" opacity-0 -z-10 max-md:h-full  transition-opacity duration-500 absolute w-full h-full bg-[#0005] backdrop-blur-[2px] inset-0" id="car_view">
-    <div class="absolute bg-grey-100 w-[80%] h-[35%] top-1/2 gap-10 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl flex md:items-center px-7 pb-5 max-md:flex-col max-md:w-full max-md:h-screen max-md:gap-0 max-md:rounded-none max-md:top-0 max-md:translate-x-0 max-md:translate-y-0 max-md:left-0 max-md:overflow-y-scroll">
+    <div class="absolute bg-grey-100 w-4/5 h-[35%] top-1/2 gap-10 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl flex md:items-center px-7 pb-5 max-md:flex-col max-md:w-full max-md:h-screen max-md:gap-0 max-md:rounded-none max-md:top-0 max-md:translate-x-0 max-md:translate-y-0 max-md:left-0 max-md:overflow-y-scroll">
       <i class="fa-solid fa-ellipsis text-2xl absolute top-4 left-4 text-grey-600 cursor-pointer <?php if (!checkIfAdmin($conn)) echo 'hidden' ?>" id="actionsBtn"></i>
       <i class="fa-solid fa-xmark text-2xl absolute top-4 right-4 text-grey-600 cursor-pointer" id="close_car_view"></i>
       <div class="shadow-shadow-1 absolute left-4 top-12 -z-10 h-0 w-52  rounded-xl bg-white p-0 transition-all duration-500 overflow-hidden" id="actions">
@@ -478,7 +566,7 @@ function showProfilePicture()
           Add</button>
       </form>
     </div>
-    <div class=" absolute inset-0 max-md:rounded-none  h-[35%] w-[80%] max-md:h-full max-md:w-full opacity-0 -z-10 top-1/2  rounded-xl left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0004] backdrop-blur-[1px] grid place-content-center transition-opacity duration-300" id="delete_car_modal">
+    <div class=" absolute inset-0 max-md:rounded-none  h-[30%] w-4/5 max-md:h-full max-md:w-full opacity-0 -z-10 top-1/2  rounded-xl left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0004] backdrop-blur-[1px] grid place-content-center transition-opacity duration-300" id="delete_car_modal">
       <div class="bg-white w-fit px-7 text-center max-xs:w-full h-[250px] rounded-xl  grid place-content-center">
         <h2 class="font-bold text-grey-700 text-lg">Are you sure you want to delete this car ?</h2>
         <div class="flex justify-evenly mt-12">
@@ -487,7 +575,7 @@ function showProfilePicture()
         </div>
       </div>
     </div>
-    <div class="absolute inset-0 max-md:rounded-none  h-[48%] w-[80%] max-md:h-full max-md:w-full opacity-0 -z-10 top-1/2  rounded-xl left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0004] backdrop-blur-[1px] grid place-content-center transition-opacity duration-300" id="car_already_exists">
+    <div class="absolute inset-0 max-md:rounded-none  h-[48%] w-4/5 max-md:h-full max-md:w-full opacity-0 -z-10 top-1/2  rounded-xl left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0004] backdrop-blur-[1px] grid place-content-center transition-opacity duration-300" id="car_already_exists">
       <div class="bg-white w-fit px-7 text-center max-xs:w-full h-[150px] rounded-xl  grid place-content-center">
         <h2 class="font-bold text-grey-700 text-lg">The car you're trying to add already exists.Please try again.</h2>
         <button class="w-fit mx-auto mt-7 bg-red-300 py-2 px-4 text-white font-bold rounded-xl cursor-pointer hover:opacity-80 transition-opacity">Ok</button>

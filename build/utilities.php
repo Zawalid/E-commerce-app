@@ -15,13 +15,41 @@ function checkPassword($password)
     }
     return $validated ? 'valid' : $error_msg;
 }
+function move_uploaded_image()
+{
+    if (!isset($_FILES['Image'])) return;
 
+    $destination = './imgs/' . $_FILES["Image"]["name"];
+
+    if (!empty($_FILES['Image']['name'])) {
+        // Check if the file is an image
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/svg+xml']; // Specify the allowed MIME types
+        $fileType = $_FILES["Image"]["type"];
+
+        if (!in_array($fileType, $allowedTypes)) {
+            echo "Invalid file type. Only JPEG, PNG, and SVG images are allowed.";
+            exit;
+        }
+        // Move the uploaded image to the imgs directory
+        if (!file_exists($destination)) {
+            move_uploaded_file($_FILES["Image"]["tmp_name"], $destination);
+        }
+    }
+}
 function showError($msg, $location)
 {
     $_SESSION['error_msg'] = $msg;
     header("Location: $location");
 }
-
+function setUserSession($user)
+{
+    $_SESSION['userName'] = $user['First Name'];
+    $_SESSION['userLastName'] = $user['Last Name'];
+    $_SESSION['userImage'] = $user['image'];
+    $_SESSION['userEmail'] = $user['Email'];
+    $_SESSION['userPhone'] = $user['phone'];
+    $_SESSION['userAddress'] = $user['address'];
+}
 function rememberedUser($conn)
 {
     $token = $_COOKIE['remember_token'];
@@ -88,8 +116,7 @@ function countCarsByType($conn, $value)
 function capacityGt6($conn)
 {
 
-    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE capacity >= 6 ");
-    $stmt->execute();
+    $stmt = $conn->query("SELECT COUNT(*) AS total FROM `cars` WHERE capacity >= 6 ");
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
@@ -97,8 +124,7 @@ function capacityGt6($conn)
 function capacityGt2AndLs5($conn)
 {
 
-    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE capacity >= 2 AND capacity <= 5 ");
-    $stmt->execute();
+    $stmt = $conn->query("SELECT COUNT(*) AS total FROM `cars` WHERE capacity >= 2 AND capacity <= 5 ");
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
@@ -115,8 +141,7 @@ function countCarsByTransmission($conn, $value)
 function priceBet20And40($conn)
 {
 
-    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE price >= 20000 AND price <= 40000 ");
-    $stmt->execute();
+    $stmt = $conn->query("SELECT COUNT(*) AS total FROM `cars` WHERE price >= 20000 AND price <= 40000 ");
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
@@ -124,8 +149,7 @@ function priceBet20And40($conn)
 function priceBet40And65($conn)
 {
 
-    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE price >= 40000 AND price <= 65000 ");
-    $stmt->execute();
+    $stmt = $conn->query("SELECT COUNT(*) AS total FROM `cars` WHERE price >= 40000 AND price <= 65000 ");
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
@@ -133,8 +157,7 @@ function priceBet40And65($conn)
 function priceBet150And500($conn)
 {
 
-    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE price >= 150000 AND price <= 500000 ");
-    $stmt->execute();
+    $stmt = $conn->query("SELECT COUNT(*) AS total FROM `cars` WHERE price >= 150000 AND price <= 500000 ");
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
@@ -142,8 +165,7 @@ function priceBet150And500($conn)
 function customRecGt70($conn)
 {
 
-    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE customRecommendation >= 70 ");
-    $stmt->execute();
+    $stmt = $conn->query("SELECT COUNT(*) AS total FROM `cars` WHERE customRecommendation >= 70 ");
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
@@ -151,8 +173,7 @@ function customRecGt70($conn)
 function customRecBt40And70($conn)
 {
 
-    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE customRecommendation >= 40 AND customRecommendation <= 69 ");
-    $stmt->execute();
+    $stmt = $conn->query("SELECT COUNT(*) AS total FROM `cars` WHERE customRecommendation >= 40 AND customRecommendation <= 69 ");
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
@@ -160,8 +181,7 @@ function customRecBt40And70($conn)
 function customRecLt39($conn)
 {
 
-    $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM `cars` WHERE customRecommendation <= 39 ");
-    $stmt->execute();
+    $stmt = $conn->query("SELECT COUNT(*) AS total FROM `cars` WHERE customRecommendation <= 39 ");
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $count = $result['total'];
     echo  $count;
@@ -170,8 +190,7 @@ function customRecLt39($conn)
 function isCartEmpty($conn)
 {
 
-    $stmt = $conn->prepare('SELECT * FROM carts');
-    $stmt->execute();
+    $stmt = $conn->query('SELECT * FROM carts');
     $stmt->fetchAll(PDO::FETCH_ASSOC);
     if ($stmt->rowCount() > 0) {
         return false;

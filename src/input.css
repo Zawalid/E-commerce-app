@@ -25,6 +25,7 @@
   .showPasswordIcon {
     @apply absolute right-3 top-[62%] -translate-y-1/2 cursor-pointer text-sm text-grey-500;
   }
+  #settings.show,
   #car_view.show {
     @apply z-30 opacity-100;
   }
@@ -34,13 +35,19 @@
   #add_edit_car_modal.show {
     @apply h-[48%] w-[80%] p-7 max-md:h-full max-md:w-full;
   }
-  #car_already_exists.show ,
+  #car_already_exists.show,
   #forgot_password_modal.show,
   #delete_car_modal.show {
     @apply z-10 opacity-100;
   }
   input.field_error {
     @apply outline outline-1 outline-red-300;
+  }
+  #settings li.active {
+    @apply bg-black text-white shadow-[-5px_5px_8px_0px_#0005];
+  }
+  body:has(#settings.show) {
+    @apply h-screen overflow-hidden;
   }
 }
 @media (max-width: 768px) {
@@ -71,7 +78,9 @@ aside > div::-webkit-scrollbar-thumb,
 #cart_cars::-webkit-scrollbar-thumb {
   @apply bg-grey-500;
 }
-
+#settings ul::-webkit-scrollbar {
+  display: none;
+}
 /* slider track */
 input[type="range"]::-webkit-slider-runnable-track {
   @apply h-1 rounded-full bg-grey-100;
