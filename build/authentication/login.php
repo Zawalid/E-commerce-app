@@ -20,9 +20,7 @@ session_start();
 
 <body class="flex min-h-screen flex-col bg-nobleDark700 font-Jakarta md:flex-row relative">
   <section class="flex min-h-screen flex-col justify-between gap-12 bg-white p-8 max-xs:p-4 lg:w-1/2">
-    <a href="../main.php">
-      <img src="../imgs/logo.jpg" alt="" class="w-20 cursor-pointer" />
-    </a>
+    <img src="../imgs/logo.jpg" alt="" class="w-20 " />
     <div class="px-5 sm:px-16 max-xs:px-2">
       <h1 class="mb-5  text-grey-900 max-md:text-center max-md:text-3xl font-bold text-logo">
         Login and Reconnect with Your Automotive World!

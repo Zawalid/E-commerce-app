@@ -20,9 +20,7 @@ session_start();
 <body class="flex min-h-screen flex-col bg-nobleDark700 font-Jakarta md:flex-row">
   <section class="flex min-h-screen flex-col justify-between gap-12 bg-white p-8 max-xs:p-4 lg:w-3/5">
     <div class="flex items-center justify-between">
-      <a href="../main.php">
-        <img src="../imgs/logo.jpg" alt="" class="w-20 cursor-pointer" />
-      </a>
+      <img src="../imgs/logo.jpg" alt="" class="w-20" />
       <a class="text-grey-700 font-bold text-lg" href="login.php">Login</a>
     </div>
     <div class="px-5 sm:px-16  max-xs:px-2 ">

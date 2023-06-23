@@ -16,12 +16,12 @@ const checkIfUserIsAdmin = () => {
       document.getElementById("cart_toggler"),
       ...document.querySelectorAll("div:has( > #addToCart)"),
     ].forEach((e) => e.remove());
-    document.getElementById("car_view").firstElementChild.style.height = "30%";
     return true;
   } else {
     return false;
   }
 };
+
 //* Get the uploaded image
 const getUploadedImage = async (img) => {
   return new Promise((resolve) => {
@@ -90,6 +90,36 @@ const checkForEmptyFields = (inputs) => {
   });
   showError(emptyFieldsError);
 };
+
+//* Show password
+const showPassword = () => {
+  const showPasswordButtons = document.querySelectorAll(
+    "input ~ #show_password "
+  );
+  showPasswordButtons.forEach((button) => {
+    const input = button.previousElementSibling;
+    button.addEventListener("click", () => {
+      if (input.type == "password" && input.value != "") {
+        input.type = "text";
+        button.className = "fa-solid fa-eye-slash showPasswordIcon";
+      } else {
+        input.type = "password";
+        button.className = "fa-solid fa-eye showPasswordIcon";
+      }
+    });
+    document.addEventListener("click", (e) => {
+      if (
+        !input.contains(e.target) &&
+        !button.contains(e.target) &&
+        input.type == "text"
+      ) {
+        input.type = "password";
+        button.className = "fa-solid fa-eye showPasswordIcon";
+      }
+    });
+  });
+};
+showPassword();
 
 //! Main Code
 
@@ -598,7 +628,6 @@ addAndEditCarForm.addEventListener("submit", function (e) {
   if (this.querySelector("[name='action']").value === "add") {
     sendFormData((data) => {
       if (data === "already exist") {
-        // search();
         document.getElementById("car_already_exists").classList.add("show");
       } else {
         responseActions(data);
@@ -650,23 +679,35 @@ setInterval(() => {
     : index++;
 }, 3500);
 
-//* Car already exists error
-document
-  .getElementById("car_already_exists")
-  .querySelector("button")
-  .addEventListener("click", () => {
-    document.getElementById("car_already_exists").classList.remove("show");
+//*Errors
+[
+  document.getElementById("car_already_exists"),
+  document.getElementById("email_already_exists"),
+  document.getElementById("incorrect_password"),
+  document.getElementById("passwords_dont_match"),
+  document.getElementById("same_passwords"),
+].forEach((error) => {
+  error.querySelector("button").addEventListener("click", () => {
+    error.classList.remove("show");
   });
+});
 
 //* Settings
 const settings = document.getElementById("settings");
-document.getElementById("show_settings").addEventListener("click", () => {
+const showSettings = (el) => {
   if (checkIfUserLoggedIn()) {
     window.scrollTo(0, 0);
+    el.dispatchEvent(new Event("click"));
     settings.classList.add("show");
   } else {
     window.location.href = "authentication/login.php";
   }
+};
+document.getElementById("show_settings").addEventListener("click", () => {
+  showSettings(settings.querySelector("li#settings"));
+});
+document.getElementById("show_userInfo").addEventListener("click", () => {
+  showSettings(settings.querySelector("li#userInfo"));
 });
 settings.addEventListener("click", (e) => {
   e.currentTarget === e.target && settings.classList.remove("show");
@@ -674,11 +715,6 @@ settings.addEventListener("click", (e) => {
 document.getElementById("close_settings").addEventListener("click", () => {
   settings.classList.remove("show");
 });
-//* Settings : Edit user info
-const settingAction = settings.querySelector("[name='action']");
-const changePicture = settings.querySelector("#change_picture");
-const imageInput = settings.querySelector("[name='Image']");
-
 settings.querySelectorAll("#settings li").forEach((li) => {
   li.addEventListener("click", () => {
     document.getElementById(
@@ -692,70 +728,148 @@ settings.querySelectorAll("#settings li").forEach((li) => {
   });
 });
 
-//* Edit user info
-settings.querySelector("form").addEventListener("submit", function (e) {
-  e.preventDefault();
-  if (settingAction.value === "edit") {
-    settings.querySelector("button").textContent = "Save Changes";
-    settings.querySelectorAll("input").forEach((input) => {
-      input.removeAttribute("readonly");
-    });
-    settings.querySelectorAll("input").forEach((input) => {
-      if (input.value === "Hasn't been set") input.value = "";
-    });
-    changePicture.classList.remove("hidden");
-    changePicture.classList.add("grid");
-    settingAction.value = "save";
-    imageInput.addEventListener("change", () => {
-      if (!imageInput.files[0].type.startsWith("image/")) {
-        settings.querySelector("#profile_picture").src =
-          "./imgs/no profile.png";
-        return;
-      }
-      getUploadedImage(imageInput.files[0]).then((src) => {
-        settings.querySelector("#profile_picture").src = src;
+//* Settings : Edit user info
+const userInfo = document.getElementById("User info");
+const settingAction = settings.querySelector("[name='action']");
+const changePicture = settings.querySelector("#change_picture");
+const imageInput = settings.querySelector("[name='Image']");
+
+document
+  .getElementById("userInfo_form")
+  .addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (settingAction.value === "edit") {
+      userInfo.querySelector("button").textContent = "Save Changes";
+      userInfo.querySelectorAll("input").forEach((input) => {
+        input.removeAttribute("readonly");
       });
-    });
-  } else if (settingAction.value === "save") {
-    const inputs = [
-      ...settings.querySelector("form").querySelectorAll("input"),
-    ];
-    if (inputs.some((input) => input.value == "")) {
-      checkForEmptyFields(inputs);
-    } else {
-      const data = new FormData(this);
-      if (
-        imageInput.files[0] &&
-        imageInput.files[0].type.startsWith("image/")
-      ) {
-        data.append("Image", imageInput.files[0]);
-      }
-      for (let pair of data) {
-        console.log(pair);
-      }
-      settingAction.value = "edit";
-      settings.querySelector("button").textContent = "Edit Profile";
-      settings.querySelectorAll("input").forEach((input) => {
-        input.setAttribute("readonly", "readonly");
+      userInfo.querySelectorAll("input").forEach((input) => {
+        if (input.value === "Hasn't been set") input.value = "";
       });
-      changePicture.classList.add("hidden");
-      changePicture.classList.remove("grid");
-      settings.querySelector("#user_name").textContent = `${data.get(
-        "firstName"
-      )} ${data.get("lastName")}`;
-      fetch("settings.php", {
-        method: "POST",
-        body: data,
-      })
-        .then(function (response) {
-          return response.text();
-        })
-        .then((data) => {
-          console.log(data);
-        })
-        .catch(function (error) {
-          console.log("An error occurred while processing the request ", error);
+      changePicture.classList.remove("hidden");
+      changePicture.classList.add("grid");
+      settingAction.value = "save";
+      imageInput.addEventListener("change", () => {
+        if (!imageInput.files[0].type.startsWith("image/")) {
+          settings.querySelector("#profile_picture").src =
+            "./imgs/no profile.png";
+          return;
+        }
+        getUploadedImage(imageInput.files[0]).then((src) => {
+          settings.querySelector("#profile_picture").src = src;
         });
+      });
+    } else if (settingAction.value === "save") {
+      const inputs = [...document.querySelectorAll("#userInfo_form input")];
+      if (inputs.some((input) => input.value == "")) {
+        checkForEmptyFields(inputs);
+      } else {
+        const data = new FormData(this);
+        const fullName = `${data.get("firstName")} ${data.get("lastName")}`;
+        if (
+          imageInput.files[0] &&
+          imageInput.files[0].type.startsWith("image/")
+        ) {
+          data.append("Image", imageInput.files[0]);
+        }
+        fetch("settings.php", {
+          method: "POST",
+          body: data,
+        })
+          .then(function (response) {
+            return response.text();
+          })
+          .then((data) => {
+            if (data === "email already exists") {
+              document
+                .getElementById("email_already_exists")
+                .classList.add("show");
+            } else {
+              settingAction.value = "edit";
+              userInfo.querySelector("button").textContent = "Edit Profile";
+              userInfo.querySelectorAll("input").forEach((input) => {
+                input.setAttribute("readonly", "readonly");
+              });
+              changePicture.classList.add("hidden");
+              changePicture.classList.remove("grid");
+              userInfo.querySelector("#user_name").textContent = fullName;
+            }
+          })
+          .catch(function (error) {
+            console.log(
+              "An error occurred while processing the request ",
+              error
+            );
+          });
+      }
     }
+  });
+
+//* Settings : Change password
+//* Password Validation
+const passwordInput = document.querySelector("[name='newPassword']");
+const charsLongValidation = document.getElementById("chars_long_validation");
+const specialCharsValidation = document.getElementById(
+  "special_chars_validation"
+);
+const numbersValidation = document.getElementById("numbers_validation");
+const uppercaseValidation = document.getElementById("uppercase_validation");
+const lowercaseValidation = document.getElementById("lowercase_validation");
+const checked = "fa-solid fa-check-circle mr-3 text-green-500";
+const unchecked = "fa-regular fa-circle-check mr-3 text-red-300";
+// Check if the password is valid
+passwordInput.addEventListener("input", function () {
+  function validatePassword(condition, icon) {
+    if (condition) {
+      icon.className = checked;
+    } else {
+      icon.className = unchecked;
+    }
+  }
+  validatePassword(this.value.length >= 8, charsLongValidation);
+  validatePassword(this.value.match(/[^a-zA-Z0-9]/g), specialCharsValidation);
+  validatePassword(this.value.match(/[0-9]/g), numbersValidation);
+  validatePassword(this.value.match(/[A-Z]/g), uppercaseValidation);
+  validatePassword(this.value.match(/[a-z]/g), lowercaseValidation);
+});
+
+//* Change password
+document.getElementById("password_form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const inputs = [...document.querySelectorAll("#password_form input")];
+  if (inputs.some((input) => input.value == "")) {
+    checkForEmptyFields(inputs);
+  } else {
+    fetch("settings.php", {
+      method: "POST",
+      body: new FormData(document.getElementById("password_form")),
+    })
+      .then(function (response) {
+        return response.text();
+      })
+      .then((data) => {
+        if (data === "wrong password") {
+          document.getElementById("incorrect_password").classList.add("show");
+        } else if (
+          charsLongValidation.className === unchecked ||
+          specialCharsValidation.className === unchecked ||
+          numbersValidation.className === unchecked ||
+          uppercaseValidation.className === unchecked ||
+          lowercaseValidation.className === unchecked
+        ) {
+          passwordInput.focus();
+        } else if (data === "passwords are the same") {
+          document.getElementById("same_passwords").classList.add("show");
+        } else if (data === "passwords don't match") {
+          document.getElementById("passwords_dont_match").classList.add("show");
+        } else {
+          document.getElementById("password_form").reset();
+          passwordInput.blur();
+          document.getElementById("password_changed").classList.add("show");
+        }
+      })
+      .catch(function (error) {
+        console.log("An error occurred while processing the request ", error);
+      });
   }
 });

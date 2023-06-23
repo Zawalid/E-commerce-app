@@ -35,6 +35,12 @@
   #add_edit_car_modal.show {
     @apply h-[48%] w-[80%] p-7 max-md:h-full max-md:w-full;
   }
+  /* Errors and warnings*/
+  #password_changed.show,
+  #same_passwords.show,
+  #passwords_dont_match.show,
+  #incorrect_password.show,
+  #email_already_exists.show,
   #car_already_exists.show,
   #forgot_password_modal.show,
   #delete_car_modal.show {

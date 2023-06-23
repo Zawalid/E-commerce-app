@@ -4,11 +4,16 @@ require 'db.php';
 require 'utilities.php';
 function showProfilePicture()
 {
-  if (isset($_SESSION['userName'])) {
-    return '<img src="imgs/Person-3.svg" alt="" class="h-9 w-9 rounded-full" />';
+  if (isset($_SESSION['userImage'])) {
+    return '<img src="' . $_SESSION['userImage'] . '" alt="" class="h-9 w-9 rounded-full" />';
   } else {
     return '<img src="imgs/no profile.png" alt="" class="h-9 w-9 rounded-full" />';
   }
+}
+// Log user out
+if (isset($_SESSION['password_changed']) && $_SESSION['password_changed']) {
+  session_unset();
+  session_destroy();
 }
 
 ?>
@@ -34,7 +39,6 @@ function showProfilePicture()
     <div class="container border-b-2 border-border-color py-4">
       <div class="flex items-center justify-between">
         <h2 class="text-logo uppercase text-primary-500">Wheelz</h2>
-        <!-- <img src="./imgs/logo.jpg" alt="" class="w-10 h-10"> -->
         <div class="flex items-center max-md:hidden">
           <a href="#" class="relative mr-6 text-sm font-semibold text-grey-500 transition-colors duration-500 before:absolute before:-bottom-[26px] before:h-[2px] before:w-full before:bg-primary-500 before:opacity-0 before:transition-opacity before:duration-500 hover:text-grey-900 hover:before:opacity-100">Booking</a>
           <a href="#" class="relative mr-6 text-sm font-semibold text-grey-500 transition-colors duration-500 before:absolute before:-bottom-[26px] before:h-[2px] before:w-full before:bg-primary-500 before:opacity-0 before:transition-opacity before:duration-500 hover:text-grey-900 hover:before:opacity-100">About Us</a>
@@ -47,7 +51,7 @@ function showProfilePicture()
             <?php echo showProfilePicture() ?>
             <i class="fa-solid fa-chevron-up cursor-pointer text-lg text-grey-500 transition-transform duration-500" id="dropDownBtn"></i>
             <div class="absolute right-0 top-[3.3rem] -z-10 h-0 w-52  rounded-xl bg-white p-0 transition-all duration-500 " id="dropDown">
-              <div class="bg-white flex items-center gap-3 border-b border-border-color px-4 pb-3">
+              <div class="bg-white flex items-center gap-3 border-b border-border-color px-4 pb-3 cursor-pointer" id="show_userInfo">
                 <?php echo showProfilePicture() ?>
                 <h2 class="font-semibold text-grey-900" id="userName"><?php if (isset($_SESSION['userName'])) {
                                                                         echo   $_SESSION['userName'];
@@ -372,11 +376,12 @@ function showProfilePicture()
       </div>
     </section>
   </main>
-  <div class="show opacity-0 -z-10 max-md:h-full  transition-opacity duration-500 absolute w-full h-full  bg-[#0005] backdrop-blur-[2px] inset-0 flex-col " id="settings">
-    <div class="w-4/5 h-4/5 rounded-xl flex flex-col bg-white absolute top-1/2 gap-10 left-1/2 -translate-x-1/2 -translate-y-1/2 max-md:rounded-none max-md:top-0 max-md:translate-x-0 max-md:translate-y-0 max-md:left-0 max-md:overflow-y-scroll max-md:w-full max-md:h-full">
-      <div class="shadow-shadow-1 rounded-xl flex w-full gap-5 items-center justify-center pe-3">
+  <div class=" opacity-0 -z-10 max-md:h-full  transition-opacity duration-500 absolute w-full h-full  bg-[#0005] backdrop-blur-[2px] inset-0 flex-col " id="settings">
+    <div class="w-4/5 h-4/5 rounded-xl flex flex-col bg-white absolute top-1/2 gap-10 left-1/2 -translate-x-1/2 -translate-y-1/2 max-md:rounded-none max-md:top-0 max-md:translate-x-0 max-md:translate-y-0 max-md:left-0 max-md:overflow-y-scroll max-md:w-full max-md:h-full overflow-y-scroll">
+      <div class="shadow-shadow-1 bg-white rounded-xl flex w-full gap-5 items-center justify-center pe-3 sticky top-0
+      z-10">
         <ul class="py-2 max-sm:px-5 flex gap-8 max-sm:overflow-scroll">
-          <li class="active px-5 py-2 max-sm:min-w-[140px] rounded-md flex items-center gap-3 cursor-pointer transition duration-500 font-semibold text-grey-900 hover:text-white hover:shadow-[-5px_5px_8px_0px_#0005] hover:bg-black ">
+          <li class="active px-5 py-2 max-sm:min-w-[140px] rounded-md flex items-center gap-3 cursor-pointer transition duration-500 font-semibold text-grey-900 hover:text-white hover:shadow-[-5px_5px_8px_0px_#0005] hover:bg-black " id="userInfo">
             <i class="fa-solid fa-user w-5"></i>
             User info
           </li>
@@ -385,7 +390,7 @@ function showProfilePicture()
             <i class="fa-solid fa-key w-5"></i>
             Change password
           </li>
-          <li class="px-5 py-2 max-sm:min-w-[140px] rounded-md flex items-center gap-3 cursor-pointer transition-colors duration-500 font-semibold text-grey-900 hover:text-white hover:shadow-[-5px_5px_8px_0px_#0005] hover:bg-black">
+          <li class="px-5 py-2 max-sm:min-w-[140px] rounded-md flex items-center gap-3 cursor-pointer transition-colors duration-500 font-semibold text-grey-900 hover:text-white hover:shadow-[-5px_5px_8px_0px_#0005] hover:bg-black" id="settings">
             <i class=" fa-solid fa-gear cursor-pointer w-5"></i>
             Settings
           </li>
@@ -408,7 +413,7 @@ function showProfilePicture()
             <h2 class="font-bold text-grey-700 text-xl" id="user_name"><?= $_SESSION['userName'] . " " . $_SESSION['userLastName'] ?></h2>
           </div>
         </div>
-        <form class="w-4/5">
+        <form class="w-4/5" id="userInfo_form">
           <input type="hidden" name="action" value="edit">
           <div class="mb-7 flex gap-20 max-sm:flex-col max-sm:gap-5">
             <label class="w-1/2 font-semibold text-grey-900 max-sm:w-full">
@@ -423,12 +428,12 @@ function showProfilePicture()
           <div class="mb-7 flex gap-20 max-sm:flex-col max-sm:gap-5">
             <label class="w-1/2 font-semibold text-grey-900 max-sm:w-full">
               Email
-              <input type="text" name="email" value="<?= $_SESSION['userEmail'] ?>" readonly class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-500">
+              <input type="email" name="email" value="<?= $_SESSION['userEmail'] ?>" readonly class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-500">
             </label>
             <label class="w-1/2 font-semibold text-grey-900 max-sm:w-full">
               Phone
-              <input type="text" name="phone" value="<?php if (empty($_SESSION['userPhone'])) echo "Hasn't been set";
-                                                      else echo $_SESSION['userPhone']  ?>" readonly class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-500">
+              <input type="text" pattern="\+212-[5-9]-\d{8}" name="phone" value="<?php if (empty($_SESSION['userPhone'])) echo "Hasn't been set";
+                                                                                  else echo $_SESSION['userPhone']  ?>" readonly class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-500">
             </label>
           </div>
           <label class="font-semibold text-grey-900 max-sm:w-full">
@@ -440,28 +445,83 @@ function showProfilePicture()
         </form>
       </div>
       <div class="flex-1 w-full hidden justify-center items-center flex-col pb-5" id="Change password">
-        <form class="w-4/5">
+        <form class="w-4/5" id="password_form">
           <input type="hidden" name="action" value="changePassword">
           <label class="font-semibold text-grey-900 max-sm:w-full">
             Current Password
-            <input type="password" name="currentPassword" placeholder="Enter your current password" class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-500">
+            <div class="relative">
+              <input type="password" name="currentPassword" autocomplete="true" placeholder="Enter your current password" class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-500">
+              <i class="fa-solid fa-eye eye-icon showPasswordIcon" id="show_password"></i>
+            </div>
           </label>
-          <label class="font-semibold text-grey-900 max-sm:w-full my-5">
+          <label class="font-semibold text-grey-900 max-sm:w-full block my-5">
             New Password
-            <input type="password" name="newPassword" placeholder="Enter your new password" class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-500">
+            <div class="relative">
+              <input type="password" name="newPassword" autocomplete="true" placeholder="Enter your new password" class="peer focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-500">
+              <i class="fa-solid fa-eye eye-icon showPasswordIcon" id="show_password"></i>
+              <div class="absolute w-full sm:w-[325px]  rounded-xl shadow-shadow-1 bg-white p-5 -top-[210px] transition-opacity duration-500 opacity-0 -z-10 peer-focus:opacity-100 peer-focus:z-10" id="password_validation">
+                <h3 class="font-bold text-grey-700">Password requirements</h3>
+                <ul class="mt-3">
+                  <li class="text-sm mb-2  text-grey-500"><i id="chars_long_validation" class="fa-regular fa-circle-check mr-3 text-red-300"></i>Should be at least 8 characters</li>
+                  <li class="text-sm mb-2  text-grey-500"><i id="uppercase_validation" class="fa-regular fa-circle-check mr-3 text-red-300"></i>Contain at least one uppercase</li>
+                  <li class="text-sm mb-2  text-grey-500"><i id="lowercase_validation" class="fa-regular fa-circle-check mr-3 text-red-300"></i>Contain at least one lowercase</li>
+                  <li class="text-sm mb-2  text-grey-500"><i id="numbers_validation" class="fa-regular fa-circle-check mr-3 text-red-300"></i>Contain at least one digit</li>
+                  <li class="text-sm  text-grey-500"><i id="special_chars_validation" class="fa-regular fa-circle-check mr-3 text-red-300"></i>Contain at least one special character</li>
+                </ul>
+              </div>
+            </div>
           </label>
           <label class="font-semibold text-grey-900 max-sm:w-full">
             Confirm Password
-            <input type="password" name="confirmPassword" placeholder="Confirm your new password" class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-500">
+            <div class="relative">
+              <input type="password" name="confirmPassword" autocomplete="true" placeholder="Confirm your new password" class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-500">
+              <i class="fa-solid fa-eye eye-icon showPasswordIcon" id="show_password"></i>
+            </div>
           </label>
           <button class="block mx-auto px-8 mt-12 text-center text-white bg-primary-500 rounded-xl py-3 font-bold text-sm hover:bg-grey-900 transition-colors duration-500">Change Password</button>
         </form>
       </div>
       <div class=" flex-1 w-full hidden  justify-center items-center flex-col pb-5" id="Settings"></div>
     </div>
+    <div class=" absolute inset-0 max-md:rounded-none w-4/5 h-4/5 max-md:w-full max-md:h-full opacity-0 -z-10 top-1/2  rounded-xl left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0004] backdrop-blur-[1px] grid place-content-center transition-opacity duration-300" id="email_already_exists">
+      <div class="bg-white w-fit py-4  px-7 text-center max-xs:w-full min-h-[150px] rounded-xl  grid place-content-center">
+        <h2 class="font-bold text-grey-700 text-lg">The email you're trying to set already exists.Please try again.</h2>
+        <button class="w-fit mx-auto mt-7 bg-red-300 py-2 px-4 text-white font-bold rounded-xl cursor-pointer hover:opacity-80 transition-opacity">Ok</button>
+      </div>
+    </div>
+    <div class=" absolute inset-0 max-md:rounded-none w-4/5 h-4/5 max-md:w-full max-md:h-full opacity-0 -z-10 top-1/2  rounded-xl left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0004] backdrop-blur-[1px] grid place-content-center transition-opacity duration-300" id="incorrect_password">
+      <div class="bg-white w-fit py-4  px-7 text-center max-xs:w-full min-h-[150px] rounded-xl  grid place-content-center">
+        <h2 class="font-bold text-grey-700 text-lg">Current password is incorrect. Please verify your current password and try again.</h2>
+        <button class="w-fit mx-auto mt-7 bg-red-300 py-2 px-4 text-white font-bold rounded-xl cursor-pointer hover:opacity-80 transition-opacity">Ok</button>
+      </div>
+    </div>
+    <div class=" absolute inset-0 max-md:rounded-none w-4/5 h-4/5 max-md:w-full max-md:h-full opacity-0 -z-10 top-1/2  rounded-xl left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0004] backdrop-blur-[1px] grid place-content-center transition-opacity duration-300" id="same_passwords">
+      <div class="bg-white w-fit py-4  px-7 text-center max-xs:w-full min-h-[150px] rounded-xl  grid place-content-center">
+        <h2 class="font-bold text-grey-700 text-lg"> New password must be different from the old password. Please choose a different password.</h2>
+        <button class="w-fit mx-auto mt-7 bg-red-300 py-2 px-4 text-white font-bold rounded-xl cursor-pointer hover:opacity-80 transition-opacity">Ok</button>
+      </div>
+    </div>
+    <div class=" absolute inset-0 max-md:rounded-none w-4/5 h-4/5 max-md:w-full max-md:h-full opacity-0 -z-10 top-1/2  rounded-xl left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0004] backdrop-blur-[1px] grid place-content-center transition-opacity duration-300" id="passwords_dont_match">
+      <div class="bg-white py-4 max-w-[800px] px-7 text-center max-xs:w-full min-h-[150px] rounded-xl  grid place-content-center">
+        <h2 class="font-bold text-grey-700 text-lg">Passwords do not match. Please make sure the new password and confirmation password are identical.</h2>
+        <button class="w-fit mx-auto mt-7 bg-red-300 py-2 px-4 text-white font-bold rounded-xl cursor-pointer hover:opacity-80 transition-opacity">Ok</button>
+      </div>
+    </div>
+    <div class="absolute inset-0 max-md:rounded-none w-4/5 h-4/5 max-md:w-full max-md:h-full opacity-0 -z-10 top-1/2  rounded-xl left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0004] backdrop-blur-[1px] grid place-content-center transition-opacity duration-300" id="password_changed">
+      <div class="bg-white py-12 px-7 text-center max-xs:w-full min-h-[450px] rounded-xl  flex justify-between items-center flex-col">
+        <div>
+          <i class="fa-solid fa-circle-check text-green-500 mb-12 text-8xl"></i>
+          <h2 class="font-bold text-grey-700 text-xl mb-3">Password Changed!</h2>
+          <p class="text-sm"> Your password has been changed successfully.</p>
+          <p class="text-sm"> Use your new password to log in</p>
+        </div>
+        <a href="./authentication/login.php" class="w-full px-8 mt-12 text-center text-white bg-primary-500 rounded-xl py-3 font-bold text-sm hover:bg-grey-900 transition-colors duration-500">Login</a>
+      </div>
+    </div>
+
   </div>
   <div class=" opacity-0 -z-10 max-md:h-full  transition-opacity duration-500 absolute w-full h-full bg-[#0005] backdrop-blur-[2px] inset-0" id="car_view">
-    <div class="absolute bg-grey-100 w-4/5 h-[35%] top-1/2 gap-10 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl flex md:items-center px-7 pb-5 max-md:flex-col max-md:w-full max-md:h-screen max-md:gap-0 max-md:rounded-none max-md:top-0 max-md:translate-x-0 max-md:translate-y-0 max-md:left-0 max-md:overflow-y-scroll">
+    <div class="absolute bg-grey-100 w-4/5 h-[30%] top-1/2 gap-10 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl flex md:items-center px-7 pb-5 max-md:flex-col max-md:w-full max-md:h-screen max-md:gap-0 max-md:rounded-none max-md:top-0 max-md:translate-x-0 max-md:translate-y-0 max-md:left-0 max-md:overflow-y-scroll">
       <i class="fa-solid fa-ellipsis text-2xl absolute top-4 left-4 text-grey-600 cursor-pointer <?php if (!checkIfAdmin($conn)) echo 'hidden' ?>" id="actionsBtn"></i>
       <i class="fa-solid fa-xmark text-2xl absolute top-4 right-4 text-grey-600 cursor-pointer" id="close_car_view"></i>
       <div class="shadow-shadow-1 absolute left-4 top-12 -z-10 h-0 w-52  rounded-xl bg-white p-0 transition-all duration-500 overflow-hidden" id="actions">
@@ -575,7 +635,7 @@ function showProfilePicture()
         </div>
       </div>
     </div>
-    <div class="absolute inset-0 max-md:rounded-none  h-[48%] w-4/5 max-md:h-full max-md:w-full opacity-0 -z-10 top-1/2  rounded-xl left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0004] backdrop-blur-[1px] grid place-content-center transition-opacity duration-300" id="car_already_exists">
+    <div class="absolute inset-0 max-md:rounded-none  h-[30%] w-4/5 max-md:h-full max-md:w-full opacity-0 -z-10 top-1/2  rounded-xl left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0004] backdrop-blur-[1px] grid place-content-center transition-opacity duration-300" id="car_already_exists">
       <div class="bg-white w-fit px-7 text-center max-xs:w-full h-[150px] rounded-xl  grid place-content-center">
         <h2 class="font-bold text-grey-700 text-lg">The car you're trying to add already exists.Please try again.</h2>
         <button class="w-fit mx-auto mt-7 bg-red-300 py-2 px-4 text-white font-bold rounded-xl cursor-pointer hover:opacity-80 transition-opacity">Ok</button>
