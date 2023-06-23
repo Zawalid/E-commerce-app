@@ -33,9 +33,9 @@ module.exports = {
         "border-color": "#EEF0F1",
       },
       backgroundImage: {
-        person1: "url('../imgs/Person-1.svg')",
-        person2: "url('../imgs/Person-2.svg')",
-        person3: "url('../imgs/Person-3.svg')",
+        person1: "url('../imgs/man1.jpeg')",
+        person2: "url('../imgs/man2.jpeg')",
+        person3: "url('../imgs/woman1.jpeg')",
         login: "url('../imgs/login.jpg')",
         signup: "url('../imgs/signup.jpg')",
       },

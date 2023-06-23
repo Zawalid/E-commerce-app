@@ -36,6 +36,7 @@
     @apply h-[48%] w-[80%] p-7 max-md:h-full max-md:w-full;
   }
   /* Errors and warnings*/
+  #save_confirmation.show,
   #password_changed.show,
   #same_passwords.show,
   #passwords_dont_match.show,
@@ -45,9 +46,6 @@
   #forgot_password_modal.show,
   #delete_car_modal.show {
     @apply z-10 opacity-100;
-  }
-  input.field_error {
-    @apply outline outline-1 outline-red-300;
   }
   #settings li.active {
     @apply bg-black text-white shadow-[-5px_5px_8px_0px_#0005];

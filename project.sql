@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 20, 2023 at 11:43 PM
+-- Generation Time: Jun 23, 2023 at 08:53 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `auth`
+-- Database: `project`
 --
 
 DELIMITER $$
@@ -116,13 +116,6 @@ CREATE TABLE `carts` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `carts`
---
-
-INSERT INTO `carts` (`id`, `user_id`, `car_id`, `quantity`, `created_at`, `updated_at`) VALUES
-(1, 1, 14, 1, '2023-06-20 20:20:06', '2023-06-20 20:20:06');
-
 -- --------------------------------------------------------
 
 --
@@ -136,15 +129,19 @@ CREATE TABLE `users` (
   `Email` varchar(255) NOT NULL,
   `password` varchar(255) DEFAULT NULL,
   `Token` varchar(255) DEFAULT NULL,
-  `is_admin` varchar(20) DEFAULT NULL
+  `phone` varchar(12) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT './imgs/no profile.png',
+  `is_admin` int(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `First Name`, `Last Name`, `Email`, `password`, `Token`, `is_admin`) VALUES
-(1, 'Walid', 'Zakan', 'walid@gmail.com', '$2y$10$tZKiRoWLjevu847lopzGo.qQIDU54Qyk9UXHrki6RWKq.I9D40iYy', 'e6a84cee3a81fd4d8545ec23d421f296777cccc47c71e95d3e0def641e14b20f', '1');
+INSERT INTO `users` (`id`, `First Name`, `Last Name`, `Email`, `password`, `Token`, `phone`, `address`, `image`, `is_admin`) VALUES
+(1, 'Walid', 'Zakan', 'walid@gmail.com', '$2y$10$pJ70DYg/I/ezVyr1lycwwOrI63jJlOgNyqAuiL2xxDe9OP6NADTqa', 'f2cf3626131eada1cd31643a650fd2a5dc030e514e28a5267099013360e5bad4', '0682208346', ' SALE', './imgs/3atir.jpg', 1),
+(2, 'Walid', 'Zakan', 'williev@ee.edu', '$2y$10$dqdgLZCkLvd6e5Jkhu3ZGOvEQAuUP/tG9MTTE9Kmm7GjEWdgmOYeq', 'fce02c0b5e365ce50e83ac440dd73a0812b77ac28eec2d38013819f3a8b5d17f', NULL, NULL, './imgs/no profile.png', 0);
 
 --
 -- Indexes for dumped tables
@@ -180,19 +177,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cars`
 --
 ALTER TABLE `cars`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=150;
 
 --
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

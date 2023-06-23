@@ -79,13 +79,13 @@ const checkForEmptyFields = (inputs) => {
   fields.textContent = "";
   const emptyFields = inputs.filter((input) => input.value == "");
   emptyFields.forEach((field) => {
+    emptyFields[0].focus();
     fields.textContent += `${field.name} ${
       emptyFields.length > 1 &&
       emptyFields.indexOf(field) != emptyFields.length - 1
         ? ", "
         : ""
     }`;
-    field.classList.add("field_error");
     setTimeout(() => field.classList.remove("field_error"), 3200);
   });
   showError(emptyFieldsError);
@@ -694,8 +694,11 @@ setInterval(() => {
 
 //* Settings
 const settings = document.getElementById("settings");
+
+// Show settings
 const showSettings = (el) => {
   if (checkIfUserLoggedIn()) {
+    dropDown.classList.remove("show");
     window.scrollTo(0, 0);
     el.dispatchEvent(new Event("click"));
     settings.classList.add("show");
@@ -709,12 +712,40 @@ document.getElementById("show_settings").addEventListener("click", () => {
 document.getElementById("show_userInfo").addEventListener("click", () => {
   showSettings(settings.querySelector("li#userInfo"));
 });
+
+// Close settings
+const closeSettings = (e) => {
+  if (settings.querySelector("[name='action']").value === "save") {
+    document.getElementById("save_confirmation").classList.add("show");
+  } else {
+    settings.classList.remove("show");
+    settings.querySelectorAll("form").forEach((form) => form.reset());
+  }
+};
 settings.addEventListener("click", (e) => {
-  e.currentTarget === e.target && settings.classList.remove("show");
+  if (e.currentTarget === e.target) closeSettings(e);
 });
-document.getElementById("close_settings").addEventListener("click", () => {
-  settings.classList.remove("show");
-});
+document
+  .getElementById("close_settings")
+  .addEventListener("click", closeSettings);
+
+// Confirmation
+document
+  .getElementById("save_confirmation")
+  .querySelector("#no_button")
+  .addEventListener("click", (e) => {
+    document.getElementById("save_confirmation").classList.remove("show");
+  });
+document
+  .getElementById("save_confirmation")
+  .querySelector("#yes_button")
+  .addEventListener("click", (e) => {
+    switchToEdit();
+    document.getElementById("save_confirmation").classList.remove("show");
+    closeSettings(e);
+  });
+
+// Settings tabs
 settings.querySelectorAll("#settings li").forEach((li) => {
   li.addEventListener("click", () => {
     document.getElementById(
@@ -733,17 +764,28 @@ const userInfo = document.getElementById("User info");
 const settingAction = settings.querySelector("[name='action']");
 const changePicture = settings.querySelector("#change_picture");
 const imageInput = settings.querySelector("[name='Image']");
+const userInfoInputs = userInfo.querySelectorAll("input");
+const userInfoButton = userInfo.querySelector("button");
 
+const switchToEdit = () => {
+  settingAction.value = "edit";
+  userInfoButton.textContent = "Edit Profile";
+  userInfoInputs.forEach((input) => {
+    input.setAttribute("readonly", "readonly");
+  });
+  changePicture.classList.add("hidden");
+  changePicture.classList.remove("grid");
+};
 document
   .getElementById("userInfo_form")
   .addEventListener("submit", function (e) {
     e.preventDefault();
     if (settingAction.value === "edit") {
-      userInfo.querySelector("button").textContent = "Save Changes";
-      userInfo.querySelectorAll("input").forEach((input) => {
+      userInfoButton.textContent = "Save Changes";
+      userInfoInputs.forEach((input) => {
         input.removeAttribute("readonly");
       });
-      userInfo.querySelectorAll("input").forEach((input) => {
+      userInfoInputs.forEach((input) => {
         if (input.value === "Hasn't been set") input.value = "";
       });
       changePicture.classList.remove("hidden");
@@ -785,13 +827,7 @@ document
                 .getElementById("email_already_exists")
                 .classList.add("show");
             } else {
-              settingAction.value = "edit";
-              userInfo.querySelector("button").textContent = "Edit Profile";
-              userInfo.querySelectorAll("input").forEach((input) => {
-                input.setAttribute("readonly", "readonly");
-              });
-              changePicture.classList.add("hidden");
-              changePicture.classList.remove("grid");
+              switchToEdit();
               userInfo.querySelector("#user_name").textContent = fullName;
             }
           })

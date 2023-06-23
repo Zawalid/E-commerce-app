@@ -168,9 +168,9 @@ if (isset($_SESSION['password_changed']) && $_SESSION['password_changed']) {
           </p>
           <div class="flex items-center gap-7">
             <div class="relative flex h-12 w-36">
-              <div class="absolute left-0 top-0 z-[1] h-12 w-12 rounded-full border-2 border-border-color bg-grey-100 bg-person1"></div>
-              <div class="absolute left-[35px] top-0 z-[1] h-12 w-12 rounded-full border-2 border-border-color bg-grey-100 bg-person2"></div>
-              <div class="absolute left-[65px] top-0 z-[1] h-12 w-12 rounded-full border-2 border-border-color bg-grey-100 bg-person3"></div>
+              <div class="absolute left-0 top-0 z-[1] h-12 w-12 rounded-full border-2 border-border-color bg-cover bg-person1"></div>
+              <div class="absolute left-[35px] top-0 z-[1] h-12 w-12 rounded-full border-2 border-border-color bg-cover bg-person2"></div>
+              <div class="absolute left-[65px] top-0 z-[1] h-12 w-12 rounded-full border-2 border-border-color bg-cover bg-person3"></div>
               <div class="absolute left-[95px] top-0 z-[1] grid h-12 w-12 place-content-center rounded-full border-2 border-border-color bg-grey-100 text-sm font-bold">
                 +2k
               </div>
@@ -381,16 +381,16 @@ if (isset($_SESSION['password_changed']) && $_SESSION['password_changed']) {
       <div class="shadow-shadow-1 bg-white rounded-xl flex w-full gap-5 items-center justify-center pe-3 sticky top-0
       z-10">
         <ul class="py-2 max-sm:px-5 flex gap-8 max-sm:overflow-scroll">
-          <li class="active px-5 py-2 max-sm:min-w-[140px] rounded-md flex items-center gap-3 cursor-pointer transition duration-500 font-semibold text-grey-900 hover:text-white hover:shadow-[-5px_5px_8px_0px_#0005] hover:bg-black " id="userInfo">
+          <li class="active px-5 py-2 max-sm:min-w-[140px] rounded-md flex items-center gap-3 cursor-pointer transition duration-300 font-semibold text-grey-900 hover:text-white hover:shadow-[-5px_5px_8px_0px_#0005] hover:bg-black " id="userInfo">
             <i class="fa-solid fa-user w-5"></i>
             User info
           </li>
 
-          <li class="px-5 py-2 max-sm:min-w-[220px] rounded-md flex items-center gap-3 cursor-pointer transition-colors duration-500 font-semibold text-grey-900 hover:text-white hover:shadow-[-5px_5px_8px_0px_#0005] hover:bg-black ">
+          <li class="px-5 py-2 max-sm:min-w-[220px] rounded-md flex items-center gap-3 cursor-pointer transition-colors duration-300 font-semibold text-grey-900 hover:text-white hover:shadow-[-5px_5px_8px_0px_#0005] hover:bg-black ">
             <i class="fa-solid fa-key w-5"></i>
             Change password
           </li>
-          <li class="px-5 py-2 max-sm:min-w-[140px] rounded-md flex items-center gap-3 cursor-pointer transition-colors duration-500 font-semibold text-grey-900 hover:text-white hover:shadow-[-5px_5px_8px_0px_#0005] hover:bg-black" id="settings">
+          <li class="px-5 py-2 max-sm:min-w-[140px] rounded-md flex items-center gap-3 cursor-pointer transition-colors duration-300 font-semibold text-grey-900 hover:text-white hover:shadow-[-5px_5px_8px_0px_#0005] hover:bg-black" id="settings">
             <i class=" fa-solid fa-gear cursor-pointer w-5"></i>
             Settings
           </li>
@@ -432,8 +432,8 @@ if (isset($_SESSION['password_changed']) && $_SESSION['password_changed']) {
             </label>
             <label class="w-1/2 font-semibold text-grey-900 max-sm:w-full">
               Phone
-              <input type="text" pattern="\+212-[5-9]-\d{8}" name="phone" value="<?php if (empty($_SESSION['userPhone'])) echo "Hasn't been set";
-                                                                                  else echo $_SESSION['userPhone']  ?>" readonly class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-500">
+              <input type="text" pattern="0[5-9]\d{8}" name="phone" value="<?php if (empty($_SESSION['userPhone'])) echo "Hasn't been set";
+                                                                            else echo $_SESSION['userPhone']  ?>" readonly class="focus:outline-none w-full rounded-xl  mt-3  outline-transparent placeholder:text-nobleDark300 bg-grey-100 p-3 font-semibold text-grey-500">
             </label>
           </div>
           <label class="font-semibold text-grey-900 max-sm:w-full">
@@ -482,6 +482,17 @@ if (isset($_SESSION['password_changed']) && $_SESSION['password_changed']) {
         </form>
       </div>
       <div class=" flex-1 w-full hidden  justify-center items-center flex-col pb-5" id="Settings"></div>
+    </div>
+    <div class="absolute inset-0 max-md:rounded-none w-4/5 h-4/5 max-md:w-full max-md:h-full opacity-0 -z-10 top-1/2  rounded-xl left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0004] backdrop-blur-[1px] grid place-content-center transition-opacity duration-300" id="save_confirmation">
+      <div class="bg-white w-fit py-4  px-7 text-center max-xs:w-full min-h-[150px] rounded-xl  grid place-content-center">
+        <h2 class="font-bold text-grey-700 text-lg">Are you sure you want to close without saving changes?</h2>
+        <div class="flex justify-evenly">
+
+          <button class="w-fit mx-auto mt-7 bg-red-300 py-2 px-4 text-white font-bold rounded-xl cursor-pointer hover:opacity-80 transition-opacity" id="yes_button">Yes</button>
+
+          <button class="w-fit mx-auto mt-7 bg-blue-300 py-2 px-4 text-white font-bold rounded-xl cursor-pointer hover:opacity-80 transition-opacity" id="no_button">No</button>
+        </div>
+      </div>
     </div>
     <div class=" absolute inset-0 max-md:rounded-none w-4/5 h-4/5 max-md:w-full max-md:h-full opacity-0 -z-10 top-1/2  rounded-xl left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0004] backdrop-blur-[1px] grid place-content-center transition-opacity duration-300" id="email_already_exists">
       <div class="bg-white w-fit py-4  px-7 text-center max-xs:w-full min-h-[150px] rounded-xl  grid place-content-center">

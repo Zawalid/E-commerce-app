@@ -634,7 +634,8 @@ aside.show {
 
 /* Errors and warnings*/
 
-#password_changed.show,
+#save_confirmation.show,
+  #password_changed.show,
   #same_passwords.show,
   #passwords_dont_match.show,
   #incorrect_password.show,
@@ -644,12 +645,6 @@ aside.show {
   #delete_car_modal.show {
   z-index: 10;
   opacity: 1;
-}
-
-input.field_error {
-  outline-style: solid;
-  outline-width: 1px;
-  outline-color: #F03D3D;
 }
 
 #settings li.active {
@@ -1394,15 +1389,15 @@ body:has(#settings.show) {
 }
 
 .bg-person1 {
-  background-image: url('../imgs/Person-1.svg');
+  background-image: url('../imgs/man1.jpeg');
 }
 
 .bg-person2 {
-  background-image: url('../imgs/Person-2.svg');
+  background-image: url('../imgs/man2.jpeg');
 }
 
 .bg-person3 {
-  background-image: url('../imgs/Person-3.svg');
+  background-image: url('../imgs/woman1.jpeg');
 }
 
 .bg-signup {
@@ -1776,6 +1771,11 @@ body:has(#settings.show) {
 
 .outline-transparent {
   outline-color: transparent;
+}
+
+.blur {
+  --tw-blur: blur(8px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .drop-shadow-\[0px_0px_4px_\#0005\] {
